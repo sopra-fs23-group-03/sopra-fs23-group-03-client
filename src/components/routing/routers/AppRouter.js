@@ -4,6 +4,7 @@ import GameRouter from "components/routing/routers/GameRouter";
 import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "components/views/Register";
+import NavigationBar from "components/views/NavigationBar";
 
 /**
  * Main router of your application.
@@ -17,9 +18,11 @@ import Register from "components/views/Register";
 const AppRouter = () => {
   return (
     <BrowserRouter>
+      <NavigationBar /> {/* Render the Navbar component here */}
       <Switch>
         <Route path="/game">
           <GameGuard>
+            <GameRouter base="/game" />
             <GameRouter base="/game" />
           </GameGuard>
         </Route>
@@ -35,18 +38,6 @@ const AppRouter = () => {
             <Register />
           </LoginGuard>
         </Route>
-
-        {/* <Route exact path="/users/:userId">
-          <GameGuard>
-            <Profile />
-          </GameGuard>
-        </Route>
-
-        <Route exact path="/:userId/edit">
-          <GameGuard>
-            <EditProfile />
-          </GameGuard>
-        </Route> */}
 
         <Route exact path="/">
           <Redirect to="/game" />
