@@ -1,0 +1,86 @@
+/* Logo */
+
+@import "styles/theme";
+
+.navbar {
+  position: absolute;
+  width: 100%;
+  height: 72px;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border: 1px solid rgba(102, 102, 102, 0.25);
+  box-sizing: border-box;
+  padding: 0 30px;
+}
+
+.logo {
+  width: 200px;
+  height: 75px;
+}
+
+/* Button Container */
+
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Register Button */
+
+.register-button {
+  width: 105px;
+  height: 54px;
+  background-color: #ffffff;
+  border: 1px solid #333333;
+  border-radius: 8px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.register-button:hover {
+  background-color: #f2f2f2;
+}
+
+/* Register Text */
+
+.register-text {
+  font-family: "Poppins";
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height */
+  color: #333333;
+  margin-right: 10px;
+}
+
+/* Login Button */
+
+.login-button {
+  width: 105px;
+  height: 54px;
+  background-color: #333333;
+  border-radius: 8px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.login-button:hover {
+  background-color: #1a1a1a;
+}
+
+/* Login Text */
+
+.login-text {
+  font-family: "Poppins";
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height */
+  color: #ffffff;
+}
