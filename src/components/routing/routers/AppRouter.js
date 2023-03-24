@@ -1,13 +1,10 @@
-import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
-import {GameGuard} from "components/routing/routeProtectors/GameGuard";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { GameGuard } from "components/routing/routeProtectors/GameGuard";
 import GameRouter from "components/routing/routers/GameRouter";
-import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
+import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
-<<<<<<< Updated upstream
-=======
 import Register from "components/views/Register";
 import NavigationBar from "components/views/NavigationBar"; // import the Navbar component here
->>>>>>> Stashed changes
 
 /**
  * Main router of your application.
@@ -20,29 +17,20 @@ import NavigationBar from "components/views/NavigationBar"; // import the Navbar
  */
 const AppRouter = () => {
   return (
-    // <BrowserRouter>
-    //   <Switch>
-    //     <Route path="/game">
-    //       <GameGuard>
-    //         <GameRouter base="/game" />
-    //       </GameGuard>
-    //     </Route>
-
     <BrowserRouter>
       <NavigationBar /> {/* Render the Navbar component here */}
       <Switch>
         <Route path="/game">
           <GameGuard>
-            <GameRouter base="/game"/>
+            <GameRouter base="/game" />
           </GameGuard>
         </Route>
+
         <Route exact path="/login">
           <LoginGuard>
-            <Login/>
+            <Login />
           </LoginGuard>
         </Route>
-<<<<<<< Updated upstream
-=======
 
         <Route exact path="/register">
           <LoginGuard>
@@ -50,9 +38,8 @@ const AppRouter = () => {
           </LoginGuard>
         </Route>
 
->>>>>>> Stashed changes
         <Route exact path="/">
-          <Redirect to="/game"/>
+          <Redirect to="/game" />
         </Route>
       </Switch>
     </BrowserRouter>
@@ -60,6 +47,6 @@ const AppRouter = () => {
 };
 
 /*
-* Don't forget to export your component!
+ * Don't forget to export your component!
  */
 export default AppRouter;
