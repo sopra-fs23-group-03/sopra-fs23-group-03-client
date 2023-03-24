@@ -1,6 +1,6 @@
 @import "styles/theme";
 
-.login {
+.register {
   &.container {
     margin-top: 2em;
     min-height: 300px;
@@ -40,6 +40,7 @@
     background: transparentize(white, 0.8);
     color: $textColor;
   }
+
   &.toggle-password-button {
     // display: flex;
     border: none;
@@ -63,10 +64,10 @@
     margin-top: 2em;
   }
 
-  .register-text {
+  .login-text {
     margin-top: 1.5em;
   }
-  .register-link {
+  .login-link {
     color: #3f3a3a;
     text-decoration: underline;
     cursor: pointer;
