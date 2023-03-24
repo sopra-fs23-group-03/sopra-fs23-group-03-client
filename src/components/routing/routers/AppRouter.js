@@ -18,7 +18,7 @@ import NavigationBar from "components/views/NavigationBar";
 const AppRouter = () => {
   return (
     <BrowserRouter>
-      <NavigationBar /> {/* Render the Navbar component here */}
+      <NavigationBar />
       <Switch>
         <Route path="/game">
           <GameGuard>
