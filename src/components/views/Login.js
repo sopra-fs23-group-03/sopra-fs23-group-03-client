@@ -80,6 +80,7 @@ const Login = (props) => {
     <BaseContainer>
       <div className="login container">
         <div className="login form">
+          <h1 className="login title"> Welcome back! </h1>
           <FormField
             label="Username"
             value={username}
@@ -90,22 +91,26 @@ const Login = (props) => {
             value={password}
             onChange={(n) => setPassword(n)}
           />
+          <div>
           <div className="login button-container">
             <Button
               disabled={!username || !password}
-              width="100%"
+              width="40%"
               onClick={() => doLogin()}
             >
-              Login
+              Sign in
             </Button>
           </div>
-        </div>
-
+          <div>
         <div className="login register-text">
-          You don't have an account? Register now{" "}
+          
+          You don't have an account yet? Register now{" "}
           <Link to="/register" className="login register-link">
             here
           </Link>
+          </div>
+          </div>
+        </div>
         </div>
       </div>
     </BaseContainer>

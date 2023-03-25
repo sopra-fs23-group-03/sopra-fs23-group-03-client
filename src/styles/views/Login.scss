@@ -1,34 +1,47 @@
 @import "styles/theme";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
 
 .login {
   &.container {
-    margin-top: 2em;
-    min-height: 300px;
-    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
-    @include center;
-    flex-direction: column;
+    display: flex;
+    flex-direction: row-reverse;
+    background-image: url('../../../public/login-image.jpg');
+    background-size: contain;
   }
   &.form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 60%;
-    max-width: 30em;
-    height: 20em;
+    justify-content: space-evenly;
+    width: 790px;
+    height: 45.4em;
     font-size: 16px;
     font-weight: 300;
-    padding-left: 37px;
-    padding-right: 37px;
-    border-radius: 0.75em;
-    background-color: $background;
+    padding-left: 120px;
+    padding-right: 120px;
+    background-color: #FFFFFF;
     transition: opacity 0.9s ease, transform 0.9s ease;
     box-shadow: $dropShadow;
   }
+
+  &.title{
+    font-family:'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    color: #333333;
+  }
+
   &.field {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: 2.5em;
+    border: 1px solid rgba(102, 102, 102, 0.35);
+    border-radius: 12px;
+    max-width: 450px;
   }
+
   &.input {
     height: 35px;
     width: 100%;
@@ -36,39 +49,64 @@
     margin-left: -2px;
     border: none;
     border-radius: 0.75em;
-    margin-bottom: 20px;
+    margin-bottom: 35px;
     background: transparentize(white, 0.8);
-    color: $textColor;
+    color: #666666;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+
+    
   }
+
   &.toggle-password-button {
     // display: flex;
     border: none;
     background: none;
     color: #a5a5a5;
+    font-family: 'Poppins';
     justify-content: center;
-    margin-left: -41px;
-    margin-top: -15px;
+    margin-left: -50px;
+    margin-top: -33px;
     font-size: 12px;
     cursor: pointer;
   }
 
   &.label {
-    color: $textColor;
     margin-bottom: 10px;
-    font-weight: 300;
+
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+
+    color: #666666;
   }
+
   &.button-container {
     display: flex;
-    justify-content: center;
+    justify-content: normal;
     margin-top: 2em;
   }
 
   .register-text {
     margin-top: 1.5em;
+    font-family: "Poppins";
+    font-size: 16px;
+
   }
   .register-link {
     color: #3f3a3a;
     text-decoration: underline;
     cursor: pointer;
+    font-weight: 700;
+  }
+
+  &.image{
+    display: flex;
+    width: 900px;
   }
 }
