@@ -3,7 +3,7 @@ import { api, handleError } from "helpers/api";
 import User from "models/User";
 import { useHistory, Link } from "react-router-dom"; //
 import { Button } from "components/ui/Button";
-import "styles/views/Register.scss";
+import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 
@@ -17,12 +17,12 @@ const FormField = (props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="register field">
-      <label className="register label">{props.label}</label>
+    <div className="login field">
+      <label className="login label">{props.label}</label>
 
       <div style={{ display: "flex", alignItems: "center" }}>
         <input
-          className="register input"
+          className="login input"
           placeholder="enter here.."
           type={
             props.label === "Password"
@@ -36,7 +36,7 @@ const FormField = (props) => {
         />
         {props.label === "Password" && (
           <button
-            className="register toggle-password-button"
+            className="login toggle-password-button"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? "Hide" : "Show"}
@@ -85,8 +85,15 @@ const Register = (props) => {
 
   return (
     <BaseContainer>
-      <div className="register container">
-        <div className="register form">
+      <div className="login container">
+        <div className="login form">
+        <div>
+          <h1 className="login title"> Register </h1>
+          <p className="login text">
+        Register now to join our community and start planning dinners with friends
+        </p>
+        </div>
+        <div>
           <FormField
             label="Username"
             value={username}
@@ -97,22 +104,34 @@ const Register = (props) => {
             value={password}
             onChange={(n) => setPassword(n)}
           />
-          <div className="register button-container">
+          <FormField
+            label="Repeat password"
+            // value={password}
+            // onChange={(n) => setPassword(n)}
+          />
+          </div>
+          <div>
+          <div className="login button-container">
             <Button
               disabled={!username || !password}
-              width="100%"
+              width="40%"
               onClick={() => doRegister()}
             >
               Register
             </Button>
           </div>
-        </div>
-        <div className="register login-text">
-          You already have an account? Sign in{" "}
-          <Link to="/login" className="register login-link">
+        
+        <div>
+        <div className="login register-text">
+          
+          You already have an account? Sign in {" "}
+          <Link to="/login" className="login register-link">
             here
           </Link>
-        </div>
+          </div>
+          </div>
+          </div>
+          </div>
       </div>
     </BaseContainer>
   );
