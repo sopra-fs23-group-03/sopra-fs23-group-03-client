@@ -93,7 +93,6 @@ const Register = (props) => {
         Register now to join our community and start planning dinners with friends
         </p>
         </div>
-        <div>
           <FormField
             label="Username"
             value={username}
@@ -109,7 +108,6 @@ const Register = (props) => {
             // value={password}
             // onChange={(n) => setPassword(n)}
           />
-          </div>
           <div>
           <div className="login button-container">
             <Button
