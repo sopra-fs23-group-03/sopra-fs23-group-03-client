@@ -25,7 +25,7 @@ const FormField = (props) => {
           className="login input"
           placeholder="enter here.."
           type={
-            props.label === "Password"
+            props.name === "Password"
               ? showPassword
                 ? "text"
                 : "password"
@@ -34,7 +34,7 @@ const FormField = (props) => {
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
-        {props.label === "Password" && (
+        {props.name === "Password" && (
           <button
             className="login toggle-password-button"
             onClick={() => setShowPassword(!showPassword)}
@@ -56,30 +56,40 @@ FormField.propTypes = {
 const Register = (props) => {
   const history = useHistory();
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [username, setUsername] = useState("");
 
-  const doRegister = async () => {
-    try {
-      const requestBody = JSON.stringify({ username, password });
-      const response = await api.post("/users", requestBody);
+const handleRegister = () => {
+  if(password !== repeatPassword){
+    alert('The two passwords are not matching');
+    return;
+  }
+  doRegister();
+}
 
-      // Get the returned user and update a new object.
-      const user = new User(response.data);
+const doRegister = async () => {
+    
+  try {
+    const requestBody = JSON.stringify({ username, password });
+    const response = await api.post("/users", requestBody);
 
-      // Store the token from the response headers into the local storage.
-      const token = response.headers.authorization;
-      localStorage.setItem("token", token);
+    // Get the returned user and update a new object.
+    const user = new User(response.data);
 
-      // Store the user ID in local storage.
-      localStorage.setItem("userId", user.id);
+    // Store the token from the response headers into the local storage.
+    const token = response.headers.authorization;
+    localStorage.setItem("token", token);
 
-      // Register successfully worked --> navigate to the route /game in the GameRouter
-      history.push(`/game`);
-    } catch (error) {
-      alert(`Something went wrong during the login: \n${handleError(error)}`);
-      history.push(`/register`);
-    }
-  };
+    // Store the user ID in local storage.
+    localStorage.setItem("userId", user.id);
+
+    // Register successfully worked --> navigate to the route /game in the GameRouter
+    history.push(`/game`);
+  } catch (error) {
+    alert(`Something went wrong during the login: \n${handleError(error)}`);
+    history.push(`/register`);
+  }
+};
 
   return (
     <BaseContainer>
@@ -98,20 +108,22 @@ const Register = (props) => {
           />
           <FormField
             label="Password"
+            name="Password"
             value={password}
             onChange={(n) => setPassword(n)}
           />
           <FormField
             label="Repeat password"
-            // value={password}
-            // onChange={(n) => setPassword(n)}
+            name="Password"
+            value={repeatPassword}
+            onChange={(n) => setRepeatPassword(n)}
           />
           <div>
           <div className="login button-container">
             <Button
-              disabled={!username || !password}
+              disabled={!username || !password || !repeatPassword}
               width="40%"
-              onClick={() => doRegister()}
+              onClick={() => handleRegister()}
             >
               Register
             </Button>
