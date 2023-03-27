@@ -64,13 +64,21 @@ const handleRegister = () => {
     alert('The two passwords are not matching');
     return;
   }
+  
+  if (!/^[A-Za-z]*$/.test(username)) {
+
+    alert('Username can include only letters');
+    return;
+  }
+
   doRegister();
 }
+
 
 const doRegister = async () => {
     
   try {
-    const requestBody = JSON.stringify({ username, password });
+    const requestBody = JSON.stringify({ username, password, repeatPassword });
     const response = await api.post("/users", requestBody);
 
     // Get the returned user and update a new object.
@@ -84,9 +92,9 @@ const doRegister = async () => {
     localStorage.setItem("userId", user.id);
 
     // Register successfully worked --> navigate to the route /game in the GameRouter
-    history.push(`/game`);
+    history.push(`/profile`);
   } catch (error) {
-    alert(`Something went wrong during the login: \n${handleError(error)}`);
+    alert(`Something went wrong during the registration: \n${handleError(error)}`);
     history.push(`/register`);
   }
 };
