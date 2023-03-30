@@ -4,11 +4,7 @@ import GameRouter from "components/routing/routers/GameRouter";
 import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "components/views/Register";
-<<<<<<< Updated upstream
-=======
-import Profile from "components/views/Profile";
 import NavigationBar from "components/views/NavigationBar";
->>>>>>> Stashed changes
 
 /**
  * Main router of your application.
@@ -41,25 +37,6 @@ const AppRouter = () => {
             <Register />
           </LoginGuard>
         </Route>
-
-<<<<<<< Updated upstream
-=======
-        <Route path="/profile">
-          <Profile />
-        </Route>
-
->>>>>>> Stashed changes
-        {/* <Route exact path="/users/:userId">
-          <GameGuard>
-            <Profile />
-          </GameGuard>
-        </Route>
-
-        <Route exact path="/:userId/edit">
-          <GameGuard>
-            <EditProfile />
-          </GameGuard>
-        </Route> */}
 
         <Route exact path="/">
           <Redirect to="/game" />
