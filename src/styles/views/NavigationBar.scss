@@ -3,79 +3,84 @@
 @import "styles/theme";
 
 .navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #ffffff;
-  border: 1px solid rgba(102, 102, 102, 0.25);
-  box-sizing: border-box;
-  padding: 0 30px;
-}
+  &.container {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 60px;
+    background-color: #ffffff;
+    border-bottom: 1px solid rgba(102, 102, 102, 0.25);
+    padding: 0 30px;
+    z-index: 1;
+  }
 
-.logo {
-  width: 200px;
-  height: 75px;
-}
+  &.logo {
+    width: 200px;
+    height: 59px;
+  }
 
-/* Button Container */
+  /* Button Container */
 
-.button-container {
-  display: flex;
-  align-items: center;
-}
+  &.button-container {
+    display: flex;
+    align-items: center;
+  }
 
-/* Register Button */
+  /* Register Button */
 
-.register-button {
-  width: 105px;
-  height: 54px;
-  background-color: #ffffff;
-  border: 1px solid #333333;
-  border-radius: 8px;
-  margin-left: 10px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
+  &.register-button {
+    width: 105px;
+    height: 50px;
+    background-color: #ffffff;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
 
-.register-button:hover {
-  background-color: #f2f2f2;
-}
+  .register-button:hover {
+    background-color: #f2f2f2;
+  }
 
-/* Register Text */
+  /* Register Text */
 
-.register-text {
-  font-family: "Poppins";
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 22px;
-  /* identical to box height */
-  color: #333333;
-  margin-right: 10px;
-}
+  .register-text {
+    font-family: "Poppins";
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 22px;
+    /* identical to box height */
+    color: #333333;
+    margin-right: 10px;
+  }
 
-/* Login Button */
+  /* Login Button */
 
-.login-button {
-  width: 105px;
-  height: 54px;
-  background-color: #333333;
-  border-radius: 8px;
-  margin-left: 10px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
+  &.login-button {
+    width: 105px;
+    height: 50px;
+    background-color: #333333;
+    border-radius: 8px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
 
-.login-button:hover {
-  background-color: #1a1a1a;
-}
+  .login-button:hover {
+    background-color: #1a1a1a;
+  }
 
-/* Login Text */
+  /* Login Text */
 
-.login-text {
-  font-family: "Poppins";
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 22px;
-  /* identical to box height */
-  color: #ffffff;
+  .login-text {
+    font-family: "Poppins";
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 22px;
+    /* identical to box height */
+    color: #ffffff;
+  }
 }
