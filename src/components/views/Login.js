@@ -3,7 +3,6 @@ import { api, handleError } from "helpers/api";
 import User from "models/User";
 import { useHistory, Link } from "react-router-dom";
 import { Button } from "components/ui/Button";
-//import ErrorContainer from 'components/ui/ErrorContainer';
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
@@ -79,7 +78,6 @@ const Login = (props) => {
   return (
     <BaseContainer>
       <div className="login container">
-      <img className="login img" src="login-image.jpg" alt="background"/>
         <div className="login form">
           <h1 className="login title"> Welcome back! </h1>
           <FormField
