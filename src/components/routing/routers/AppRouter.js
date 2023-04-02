@@ -5,6 +5,7 @@ import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "components/views/Register";
 import Profile from "components/views/Profile";
+import NavigationBar from "components/views/NavigationBar";
 
 /**
  * Main router of your application.
@@ -18,6 +19,7 @@ import Profile from "components/views/Profile";
 const AppRouter = () => {
   return (
     <BrowserRouter>
+      <NavigationBar />
       <Switch>
         <Route path="/game">
           <GameGuard>
