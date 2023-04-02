@@ -1,8 +1,7 @@
-import React from 'react';
+import React from "react";
 import 'styles/views/Profile.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Game.scss";
-
 
 const Profile = () => {
 //   const history = useHistory();
@@ -18,8 +17,10 @@ const Profile = () => {
     <BaseContainer>
       <div className="profile container">
         <div className="profile form">
+          <img src="profile.png" alt="Profile icon" width="120" />
+          myusername
+          </div>
         </div>
-      </div>
     </BaseContainer>
   );
 };
