@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { api, handleError } from "helpers/api";
 import User from "models/User";
 import { useHistory, Link } from "react-router-dom"; //
@@ -6,6 +6,7 @@ import { Button } from "components/ui/Button";
 import "styles/views/Register.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import AuthContext from "components/contexts/AuthContext";
 
 /*
 It is possible to add multiple components inside a single file,
@@ -57,6 +58,7 @@ const Register = (props) => {
   const history = useHistory();
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const [user, setUser] = useState(null);
 
@@ -74,6 +76,7 @@ const Register = (props) => {
 
       // Store the user ID in local storage.
       localStorage.setItem("userId", user.id);
+      setIsLoggedIn(true);
 
       // Register successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/game`);

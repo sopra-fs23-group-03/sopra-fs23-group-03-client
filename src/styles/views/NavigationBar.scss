@@ -17,70 +17,95 @@
   }
 
   &.logo {
-    width: 200px;
-    height: 59px;
+    // background-image: url("../../../public/logo.png");
+    width: 180px;
+    height: px;
   }
 
   /* Button Container */
 
-  &.button-container {
+  .button-container {
     display: flex;
     align-items: center;
+
+    .button {
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+      border-radius: 8px;
+      margin-left: 10px;
+      height: 45px;
+      font-family: "Poppins";
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+    }
   }
 
-  /* Register Button */
-
-  &.register-button {
-    width: 105px;
-    height: 50px;
+  .register-button {
     background-color: #ffffff;
     border: 1px solid #333333;
-    border-radius: 8px;
-    margin-left: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-  }
-
-  .register-button:hover {
-    background-color: #f2f2f2;
-  }
-
-  /* Register Text */
-
-  .register-text {
-    font-family: "Poppins";
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 22px;
-    /* identical to box height */
     color: #333333;
-    margin-right: 10px;
   }
 
-  /* Login Button */
-
-  &.login-button {
-    width: 105px;
-    height: 50px;
+  .login-button {
     background-color: #333333;
-    border-radius: 8px;
-    margin-left: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+    color: #ffffff;
+  }
+
+  .button:hover {
+    background-color: #f2f2f2;
   }
 
   .login-button:hover {
     background-color: #1a1a1a;
   }
 
-  /* Login Text */
+  &.button-container .text {
+    margin-right: 10px;
+  }
 
-  .login-text {
-    font-family: "Poppins";
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 22px;
-    /* identical to box height */
-    color: #ffffff;
+  /* Notification Icon */
+  .notification-icon {
+    font-family: "Material Icons";
+    font-size: 24px;
+    color: #000000;
+    border: 1px solid #232323;
+    background-color: #ffffff;
+    border-radius: 50%;
+    padding: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  /* Profile Icon */
+  .profile-icon {
+    font-family: "Material Icons";
+    font-size: 24px;
+    color: #000000;
+    border: 1px solid #232323;
+    background-color: #ffffff;
+    border-radius: 50%;
+    padding: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  .navbar a {
+    text-decoration: none;
+  }
+
+  .home-icon {
+    font-family: "Material Icons";
+    font-size: 24px;
+    color: #000000;
+    border: 1px solid #232323;
+    background-color: #ffffff;
+    border-radius: 50%;
+    padding: 4px;
+    margin-right: 10px;
+    cursor: pointer;
   }
 }

@@ -1,14 +1,24 @@
+import React, { useState, useEffect } from "react";
 import AppRouter from "components/routing/routers/AppRouter";
+import AuthContext from "components/contexts/AuthContext";
 
-/**
- * Happy coding!
- * React Template by Lucas Pelloni
- * Overhauled by Kyrill Hux
- */
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const storedValue = localStorage.getItem("isLoggedIn");
+    return storedValue !== null ? JSON.parse(storedValue) : false;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
+
+  console.log(isLoggedIn);
+
   return (
     <div>
-      <AppRouter />
+      <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+        <AppRouter />
+      </AuthContext.Provider>
     </div>
   );
 };

@@ -23,7 +23,6 @@ const AppRouter = () => {
         <Route path="/game">
           <GameGuard>
             <GameRouter base="/game" />
-            <GameRouter base="/game" />
           </GameGuard>
         </Route>
 

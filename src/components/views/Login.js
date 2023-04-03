@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { api, handleError } from "helpers/api";
 import User from "models/User";
 import { useHistory, Link } from "react-router-dom";
 import { Button } from "components/ui/Button";
-//import ErrorContainer from 'components/ui/ErrorContainer';
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import AuthContext from "components/contexts/AuthContext";
 
 const FormField = (props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -52,6 +52,7 @@ const Login = (props) => {
   const history = useHistory();
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const doLogin = async () => {
     try {
@@ -67,6 +68,7 @@ const Login = (props) => {
 
       // Store the user ID in local storage.
       localStorage.setItem("userId", user.id);
+      setIsLoggedIn(true);
 
       // Register successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/game`);
