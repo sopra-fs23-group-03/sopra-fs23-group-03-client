@@ -19,7 +19,7 @@ const NavigationBar = () => {
   return (
     <div className="navbar container">
       <div className="logo-container">
-        <img className="navbar logo" src="logo.png" alt="logo" />
+        <img className="navbar logo" src="/logo.png" alt="logo" />
       </div>
 
       {!isLoggedIn && (
