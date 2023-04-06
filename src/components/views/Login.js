@@ -3,7 +3,6 @@ import { api, handleError } from "helpers/api";
 import User from "models/User";
 import { useHistory, Link } from "react-router-dom";
 import { Button } from "components/ui/Button";
-//import ErrorContainer from 'components/ui/ErrorContainer';
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";

@@ -10,7 +10,7 @@ const App = () => {
   return (
     <div>
       {/* <Header height="100"/> */}
-      <AppRouter/>
+      <AppRouter Login/>
     </div>
   );
 };

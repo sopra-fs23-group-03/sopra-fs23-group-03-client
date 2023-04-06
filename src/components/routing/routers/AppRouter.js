@@ -4,7 +4,10 @@ import GameRouter from "components/routing/routers/GameRouter";
 import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "components/views/Register";
+import Profile from "components/views/Profile";
+import { ProfileGuard } from "components/routing/routeProtectors/ProfileGuard";
 import NavigationBar from "components/views/NavigationBar";
+
 
 /**
  * Main router of your application.
@@ -15,6 +18,8 @@ import NavigationBar from "components/views/NavigationBar";
  * /game renders a Router that contains other sub-routes that render in turn other react components
  * Documentation about routing in React: https://reacttraining.com/react-router/web/guides/quick-start
  */
+
+
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -37,6 +42,24 @@ const AppRouter = () => {
             <Register />
           </LoginGuard>
         </Route>
+
+        <Route path="/profile">
+          <ProfileGuard>
+            <Profile />
+          </ProfileGuard>
+        </Route>
+
+        {/* <Route exact path="/users/:userId">
+          <GameGuard>
+            <Profile />
+          </GameGuard>
+        </Route>
+
+        <Route exact path="/:userId/edit">
+          <GameGuard>
+            <EditProfile />
+          </GameGuard>
+        </Route> */}
 
         <Route exact path="/">
           <Redirect to="/game" />

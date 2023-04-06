@@ -6,22 +6,25 @@
   &.container {
     display: flex;
     flex-direction: row-reverse;
-    background-image: url('../../../public/login-image.jpg');
+    background-image: url("../../../public/login-image.jpg");
     background-size: contain;
+    background-repeat: no-repeat;
+    
   }
+
   &.form {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    width: 790px;
-    height: 45.4em;
+    width: 50%;
+    height: 46.8em;
     font-size: 16px;
     font-weight: 300;
     padding-left: 120px;
     padding-right: 120px;
     background-color: #FFFFFF;
     transition: opacity 0.9s ease, transform 0.9s ease;
-    box-shadow: $dropShadow;
+    margin-top: 60px;
   }
 
   &.title{
@@ -96,6 +99,7 @@
     margin-top: 1.5em;
     font-family: "Poppins";
     font-size: 16px;
+    color: #333333;
 
   }
   .register-link {
