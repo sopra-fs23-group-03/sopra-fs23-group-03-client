@@ -77,6 +77,16 @@ const Game = () => {
 
   if (users) {
     const otherUsers = users.filter((user) => user.id !== userId);
+    const sortUsersByStatus = (userA, userB) => {
+      if (userA.status === "ONLINE" && userB.status !== "ONLINE") {
+        return -1;
+      } else if (userA.status !== "ONLINE" && userB.status === "ONLINE") {
+        return 1;
+      } else {
+        return 0;
+      }
+    };
+
     content = (
       <div className="game main-container">
         <div className=" game sidebar">
@@ -101,7 +111,7 @@ const Game = () => {
               &nbsp; Users &nbsp;
             </h3>
 
-            {otherUsers.map((user) => (
+            {otherUsers.sort(sortUsersByStatus).map((user) => (
               <Button
                 className={`player container ${user.status.toLowerCase()}`}
                 key={user.id}
