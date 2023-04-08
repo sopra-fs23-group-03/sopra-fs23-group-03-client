@@ -100,9 +100,11 @@
       background: #ffffff;
       color: #000000;
       font-family: "Poppins";
+      box-shadow: none;
     }
     &.username {
       font-weight: 500;
+
       color: #000000;
     }
     .status-circle {
@@ -110,6 +112,7 @@
       height: 8px;
       border-radius: 50%;
       margin-right: 15px;
+      flex-shrink: 0;
     }
 
     &.online .status-circle {
