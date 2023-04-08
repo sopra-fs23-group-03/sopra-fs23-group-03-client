@@ -67,6 +67,7 @@
     text-transform: none;
     font-family: "Poppins";
     font-style: normal;
+    font-size: 0.8em;
   }
 
   &.user-list {
@@ -101,6 +102,7 @@
       color: #000000;
       font-family: "Poppins";
       box-shadow: none;
+      font-size: 1em;
     }
     &.username {
       font-weight: 500;
@@ -112,7 +114,7 @@
       height: 8px;
       border-radius: 50%;
       margin-right: 15px;
-      flex-shrink: 0;
+      flex-shrink: 0; /* add this to prevent the status circle from shrinking */
     }
 
     &.online .status-circle {
