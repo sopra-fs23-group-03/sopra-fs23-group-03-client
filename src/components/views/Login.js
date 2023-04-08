@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { api, handleError } from "helpers/api";
 import User from "models/User";
 import { useHistory, Link } from "react-router-dom";
@@ -6,6 +6,7 @@ import { Button } from "components/ui/Button";
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import AuthContext from "components/contexts/AuthContext";
 
 const FormField = (props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -51,6 +52,7 @@ const Login = (props) => {
   const history = useHistory();
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const doLogin = async () => {
     try {
@@ -66,6 +68,7 @@ const Login = (props) => {
 
       // Store the user ID in local storage.
       localStorage.setItem("userId", user.id);
+      setIsLoggedIn(true);
 
       // Register successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/game`);
@@ -77,7 +80,12 @@ const Login = (props) => {
 
   return (
     <BaseContainer>
+      <div className="login picture">
+        <img className="picture" src="login.png" alt="login" />
+      </div>
       <div className="login container">
+        <div className="login heading">Welcome Back!</div>
+
         <div className="login form">
           <h1 className="login title"> Welcome back! </h1>
           <FormField
@@ -91,25 +99,24 @@ const Login = (props) => {
             onChange={(n) => setPassword(n)}
           />
           <div>
-          <div className="login button-container">
-            <Button
-              disabled={!username || !password}
-              width="40%"
-              onClick={() => doLogin()}
-            >
-              Sign in
-            </Button>
+            <div className="login button-container">
+              <Button
+                disabled={!username || !password}
+                width="40%"
+                onClick={() => doLogin()}
+              >
+                Sign in
+              </Button>
+            </div>
+            <div>
+              <div className="login register-text">
+                You don't have an account? Register now
+                <Link to="/register" className="login register-link">
+                  here
+                </Link>
+              </div>
+            </div>
           </div>
-          <div>
-        <div className="login register-text">
-          
-          You don't have an account yet? Register now{" "}
-          <Link to="/register" className="login register-link">
-            here
-          </Link>
-          </div>
-          </div>
-        </div>
         </div>
       </div>
     </BaseContainer>

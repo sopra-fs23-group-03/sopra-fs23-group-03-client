@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { api, handleError } from "helpers/api";
 import User from "models/User";
 import { useHistory, Link } from "react-router-dom"; //
@@ -6,6 +6,7 @@ import { Button } from "components/ui/Button";
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import AuthContext from "components/contexts/AuthContext";
 
 /*
 It is possible to add multiple components inside a single file,
@@ -58,57 +59,59 @@ const Register = (props) => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [username, setUsername] = useState("");
+  const { setIsLoggedIn } = useContext(AuthContext);
 
-const handleRegister = () => {
-  if(password !== repeatPassword){
-    alert('The two passwords are not matching');
-    return;
-  }
-  
-  if (!/^[A-Za-z]*$/.test(username)) {
+  const handleRegister = () => {
+    if (password !== repeatPassword) {
+      alert("The two passwords are not matching");
+      return;
+    }
 
-    alert('Username can include only letters');
-    return;
-  }
+    if (!/^[A-Za-z]*$/.test(username)) {
+      alert("Username can include only letters");
+      return;
+    }
 
-  doRegister();
-}
+    doRegister();
+  };
 
+  const doRegister = async () => {
+    try {
+      const requestBody = JSON.stringify({ username, password });
+      const response = await api.post("/users", requestBody);
 
-const doRegister = async () => {
-    
-  try {
-    const requestBody = JSON.stringify({ username, password });
-    const response = await api.post("/users", requestBody);
+      // Get the returned user and update a new object.
+      const user = new User(response.data);
 
-    // Get the returned user and update a new object.
-    const user = new User(response.data);
+      // Store the token from the response headers into the local storage.
+      const token = response.headers.authorization;
+      localStorage.setItem("token", token);
 
-    // Store the token from the response headers into the local storage.
-    const token = response.headers.authorization;
-    localStorage.setItem("token", token);
+      // Store the user ID in local storage.
+      localStorage.setItem("userId", user.id);
+      setIsLoggedIn(true);
 
-    // Store the user ID in local storage.
-    localStorage.setItem("userId", user.id);
-
-    // Register successfully worked --> navigate to the route /game in the GameRouter
-    history.push(`/profile`);
-  } catch (error) {
-    alert(`Something went wrong during the registration: \n${handleError(error)}`);
-    history.push(`/register`);
-  }
-};
+      // Register successfully worked --> navigate to the route /game in the GameRouter
+      history.push(`/profile`);
+    } catch (error) {
+      alert(
+        `Something went wrong during the registration: \n${handleError(error)}`
+      );
+      history.push(`/register`);
+    }
+  };
 
   return (
     <BaseContainer>
       <div className="login container">
         <div className="login form">
-        <div>
-          <h1 className="login title"> Register </h1>
-          <p className="login text">
-        Register now to join our community and start planning dinners with friends
-        </p>
-        </div>
+          <div>
+            <h1 className="login title"> Register </h1>
+            <p className="login text">
+              Register now to join our community and start planning dinners with
+              friends
+            </p>
+          </div>
           <FormField
             label="Username"
             value={username}
@@ -127,27 +130,26 @@ const doRegister = async () => {
             onChange={(n) => setRepeatPassword(n)}
           />
           <div>
-          <div className="login button-container">
-            <Button
-              disabled={!username || !password || !repeatPassword}
-              width="40%"
-              onClick={() => handleRegister()}
-            >
-              Register
-            </Button>
+            <div className="login button-container">
+              <Button
+                disabled={!username || !password || !repeatPassword}
+                width="40%"
+                onClick={() => handleRegister()}
+              >
+                Register
+              </Button>
+            </div>
+
+            <div>
+              <div className="login register-text">
+                You already have an account? Sign in{" "}
+                <Link to="/login" className="login register-link">
+                  here
+                </Link>
+              </div>
+            </div>
           </div>
-        
-        <div>
-        <div className="login register-text">
-          
-          You already have an account? Sign in {" "}
-          <Link to="/login" className="login register-link">
-            here
-          </Link>
-          </div>
-          </div>
-          </div>
-          </div>
+        </div>
       </div>
     </BaseContainer>
   );

@@ -1,59 +1,204 @@
-@import 'styles/theme';
+@import "styles/theme";
 
-/* The '&' is a shorthand for the containing element,
-  so for example a '&.user-list' inside .game will compile to
-  .game.user-list
+// /* The '&' is a shorthand for the containing element,
+//   so for example a '&.user-list' inside .game will compile to
+//   .game.user-list
 
-  for more information visit https://sass-lang.com/guide
- */
+//   for more information visit https://sass-lang.com/guide
+//  */
 
 .game {
   &.container {
-    background: $background;
-    padding: 1.5em;
-    border-radius: $borderRadius;
+    background-image: url("../../../public/food.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: $dropShadow;
+    //flex-direction: row;
+    //min-width: $DESKTOP_WIDTH;
+    justify-content: center;
+    top: 60px;
+    position: fixed;
   }
-  &.user-list {
-    list-style: none;
-    padding-left: 0;
-  }
-  &.user-item {
-    display: flex;
-    flex-direction: column;
+  .h3 {
+    margin-bottom: 0.5em;
     align-items: center;
+    position: relative;
     justify-content: center;
   }
-  & p,h2 {
-    margin: 0.5em 0;
-  }
-}
 
-.player {
-  &.container {
-    margin: 0.5em 0;
-    width: 20em;
-    padding: 10px;
-    border-radius: $borderRadius;
+  &.main-container {
     display: flex;
+    flex-direction: row;
+    margin-left: 20%;
+    margin-right: 20%;
+    top: 10%;
+    bottom: 10%;
+    height: fit-content;
+    background: rgba(250, 250, 251, 0.9);
+    border-radius: 12px;
+    position: relative;
+    //min-width: $DESKTOP_WIDTH * 2/3;
+    width: fit-content;
+  }
+  &.sidebar {
+    display: flex;
+    flex-direction: column;
+    background: #fefefe;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    justify-content: center;
     align-items: center;
-    background: lighten($background, 5);
+    padding: 1rem;
+    min-width: fit-content;
   }
-  &.name {
-    font-weight: 300;
-    margin-left: 5px;
+
+  .sidebar-buttons {
+    display: flex;
+    align-items: center; //allign text in x axis
+    justify-content: center; // text in y axis
+    width: 217.17px;
+    height: 48.62px;
+    background: #333333;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 32px;
+    margin: 0.2em 0;
+    text-transform: none;
+    font-family: "Poppins";
+    font-style: normal;
   }
-  &.username {
-    font-weight: 500;
-    color: $accent;
+
+  &.user-list {
+    display: flex;
+    flex-direction: column;
+    min-width: 217.17px;
+    //max-width: 10em;
+    list-style: none;
+    //align-items: center;
+    //justify-content: center;
+    background: #ffffff;
+    padding: 1rem;
+    box-shadow: 4px 4px 4px 4px rgba(0.25, 0.25, 0.25, 0.25);
+    border-radius: 12px;
+    max-height: 70%;
+    overflow-x: auto;
+    //margin: 20% 0;
+    max-height: 280px;
+    overflow-y: auto;
   }
-  &.id {
-    margin-left: auto;
-    margin-right: 10px;
-    font-family: $fontMono;
-    font-weight: 300;
+
+  .player {
+    &.container {
+      display: flex;
+      flex-direction: row;
+      //max-width: 10em;
+      //padding: 1px;
+      margin: 0.2em 0;
+      border-radius: $borderRadius;
+      align-items: center;
+      background: #ffffff;
+      color: #000000;
+      font-family: "Poppins";
+    }
+    &.username {
+      font-weight: 500;
+      color: #000000;
+    }
+    .status-circle {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+
+    &.online .status-circle {
+      background-color: green;
+    }
+
+    &.offline .status-circle {
+      background-color: grey;
+    }
   }
+
+  &.group-container {
+    padding-left: 1em;
+    padding-right: 10em;
+
+    display: flex;
+    flex-direction: column;
+    background: #8e111100;
+    border-radius: 12px;
+    padding: 1rem;
+  }
+
+  &.group-list {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff00;
+    overflow-y: auto;
+    padding: 1rem;
+    border-radius: 12px;
+    min-width: 630px;
+    min-height: 280px;
+    margin-bottom: 10%;
+  }
+
+  /* Shape */
+  &.group-container-labels {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background: #f1f1f5;
+    height: 50px;
+    padding: 0.5rem;
+    box-shadow: 4px 4px 4px 4px rgba(0.25, 0.25, 0.25, 0.25);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    min-width: 630px;
+  }
+
+  /* Shape */
+  &.label-text {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    color: #92929d;
+    letter-spacing: 0.1px;
+    //the words  have space between them
+    margin-right: 10em;
+    // when the text is two words the 2ond words doesn't go to the next like
+    white-space: nowrap;
+  }
+  // .group {
+  //   //width: 100%;
+  //   //padding: 1em;
+  //   background-color: $background;
+  //   border-radius: $borderRadius;
+  //   box-shadow: $dropShadow;
+  //   background: #827979;
+  //   align-items: center;
+  //   justify-content: center;
+
+  // &.user-list {
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   justify-content: center;
+  //   margin-top: 0.5em;
+
+  //   li {
+  //     margin-bottom: 0.5em;
+  //     align-items: center;
+  //     justify-content: center;
+  //   }
+  // }
+  // }
 }
