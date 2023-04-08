@@ -31,3 +31,44 @@ button {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
+
+li {
+	margin: 10px;
+  font-weight: 400;
+  line-height: 27px;
+  text-align: left;
+  width: 220px;
+  border: 1px solid rgba(217, 217, 217, 0.5);
+  border-radius: 8px;
+  background: rgba(217, 217, 217, 0.5);
+  padding-left: 10px;
+}
+
+span {
+	border-bottom: 1px dashed transparent;
+}
+
+li[data-new="true"] {
+	color: #777;
+}
+
+li input {
+	display: none;
+	border: 0;
+	outline: 0;
+	padding: 0;
+}
+
+li.edit span {
+	display: none;
+}
+
+li.edit input {
+	display: initial;
+	border-bottom: 1px dashed #000;
+}
+
+ul {
+  padding-inline-start: 10px;
+}
+

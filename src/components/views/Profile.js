@@ -5,11 +5,7 @@ import "styles/views/Game.scss";
 import { Button } from "components/ui/Button";
 
 const Profile = () => {
-//   const history = useHistory();
-
-
-//   const goToLanding = async () => {
-//     history.push('/game')}
+	
 
 
 
@@ -28,6 +24,20 @@ const Profile = () => {
             <div className="profile preferences">
               <div className="profile titles">
                 Allergies
+				<ul id="list">
+	
+					<li>
+						<span>Apple</span>
+						<input type="text" value="Apple"/>
+					</li>
+
+
+					<li data-new="true">
+						<span>add another</span>
+						<input type="text"/>
+					</li>
+
+				</ul>
               </div>
             </div>
 
