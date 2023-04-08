@@ -1,6 +1,6 @@
 @import "styles/theme";
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap");
 
 .login {
   &.container {
@@ -9,7 +9,6 @@
     background-image: url("../../../public/login-image.jpg");
     background-size: contain;
     background-repeat: no-repeat;
-    
   }
 
   &.form {
@@ -22,13 +21,13 @@
     font-weight: 300;
     padding-left: 120px;
     padding-right: 120px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     transition: opacity 0.9s ease, transform 0.9s ease;
-    margin-top: 60px;
+    //margin-top: 60px;
   }
 
-  &.title{
-    font-family:'Poppins', sans-serif;
+  &.title {
+    font-family: "Poppins", sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 32px;
@@ -60,8 +59,6 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-
-    
   }
 
   &.toggle-password-button {
@@ -69,7 +66,7 @@
     border: none;
     background: none;
     color: #a5a5a5;
-    font-family: 'Poppins';
+    font-family: "Poppins";
     justify-content: center;
     margin-left: -50px;
     margin-top: -33px;
@@ -80,7 +77,7 @@
   &.label {
     margin-bottom: 10px;
 
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -100,7 +97,6 @@
     font-family: "Poppins";
     font-size: 16px;
     color: #333333;
-
   }
   .register-link {
     color: #3f3a3a;
@@ -109,13 +105,13 @@
     font-weight: 700;
   }
 
-  &.image{
+  &.image {
     display: flex;
     width: 900px;
   }
 
-  &.text{
-    font-family: 'Poppins';
+  &.text {
+    font-family: "Poppins";
     font-style: normal;
     font-weight: 400;
     font-size: 16px;

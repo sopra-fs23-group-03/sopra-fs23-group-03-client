@@ -80,12 +80,7 @@ const Login = (props) => {
 
   return (
     <BaseContainer>
-      <div className="login picture">
-        <img className="picture" src="login.png" alt="login" />
-      </div>
       <div className="login container">
-        <div className="login heading">Welcome Back!</div>
-
         <div className="login form">
           <h1 className="login title"> Welcome back! </h1>
           <FormField
@@ -110,7 +105,7 @@ const Login = (props) => {
             </div>
             <div>
               <div className="login register-text">
-                You don't have an account? Register now
+                You don't have an account? Register now{" "}
                 <Link to="/register" className="login register-link">
                   here
                 </Link>
