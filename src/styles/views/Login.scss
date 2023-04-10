@@ -17,25 +17,6 @@
     height: 100%;
   }
 
-  .form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 50%;
-    height: 46.8em;
-    font-size: 16px;
-    font-weight: 300;
-    padding-left: 120px;
-    padding-right: 120px;
-    background-color: #ffffff;
-    transition: opacity 0.9s ease, transform 0.9s ease;
-    margin-top: 60px;
-    min-width: 450px;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
   &.title {
     font-family: "Poppins", sans-serif;
     font-style: normal;
@@ -44,6 +25,26 @@
     color: #333333;
     min-width: fit-content;
     min-width: 250px;
+    padding-top: 4em;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    //justify-content: center;
+    width: 50%;
+    height: 100%;
+    font-size: 16px;
+    font-weight: 300;
+    padding-left: 120px;
+    padding-right: 120px;
+    background-color: #ffffff;
+    transition: opacity 0.9s ease, transform 0.9s ease;
+    //margin-top: 60px;
+    min-width: 450px;
+    position: absolute;
+    right: 0;
+    top: 60px;
   }
 
   &.field {
@@ -54,6 +55,7 @@
     border: 1px solid rgba(102, 102, 102, 0.35);
     border-radius: 12px;
     max-width: 320px;
+    margin-top: 4em;
   }
 
   &.input {
