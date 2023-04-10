@@ -57,14 +57,14 @@ const Login = (props) => {
   const doLogin = async () => {
     try {
       const requestBody = JSON.stringify({ username, password });
-      const response = await api.put(`/users/${username}/login`, requestBody);
+      const response = await api.post(`/users/${username}/login`, requestBody);
 
       // Get the returned user and update a new object.
       const user = new User(response.data);
 
       // Store the token from the response headers into the local storage.
       const token = response.headers.authorization; //response.headers.authorization;
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", response.headers["x-token"]);
 
       // Store the user ID in local storage.
       localStorage.setItem("userId", user.id);

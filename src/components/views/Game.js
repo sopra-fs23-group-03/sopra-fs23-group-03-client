@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { api, handleError } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
 import { Button } from "components/ui/Button";
@@ -21,6 +21,9 @@ Player.propTypes = {
 const Game = () => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
+  const headers = useMemo(() => {
+    return { "X-Token": localStorage.getItem("token") };
+  }, []);
   const [userId, setId] = useState(localStorage.getItem("userId"));
 
   // define a state variable (using the state hook).
@@ -39,7 +42,7 @@ const Game = () => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
-        const response = await api.get("/users");
+        const response = await api.get("/users", { headers });
         //const groupsResponse = await api.get("/groups");
 
         await new Promise((resolve) => setTimeout(resolve, 1000));
