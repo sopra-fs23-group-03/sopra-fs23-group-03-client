@@ -1,21 +1,16 @@
 import React from "react";
 import 'styles/views/Profile.scss';
 import BaseContainer from "components/ui/BaseContainer";
-import "styles/views/Game.scss";
 import { Button } from "components/ui/Button";
 
 const Profile = () => {
-	
-
-
-
 
   return (
     <BaseContainer>
       <div className="profile container">
         <div className="profile form">
           <div className="profile main">
-            <img src="profile.png" alt="Profile icon" width="120" />
+            <i class="profile-icon">person</i>
             <div className="profile text"> myusername </div>
             <div className="profile diet"> diet preference </div>
           </div>
@@ -24,32 +19,30 @@ const Profile = () => {
             <div className="profile preferences">
               <div className="profile titles">
                 Allergies
-				<ul id="list">
-	
-					<li>
-						<span>Apple</span>
-						<input type="text" value="Apple"/>
-					</li>
-
-
-					<li data-new="true">
-						<span>add another</span>
-						<input type="text"/>
-					</li>
-
-				</ul>
+				        <ul id="list">
+				        	<li data-new="true">
+				        		<span>add another</span>
+				        		<input type="text"/>
+				        	</li>
+				        </ul>
               </div>
             </div>
 
             <div className="profile preferences">
               <div className="profile titles">
                 Favourite cuisine
+				        <ul id="list">          
+				        	<li data-new="true">
+				        		<span>add another</span>
+				        		<input type="text"/>
+				        	</li>
+				        </ul> 
               </div>
             </div>
           </div>
 
           <Button
-          width = "26%">
+          width = "24%">
             Modify profile
           </Button>
 
