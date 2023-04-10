@@ -43,7 +43,7 @@ const Profile = () => {
 
           <Button
           width = "24%">
-            Modify profile
+            Edit profile
           </Button>
 
         </div>
