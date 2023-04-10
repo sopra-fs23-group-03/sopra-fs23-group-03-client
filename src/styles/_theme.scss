@@ -8,14 +8,13 @@
    feel free to play around with these and see what other look you can come up with! :D
 */
 
-$accent: #97abff;
-$accentDark: #123597;
-$textColor: white;
-$background: #262632;
+$accent: #ffffff;
+$textColor: rgb(2, 2, 2);
+$background: rgba(102, 102, 102, 0.8);
 
 /* some constants */
 
-// $DESKTOP_WIDTH: 1160px;
+$DESKTOP_WIDTH: 1160px;
 $SMALL_LAPTOPS_WIDTH: 970px;
 $TABLETS_WIDTH: 750px;
 $SMALL_WIDTH: 768px;
