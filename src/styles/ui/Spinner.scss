@@ -3,8 +3,9 @@
 .loading-spinner {
     display: inline-block;
     position: relative;
-    width: 60px;
-    height: 35px;
+    width: 120px;
+    height: 70px;
+    top: 40%;
 
     & div {
         position: absolute;
