@@ -17,7 +17,6 @@
     "build": "CI=false && react-scripts build",
     "eject": "react-scripts eject",
     "test": "react-scripts test --env=jsdom"
-    "
   },
   "eslintConfig": {
     "extends": "react-app"
