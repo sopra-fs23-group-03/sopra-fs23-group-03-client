@@ -72,6 +72,11 @@ const Register = (props) => {
       return;
     }
 
+    if (username === password) {
+      alert("Username and password can't be the same")
+      return;
+    }
+
     doRegister();
   };
 
