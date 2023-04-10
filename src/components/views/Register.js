@@ -104,6 +104,7 @@ const Register = (props) => {
   return (
     <BaseContainer>
       <div className="login container">
+        <img className="login image"></img>
         <div className="login form">
           <div>
             <h1 className="login title"> Register </h1>
