@@ -81,7 +81,7 @@ const Login = (props) => {
   return (
     <BaseContainer>
       <div className="login container">
-        <img className="login image"></img>
+        <img className="login image" alt="login background"></img>
         <div className="login form">
           <h1 className="login title"> Welcome back! </h1>
           <FormField

@@ -72,6 +72,11 @@ const Register = (props) => {
       return;
     }
 
+    if (username === password) {
+      alert("Username and password can't be the same")
+      return;
+    }
+
     doRegister();
   };
 
@@ -102,7 +107,7 @@ const Register = (props) => {
   return (
     <BaseContainer>
       <div className="login container">
-        <img className="login image"></img>
+        <img className="login image" alt="login background"></img>
         <div className="login form">
           <div>
             <h1 className="login title"> Register </h1>

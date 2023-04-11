@@ -41,8 +41,7 @@
       line-height: 22px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 0 10px;
+      padding: 0 12px;
     }
   }
 
@@ -55,6 +54,8 @@
   .login-button {
     background-color: #333333;
     color: #ffffff;
+    text-align: center;
+    padding-left: 5px;
   }
 
   .button:hover {
@@ -65,16 +66,16 @@
     background-color: #1a1a1a;
   }
 
-  &.button-container .text {
-    margin-right: 10px;
-  }
+  // &.button-container .text {
+  //   // margin-right: 10px;
+  // }
 
   /* Notification Icon */
   .notification-icon {
     font-family: "Material Icons";
     font-size: 24px;
-    color: #000000;
-    border: 1px solid #232323;
+    color: #333333;
+    border: 1px solid #333333;
     background-color: #ffffff;
     border-radius: 50%;
     padding: 4px;
@@ -86,8 +87,8 @@
   .profile-icon {
     font-family: "Material Icons";
     font-size: 24px;
-    color: #000000;
-    border: 1px solid #232323;
+    color: #333333;
+    border: 1px solid #333333;
     background-color: #ffffff;
     border-radius: 50%;
     padding: 4px;
@@ -101,8 +102,8 @@
   .home-icon {
     font-family: "Material Icons";
     font-size: 24px;
-    color: #000000;
-    border: 1px solid #232323;
+    color: #333333;
+    border: 1px solid #333333;
     background-color: #ffffff;
     border-radius: 50%;
     padding: 4px;
