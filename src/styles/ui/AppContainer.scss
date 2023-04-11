@@ -1,0 +1,17 @@
+@import "styles/theme";
+
+.app-container {
+  //max-width: $DESKTOP_WIDTH;
+  //color: $textColor;
+  background-image: url("../../../public/food.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  //flex-direction: row;
+  //min-width: $DESKTOP_WIDTH;
+  justify-content: center;
+  top: 60px;
+  position: fixed;
+}

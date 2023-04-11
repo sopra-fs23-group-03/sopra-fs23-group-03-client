@@ -9,19 +9,10 @@
 
 .game {
   &.container {
-    background-image: url("../../../public/food.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100%;
-    width: 100%;
     display: flex;
     //flex-direction: row;
     //min-width: $DESKTOP_WIDTH;
     justify-content: center;
-    top: 60px;
-    position: fixed;
-    //font-family: "Poppins", sans-serif;
-    //font-family: "Poppins";
   }
   .h3 {
     margin-bottom: 0.5em;
