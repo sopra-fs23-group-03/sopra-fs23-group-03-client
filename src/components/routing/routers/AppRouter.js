@@ -6,6 +6,7 @@ import Login from "components/views/Login";
 import Register from "components/views/Register";
 import NavigationBar from "components/views/NavigationBar";
 import Profile from "components/views/Profile";
+import GroupCreation from "components/views/GroupCreation";
 import { ProfileGuard } from "components/routing/routeProtectors/ProfileGuard";
 
 /**
@@ -43,6 +44,12 @@ const AppRouter = () => {
         <Route path="/profile">
           <ProfileGuard>
             <Profile />
+          </ProfileGuard>
+        </Route>
+
+        <Route path="/group-creation">
+          <ProfileGuard>
+            <GroupCreation />
           </ProfileGuard>
         </Route>
 
