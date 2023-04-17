@@ -66,16 +66,16 @@ const Register = (props) => {
       alert("The two passwords are not matching");
       return;
     }
+    //GATEWAY TO SAVE API CALLS
+    // if (!/^[A-Za-z]*$/.test(username)) {
+    //   alert("Username can include only letters");
+    //   return;
+    // }
 
-    if (!/^[A-Za-z]*$/.test(username)) {
-      alert("Username can include only letters");
-      return;
-    }
-
-    if (username === password) {
-      alert("Username and password can't be the same")
-      return;
-    }
+    // if (username === password) {
+    //   alert("Username and password can't be the same")
+    //   return;
+    // }
 
     doRegister();
   };
