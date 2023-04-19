@@ -1,13 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "styles/views/NavigationBar.scss";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import AuthContext from "components/contexts/AuthContext";
+import NotificationBar from "components/views/NotificationBar";
 
 const NavigationBar = () => {
   const history = useHistory();
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const [showNotificationBar, setShowNotificationBar] = useState(false); // For displaying the notification bar
+  const [hasNewNotifications, setHasNewNotifications] = useState(false); // For displaying the indicator
+  const [notificationData, setNotificationData] = useState([]); // For fetching the notification content
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -15,6 +19,22 @@ const NavigationBar = () => {
     setIsLoggedIn(false);
     history.push("/login");
   };
+
+  // Code to update the indicator based on the presence of new notifications
+  //For Future Use when is connected to backend
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const response = await fetch("/notifications");
+      const data = await response.json();
+      if (data.notifications.length > 0) {
+        setHasNewNotifications(true);
+        setNotificationData(data.notifications);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+  //////////////////////////
 
   return (
     <div className="navbar container">
@@ -45,15 +65,22 @@ const NavigationBar = () => {
           </Link>
 
           <button
-            className="navbar notification-icon "
-            // onClick={() => notificationbar()}       //for future use
+            // Add the class "has-new-notifications" to the button if there are new notifications
+            className={`navbar notification-icon ${
+              hasNewNotifications ? "has-new-notifications" : ""
+            }`}
+            onClick={() => setShowNotificationBar(!showNotificationBar)}
           >
             notifications
           </button>
+          {showNotificationBar && (
+            // Pass the notification data as a prop to the NotificationBar component
+            <NotificationBar notificationData={notificationData} />
+          )}
 
           <button
             className="navbar home-icon "
-            onClick={() => history.push(`/game`)} //for future use
+            onClick={() => history.push(`/game`)}
           >
             home
           </button>

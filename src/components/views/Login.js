@@ -79,43 +79,43 @@ const Login = (props) => {
   };
 
   return (
-    <BaseContainer>
-      <div className="login container">
-        <img className="login image" alt="login background"></img>
-        <div className="login form">
-          <h1 className="login title"> Welcome back! </h1>
-          <FormField
-            label="Username"
-            value={username}
-            onChange={(un) => setUsername(un)}
-          />
-          <FormField
-            label="Password"
-            value={password}
-            onChange={(n) => setPassword(n)}
-          />
+    // <BaseContainer>
+    <div className="login container">
+      <img className="login image" alt="login background"></img>
+      <div className="login form">
+        <h1 className="login title"> Welcome back! </h1>
+        <FormField
+          label="Username"
+          value={username}
+          onChange={(un) => setUsername(un)}
+        />
+        <FormField
+          label="Password"
+          value={password}
+          onChange={(n) => setPassword(n)}
+        />
+        <div>
+          <div className="login button-container">
+            <Button
+              disabled={!username || !password}
+              width="40%"
+              onClick={() => doLogin()}
+            >
+              Sign in
+            </Button>
+          </div>
           <div>
-            <div className="login button-container">
-              <Button
-                disabled={!username || !password}
-                width="40%"
-                onClick={() => doLogin()}
-              >
-                Sign in
-              </Button>
-            </div>
-            <div>
-              <div className="login register-text">
-                You don't have an account? Register now{" "}
-                <Link to="/register" className="login register-link">
-                  here
-                </Link>
-              </div>
+            <div className="login register-text">
+              You don't have an account? Register now{" "}
+              <Link to="/register" className="login register-link">
+                here
+              </Link>
             </div>
           </div>
         </div>
       </div>
-    </BaseContainer>
+    </div>
+    // </BaseContainer>
   );
 };
 

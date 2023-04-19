@@ -9,24 +9,17 @@
 
 .game {
   &.container {
-    background-image: url("../../../public/food.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100%;
-    width: 100%;
     display: flex;
     //flex-direction: row;
     //min-width: $DESKTOP_WIDTH;
     justify-content: center;
-    top: 60px;
-    position: fixed;
   }
-  .h3 {
-    margin-bottom: 0.5em;
-    align-items: center;
-    position: relative;
-    justify-content: center;
-  }
+  // .h3 {
+  //   margin-bottom: 0.5em;
+  //   align-items: center;
+  //   position: relative;
+  //   justify-content: center;
+  // }
 
   &.main-container {
     display: flex;
@@ -64,8 +57,6 @@
     border-radius: 32px;
     margin: 0.2em 0;
     text-transform: none;
-    font-family: "Poppins";
-    font-style: normal;
     font-size: 0.8em;
   }
 
@@ -128,12 +119,11 @@
   &.group-container {
     padding-left: 1em;
     padding-right: 10em;
-
     display: flex;
     flex-direction: column;
     background: #8e111100;
     border-radius: 12px;
-    padding: 1rem;
+    padding: 1em;
   }
 
   &.group-list {
@@ -164,19 +154,16 @@
     box-shadow: 4px 4px 4px 4px rgba(0.25, 0.25, 0.25, 0.25);
     border-radius: 10px;
     margin-bottom: 10px;
-    min-width: 630px;
+    //min-width: 630px;
   }
 
   /* Shape */
   &.label-text {
-    font-family: "Poppins";
-    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 21px;
     color: #92929d;
     letter-spacing: 0.1px;
-    //the words  have space between them
     margin-right: 10em;
     // when the text is two words the 2ond words doesn't go to the next like
     white-space: nowrap;
