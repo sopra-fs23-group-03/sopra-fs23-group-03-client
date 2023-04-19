@@ -66,11 +66,6 @@ const Register = (props) => {
       alert("The two passwords are not matching");
       return;
     }
-    //GATEWAY TO SAVE API CALLS
-    // if (!/^[A-Za-z]*$/.test(username)) {
-    //   alert("Username can include only letters");
-    //   return;
-    // }
 
     // if (username === password) {
     //   alert("Username and password can't be the same")
@@ -105,57 +100,57 @@ const Register = (props) => {
   };
 
   return (
-    <BaseContainer>
-      <div className="login container">
-        <img className="login image" alt="login background"></img>
-        <div className="login form">
-          <div>
-            <h1 className="login title"> Register </h1>
-            <p className="login text">
-              Register now to join our community and start planning dinners with
-              friends
-            </p>
+    // <BaseContainer>
+    <div className="login container">
+      <img className="login image" alt="login background"></img>
+      <div className="login form">
+        <div>
+          <h1 className="login title"> Register </h1>
+          <p className="login text">
+            Register now to join our community and start planning dinners with
+            friends
+          </p>
+        </div>
+        <FormField
+          label="Username"
+          value={username}
+          onChange={(un) => setUsername(un)}
+        />
+        <FormField
+          label="Password"
+          name="Password"
+          value={password}
+          onChange={(n) => setPassword(n)}
+        />
+        <FormField
+          label="Repeat password"
+          name="Password"
+          value={repeatPassword}
+          onChange={(n) => setRepeatPassword(n)}
+        />
+        <div>
+          <div className="login button-container">
+            <Button
+              disabled={!username || !password || !repeatPassword}
+              width="40%"
+              onClick={() => handleRegister()}
+            >
+              Register
+            </Button>
           </div>
-          <FormField
-            label="Username"
-            value={username}
-            onChange={(un) => setUsername(un)}
-          />
-          <FormField
-            label="Password"
-            name="Password"
-            value={password}
-            onChange={(n) => setPassword(n)}
-          />
-          <FormField
-            label="Repeat password"
-            name="Password"
-            value={repeatPassword}
-            onChange={(n) => setRepeatPassword(n)}
-          />
-          <div>
-            <div className="login button-container">
-              <Button
-                disabled={!username || !password || !repeatPassword}
-                width="40%"
-                onClick={() => handleRegister()}
-              >
-                Register
-              </Button>
-            </div>
 
-            <div>
-              <div className="login register-text">
-                You already have an account? Sign in{" "}
-                <Link to="/login" className="login register-link">
-                  here
-                </Link>
-              </div>
+          <div>
+            <div className="login register-text">
+              You already have an account? Sign in{" "}
+              <Link to="/login" className="login register-link">
+                here
+              </Link>
             </div>
           </div>
         </div>
       </div>
-    </BaseContainer>
+    </div>
+    // </BaseContainer>
   );
 };
 /**

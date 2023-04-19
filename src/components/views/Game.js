@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
+import AppContainer from "components/ui/AppContainer";
 
 const Player = ({ user }) => (
   <div className="player container">
@@ -167,7 +168,12 @@ const Game = () => {
     );
   }
 
-  return <div className="game container">{content}</div>;
+  return (
+    <AppContainer>
+      {/* <BaseContainer> */}
+      <div className="game container">{content}</div>;{/* </BaseContainer> */}
+    </AppContainer>
+  );
 };
 
 export default Game;
