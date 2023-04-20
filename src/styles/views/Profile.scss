@@ -1,10 +1,13 @@
 @import "styles/theme";
 
 .profile {
-  .form {
+  &.form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 30px;
+    width: 100%;
+    height: 100%;
   }
 
   &.main {
@@ -12,14 +15,17 @@
     display: flex;
     flex-direction: column;
     align-content: center;
+    text-align: center;
+    width: 40%;
   }
 
   &.sections {
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 14px;
     height: 50%;
-    width: 85%;
+    width: 95%;
     white-space: nowrap;
     min-width: fit-content;
   }
@@ -30,7 +36,7 @@
     background: #f2f2f2;
     filter: drop-shadow(0px 4px 2px rgba(0, 0, 0, 0.25));
     border-radius: 8px;
-    width: 200px;
+    width: 50%;
     height: 100%;
     padding-top: 20px;
     padding-left: 22px;
@@ -50,7 +56,6 @@
     font-size: 20px;
     color: #666666;
     text-align: center;
-    margin-top: 2px;
   }
 
   &.titles {
@@ -77,19 +82,12 @@
     color: #333333;
   }
 
-  .profile-icon {
-    font-family: "Material Icons";
+  &.icon {
+    font-family: "Material Symbols Outlined";
     font-style: normal;
-    font-size: 70px;
+    font-size: 100px;
     text-align: center;
     color: #333333;
-    border: 1.4px solid #333333;
-    border-radius: 100%;
-    padding: 4px;
-    width: 82px;
-    //display: block;
-    margin: auto;
-    margin-bottom: 12px;
   }
 
   &.buttons {
@@ -97,7 +95,6 @@
     flex-direction: row;
     justify-content: space-evenly;
     width: 100%;
-    margin-top: 8%;
     //margin-bottom: 15%;
     white-space: nowrap; //makes the text be in 1 line
   }

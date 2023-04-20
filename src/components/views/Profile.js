@@ -1,7 +1,9 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import "styles/views/Profile.scss";
 import BaseContainer from "components/ui/BaseContainer";
+import { useHistory, useParams } from "react-router-dom";
+import { api, handleError } from "helpers/api";
+import { useForm } from "react-hook-form";
 import AppContainer from "components/ui/AppContainer";
 
 const InfoField = (props) => {
@@ -21,17 +23,52 @@ const InfoField = (props) => {
   );
 };
 
-const Profile = () => {
+const Profile = (props) => {
+  const history = useHistory();
+  const { register, handleSubmit } = useForm();
+  const { userId } = useParams();
+  const [user, setUser] = useState(null);
   //isEditable is a variable that is set to false by defalut and becomes true when the modify profile button is pressed
   const [isEditable, setIsEditable] = useState(false);
+  const headers = useMemo(() => {
+    return { "X-Token": localStorage.getItem("token") };
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // const response = await api.get("/users/" + userId, {
+        //   headers: { TOKEN: localStorage.getItem("token") },
+        // });
+        const response = await api.get("/users/" + userId, { headers });
+
+        // Get the returned users and update the state.
+        setUser(response.data);
+
+        console.log(response);
+      } catch (error) {
+        console.error(
+          `Something went wrong while fetching the users: \n${
+            handleError(error).info
+          }`
+        );
+        console.error("Details:", error);
+        alert(
+          "Something went wrong while fetching the users! See the console for details."
+        );
+      }
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <AppContainer>
       <BaseContainer>
-        <div className="profile container">
+
           <div className="profile form">
             <div className="profile main">
-              <i class="profile-icon">person</i>
+              <i class="profile icon">account_circle</i>
               {!isEditable && <div className="profile text"> myusername </div>}
               {!isEditable && (
                 <div className="profile diet"> diet preference </div>
@@ -133,7 +170,6 @@ const Profile = () => {
               )}
             </div>
           </div>
-        </div>
       </BaseContainer>
     </AppContainer>
   );
