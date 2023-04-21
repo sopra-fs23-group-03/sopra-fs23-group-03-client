@@ -130,7 +130,7 @@ const Game = () => {
         </div>
 
         <div className=" game  group-container">
-          <h2>GROUPS</h2>
+          <h2>Groups</h2>
 
           <div className="game group-container-labels">
             <label className="game label-text"> Group Name</label>
