@@ -8,6 +8,8 @@ import NavigationBar from "components/views/NavigationBar";
 import Profile from "components/views/Profile";
 import GroupCreation from "components/views/GroupCreation";
 import { ProfileGuard } from "components/routing/routeProtectors/ProfileGuard";
+import { useContext } from "react"; //added
+import AuthContext from "components/contexts/AuthContext"; //added
 
 /**
  * Main router of your application.
@@ -20,9 +22,11 @@ import { ProfileGuard } from "components/routing/routeProtectors/ProfileGuard";
  */
 
 const AppRouter = () => {
+const { isLoggedIn } = useContext(AuthContext);//added
+
   return (
     <BrowserRouter>
-      <NavigationBar />
+     <NavigationBar isLoggedIn={isLoggedIn} /> //updated
       <Switch>
         <Route path="/game">
           <GameGuard>
@@ -41,7 +45,7 @@ const AppRouter = () => {
             <Register />
           </LoginGuard>
         </Route>
-        <Route path="/profile">
+        <Route pexact path="/profile/:userId">
           <ProfileGuard>
             <Profile />
           </ProfileGuard>
