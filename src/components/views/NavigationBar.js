@@ -60,7 +60,7 @@ const NavigationBar = () => {
 
       {isLoggedIn && (
         <div className="navbar button-container">
-          <Link to="/profile">
+          <Link to={`/profile/${localStorage.getItem("userId")}`}>
             <button className="navbar profile-icon">person</button>
           </Link>
 
