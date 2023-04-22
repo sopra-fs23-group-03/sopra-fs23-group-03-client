@@ -1,0 +1,89 @@
+.list{
+
+  &.small {
+    opacity: .4;
+    margin-top: 20px;
+    display: block;
+  }
+  
+  &.h1 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 2em;
+    line-height: 1.3em;
+    font-weight: bold;
+    margin-top: 0.67em;
+  }
+  
+  &.todo-list {
+    padding-top: 10px;
+  }
+  
+  &.todo {
+    height: 30px;
+    background: #ededed;
+    padding: 3px 10px;
+    margin-bottom: 6px;
+    border-radius: 0.75em;
+    border: 1px solid #e1e1e1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #333333;
+  }
+  
+  &.todo-text {
+    cursor: pointer;
+  }
+  
+  &.todo-completed {
+    text-decoration: line-through;
+  }
+  
+  &.button {
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  &.todo button {
+    color: #333333;
+    background: #ededed;
+  }
+  
+  &.input {
+    background: #ededed;
+    padding: 7px 10px;
+    padding: 3px 10px;
+    border: 1px solid #e1e1e1;
+    border-right: 0px;
+    border-top-left-radius: 0.75em;
+    border-bottom-left-radius: 0.75em;
+    border-color: #e1e1e1;
+    color: #333333;
+    outline: 0;
+    flex: 1;
+    width: 100%;
+  }
+  
+  &.form {
+    display: flex;
+  }
+  
+  &.form button {
+    color: #333333;
+    background: #ededed;
+    border: 1px solid #e1e1e1;
+    border-top-right-radius: 0.75em;
+    border-bottom-right-radius: 0.75em;
+    border-left: 0px;
+    padding: 0 15px;
+  }
+
+  &.icon {
+    font-family: "Material Symbols Outlined";
+    font-style: normal;
+  }
+}
