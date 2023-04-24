@@ -7,6 +7,7 @@ import Register from "components/views/Register";
 import NavigationBar from "components/views/NavigationBar";
 import Profile from "components/views/Profile";
 import GroupCreation from "components/views/GroupCreation";
+import Final from "components/views/Final";
 import { ProfileGuard } from "components/routing/routeProtectors/ProfileGuard";
 import { useContext } from "react"; //added
 import AuthContext from "components/contexts/AuthContext"; //added
@@ -45,7 +46,7 @@ const { isLoggedIn } = useContext(AuthContext);//added
             <Register />
           </LoginGuard>
         </Route>
-        <Route pexact path="/profile/:userId">
+        <Route exact path="/profile/:userId">
           <ProfileGuard>
             <Profile />
           </ProfileGuard>
@@ -57,13 +58,17 @@ const { isLoggedIn } = useContext(AuthContext);//added
           </ProfileGuard>
         </Route>
 
-        {/* <Route exact path="/users/:userId">
+        <Route path="/final">
+            <Final />
+        </Route>
+
+        <Route exact path="/users/:userId">
           <GameGuard>
             <Profile />
           </GameGuard>
         </Route>
 
-        <Route exact path="/:userId/edit">
+        {/* <Route exact path="/:userId/edit">
           <GameGuard>
             <EditProfile />
           </GameGuard>
