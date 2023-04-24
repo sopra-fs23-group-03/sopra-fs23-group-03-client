@@ -90,7 +90,7 @@ const Register = (props) => {
       setIsLoggedIn(true);
 
       // Register successfully worked --> navigate to the route /game in the GameRouter
-      history.push(`/profile/ ${user.id}`);
+      history.push(`/users/${localStorage.getItem("userId")}`)
     } catch (error) {
       alert(
         `Something went wrong during the registration: \n${handleError(error)}`
