@@ -46,11 +46,17 @@
     outline: 0;
     cursor: pointer;
     font-size: 20px;
+    background: #ededed;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
   
   &.todo button {
     color: #333333;
     background: #ededed;
+    border: 0;
+    outline: 0;
   }
   
   &.input {
@@ -85,5 +91,6 @@
   &.icon {
     font-family: "Material Symbols Outlined";
     font-style: normal;
+
   }
 }

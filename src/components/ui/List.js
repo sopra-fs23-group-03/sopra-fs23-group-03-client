@@ -18,7 +18,7 @@ const AddTaskForm = ({ addTask }) => {
         placeholder="Add new entry..."
         onChange={e => setValue(e.target.value)}
       />
-      <button className="list button" type="submit"><i class="list icon">add</i></button>
+      <button className="list button" type="submit"><i className="list icon">add</i></button>
     </form>
   );
 }
@@ -58,7 +58,5 @@ export const ToDoList = () => {
     </div>
   );
 }
-
-
 
 export default ToDoList;

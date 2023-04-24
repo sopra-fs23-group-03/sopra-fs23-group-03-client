@@ -98,7 +98,7 @@ const Game = () => {
             className="game sidebar-buttons"
             onClick={() => history.push("/group-creation")}
           >
-            <i class="material-icons">groups</i> &nbsp; Form Group &nbsp;
+            <i className="material-icons">groups</i> &nbsp; Form Group &nbsp;
           </Button>
 
           <Button
