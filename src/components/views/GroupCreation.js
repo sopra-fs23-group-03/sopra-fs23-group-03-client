@@ -6,8 +6,6 @@ import BaseContainer from "components/ui/BaseContainer";
 import AppContainer from "components/ui/AppContainer";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
-import { set } from "react-hook-form";
-
 
 const Person = ({ user }) => (
   <div className="person container">
