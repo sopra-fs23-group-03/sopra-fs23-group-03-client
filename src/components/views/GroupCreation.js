@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 const Person = ({ user }) => (
   <div className="person container">
     <div className="person username">{user.username}</div>
-    <button><i class="person add">person_add</i></button>
+    <button><i className="person add">person_add</i></button>
   </div>
 );
 
@@ -40,13 +40,6 @@ const GroupCreation = (props) => {
         // Get the returned users and update the state.
         setUsers(response.data);
         //setGroups(groupsResponse.data);
-
-        // This is just some data for you to see what is available.
-        // Feel free to remove it.
-        console.log("request to:", response.request.responseURL);
-        console.log("status code:", response.status);
-        console.log("status text:", response.statusText);
-        console.log("requested data:", response.data);
 
         // See here to get more data.
         console.log(response);
@@ -102,7 +95,7 @@ const GroupCreation = (props) => {
                 <div className="group-creation people">
                 
                   
-                {users?.map((user) => (
+                { users?.filter(user => user.id != localStorage.getItem("userId")).map((user) => (
                 <div className="person container"> 
                   <div className="person username"> {user.status === "ONLINE" && user.username} </div>
                   {!isInvited && <i className="person add" onClick={() => {setIsInvited(!isInvited);}}>
