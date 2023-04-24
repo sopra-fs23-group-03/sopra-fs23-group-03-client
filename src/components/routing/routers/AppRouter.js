@@ -6,10 +6,12 @@ import Login from "components/views/Login";
 import Register from "components/views/Register";
 import NavigationBar from "components/views/NavigationBar";
 import Profile from "components/views/Profile";
+import GroupCreation from "components/views/GroupCreation";
+import Final from "components/views/Final";
 import { ProfileGuard } from "components/routing/routeProtectors/ProfileGuard";
 import { useContext } from "react";
 import AuthContext from "components/contexts/AuthContext";
-import GroupFormingHost from "components/views/GroupFormingHost";
+
 
 /**
  * Main router of your application.
@@ -43,17 +45,28 @@ const AppRouter = () => {
             <Register />
           </LoginGuard>
         </Route>
+        
         <Route exact path="/profile/:userId">
+          <ProfileGuard>
+            <Profile />
+          </ProfileGuard>
+        </Route>
+
+        <Route path="/group-creation">
+          <ProfileGuard>
+            <GroupCreation />
+          </ProfileGuard>
+        </Route>
+
+        <Route path="/final">
+            <Final />
+        </Route>
+
+        <Route exact path="/users/:userId">
           <GameGuard>
             <Profile />
           </GameGuard>
         </Route>
-
-        {/* <Route exact path="/groupforming/host/:userId">
-          <GameGuard>
-            <GroupFormingHost />
-          </GameGuard>
-        </Route> */}
 
         <Route exact path="/">
           <Redirect to="/game" />

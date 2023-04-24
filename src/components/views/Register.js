@@ -67,15 +67,10 @@ const Register = (props) => {
       return;
     }
 
-    if (!/^[A-Za-z]*$/.test(username)) {
-      alert("Username can include only letters");
-      return;
-    }
-
-    if (username === password) {
-      alert("Username and password can't be the same");
-      return;
-    }
+    // if (username === password) {
+    //   alert("Username and password can't be the same")
+    //   return;
+    // }
 
     doRegister();
   };
@@ -95,7 +90,7 @@ const Register = (props) => {
       setIsLoggedIn(true);
 
       // Register successfully worked --> navigate to the route /game in the GameRouter
-      history.push(`/profile`);
+      history.push(`/users/${localStorage.getItem("userId")}`)
     } catch (error) {
       alert(
         `Something went wrong during the registration: \n${handleError(error)}`
