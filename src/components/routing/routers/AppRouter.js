@@ -9,8 +9,9 @@ import Profile from "components/views/Profile";
 import GroupCreation from "components/views/GroupCreation";
 import Final from "components/views/Final";
 import { ProfileGuard } from "components/routing/routeProtectors/ProfileGuard";
-import { useContext } from "react"; //added
-import AuthContext from "components/contexts/AuthContext"; //added
+import { useContext } from "react";
+import AuthContext from "components/contexts/AuthContext";
+
 
 /**
  * Main router of your application.
@@ -23,29 +24,28 @@ import AuthContext from "components/contexts/AuthContext"; //added
  */
 
 const AppRouter = () => {
-const { isLoggedIn } = useContext(AuthContext);//added
+  const { isLoggedIn } = useContext(AuthContext);
 
   return (
     <BrowserRouter>
-     <NavigationBar isLoggedIn={isLoggedIn} /> //updated
+      <NavigationBar isLoggedIn={isLoggedIn} />
       <Switch>
         <Route path="/game">
           <GameGuard>
             <GameRouter base="/game" />
           </GameGuard>
         </Route>
-
         <Route exact path="/login">
           <LoginGuard>
             <Login />
           </LoginGuard>
         </Route>
-
         <Route exact path="/register">
           <LoginGuard>
             <Register />
           </LoginGuard>
         </Route>
+        
         <Route exact path="/profile/:userId">
           <ProfileGuard>
             <Profile />
@@ -67,12 +67,6 @@ const { isLoggedIn } = useContext(AuthContext);//added
             <Profile />
           </GameGuard>
         </Route>
-
-        {/* <Route exact path="/:userId/edit">
-          <GameGuard>
-            <EditProfile />
-          </GameGuard>
-        </Route> */}
 
         <Route exact path="/">
           <Redirect to="/game" />
