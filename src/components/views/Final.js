@@ -30,8 +30,9 @@ const Final = () => {
 
                 <div className="final section">
                     <InfoField label="Recipe"/>
+                    <InfoField label="Approx. time"/>
+                    <InfoField label="Difficulty"/>
                 </div>
-                <div className="final section"></div>
                 <div className="final button" onClick={() => history.push("/game")}>Back to main page</div>
                 
 
