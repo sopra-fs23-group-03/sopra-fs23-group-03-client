@@ -1,10 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import "styles/views/NavigationBar.scss";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import AuthContext from "components/contexts/AuthContext";
 import NotificationBar from "components/views/NotificationBar";
+import { api, handleError } from "helpers/api";
 
 const NavigationBar = () => {
   const history = useHistory();
@@ -12,28 +13,47 @@ const NavigationBar = () => {
   const [showNotificationBar, setShowNotificationBar] = useState(false); // For displaying the notification bar
   const [hasNewNotifications, setHasNewNotifications] = useState(false); // For displaying the indicator
   const [notificationData, setNotificationData] = useState([]); // For fetching the notification content
+  const headers = useMemo(() => {
+    return { "X-Token": localStorage.getItem("token") };
+  }, []);
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    setIsLoggedIn(false);
-    history.push("/login");
+  const logout = async () => {
+    try {
+      await api.post(`/users/${localStorage.getItem("userId")}/logout`, null, {
+        headers: {
+          "X-Token": localStorage.getItem("token"),
+        },
+      });
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      setIsLoggedIn(false);
+      history.push("/login");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Code to update the indicator based on the presence of new notifications
   //For Future Use when is connected to backend
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      const response = await fetch("/notifications");
-      const data = await response.json();
-      if (data.notifications.length > 0) {
-        setHasNewNotifications(true);
-        setNotificationData(data.notifications);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchNotifications = async () => {
+  //     try {
+  //       const response = await api.get(
+  //         `/users/${localStorage.getItem("userId")}/invitations`,
+  //         { headers }
+  //       );
+  //       const data = response.data;
+  //       if (data.length > 0) {
+  //         setHasNewNotifications(true);
+  //         setNotificationData(data);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    fetchNotifications();
-  }, []);
+  //   fetchNotifications();
+  // }, []);
   //////////////////////////
 
   return (
@@ -60,7 +80,7 @@ const NavigationBar = () => {
 
       {isLoggedIn && (
         <div className="navbar button-container">
-          <Link to="/profile">
+          <Link to={`/profile/${localStorage.getItem("userId")}`}>
             <button className="navbar profile-icon">person</button>
           </Link>
 
