@@ -44,6 +44,17 @@
     min-height: 300px;
   }
 
+  &.item{
+    text-align: left;
+    width: 80%;
+    border: 1px solid #E1E1E1;
+    border-radius: 8px;
+    background: #ededed;
+    padding-left: 10px;
+    width: 90%;
+    margin-bottom: 10px;
+  }
+
   &.text {
     // myusername
     font-weight: 700;
@@ -63,6 +74,7 @@
     font-size: 18px;
     text-align: left;
     font-weight: 600;
+    margin-bottom: 20px;
   }
 
   &.field {

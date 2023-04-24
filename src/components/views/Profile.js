@@ -5,6 +5,7 @@ import ToDoList from "components/ui/List";
 import { useParams } from "react-router-dom";
 import { api, handleError } from "helpers/api";
 import AppContainer from "components/ui/AppContainer";
+import PropTypes from "prop-types";
 
 const InfoField = (props) => {
   return (
@@ -13,7 +14,7 @@ const InfoField = (props) => {
 
       <input
         className="profile input"
-        placeholder="enter here.."
+        placeholder="enter here..."
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
       />
@@ -21,11 +22,22 @@ const InfoField = (props) => {
   );
 };
 
+InfoField.propTypes = {
+  label: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+};
+
 const Profile = (props) => {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
   //isEditable is a variable that is set to false by defalut and becomes true when the modify profile button is pressed
   const [isEditable, setIsEditable] = useState(false);
+
+  const [username, setUsername] = useState(user?.username);
+  const [password, setPassword] = useState(null);
+  const [diet, setDiet] = useState(null);
+    
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
@@ -63,7 +75,7 @@ const Profile = (props) => {
             <i className="profile icon">account_circle</i>
             {!isEditable && <div className="profile text"> {user?.username} </div>}
             {!isEditable && (
-              <div className="profile diet"> diet preference </div>
+              <div className="profile diet"> {user?.specialDiet===null? "diet preference" : user?.specialDiet} </div>
             )}
           </div>
 
@@ -72,56 +84,42 @@ const Profile = (props) => {
               <div className="profile preferences">
                 <div className="profile titles">
                   Allergies
-                  <ul id="list">
-                    <li data-new="true">
-                      <span>Peanuts</span>
-                      <input type="text" />
-                    </li>
-                  </ul>
                 </div>
+                
+                <div className="profile item">Wheat</div>
+                <div className="profile item">Milk</div>
+                
               </div>
 
               <div className="profile preferences">
                 <div className="profile titles">
                   Favourite cuisine
-                  <ul id="list">
-                    <li data-new="true">
-                      <span>Italian</span>
-                      <input type="text" />
-                    </li>
-                  </ul>
                 </div>
+
+                <div className="profile item">Pizza</div>
+                <div className="profile item">Mexican</div>
+
               </div>
             </div>
           )}
 
           {isEditable && (
             <div className="profile modify-section">
-              <InfoField label="Username" />
+              <InfoField label="Username" value={username} onChange={(u)=>setUsername(u)} />
               <InfoField label="Current Password" />
-              <InfoField label="Diet preference" />
-              <InfoField label="New Password" />
+              <InfoField label="Diet preference" onChange={setDiet}/>
+              <InfoField label="New Password" onChange={setPassword}/>
 
               <div className="profile list">
                 <div className="profile titles">Allergies</div>
-                {/* <ul id="list">
-                  <li data-new="true">
-                    <span>Peanuts</span>
-                    <input type="text" />
-                  </li>
-                </ul> */}
+
                 <ToDoList></ToDoList>
               </div>
 
 
               <div className="profile list">
                 <div className="profile titles">Favorite cuisine</div>
-                {/* <ul id="list">
-                  <li data-new="true">
-                    <span>add another</span>
-                    <input type="text" />
-                  </li>
-                </ul> */}
+                
                 <ToDoList></ToDoList>
               </div>
             </div>
@@ -174,8 +172,10 @@ const Profile = (props) => {
 
   function toggleEdit() {
     setIsEditable(!isEditable);
+    setDefaultValues();
   }
-  function toggleEditList() {
+  function setDefaultValues() {
+    setUsername(user?.username);
   }
 
 };
