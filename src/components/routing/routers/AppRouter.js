@@ -7,6 +7,9 @@ import Register from "components/views/Register";
 import NavigationBar from "components/views/NavigationBar";
 import Profile from "components/views/Profile";
 import { ProfileGuard } from "components/routing/routeProtectors/ProfileGuard";
+import { useContext } from "react";
+import AuthContext from "components/contexts/AuthContext";
+import GroupFormingHost from "components/views/GroupFormingHost";
 
 /**
  * Main router of your application.
@@ -19,42 +22,36 @@ import { ProfileGuard } from "components/routing/routeProtectors/ProfileGuard";
  */
 
 const AppRouter = () => {
+  const { isLoggedIn } = useContext(AuthContext);
+
   return (
     <BrowserRouter>
-      <NavigationBar />
+      <NavigationBar isLoggedIn={isLoggedIn} />
       <Switch>
         <Route path="/game">
           <GameGuard>
             <GameRouter base="/game" />
           </GameGuard>
         </Route>
-
         <Route exact path="/login">
           <LoginGuard>
             <Login />
           </LoginGuard>
         </Route>
-
         <Route exact path="/register">
           <LoginGuard>
             <Register />
           </LoginGuard>
         </Route>
-        <Route path="/profile">
-          <ProfileGuard>
-            <Profile />
-          </ProfileGuard>
-        </Route>
-
-        {/* <Route exact path="/users/:userId">
+        <Route exact path="/profile/:userId">
           <GameGuard>
             <Profile />
           </GameGuard>
         </Route>
 
-        <Route exact path="/:userId/edit">
+        {/* <Route exact path="/groupforming/host/:userId">
           <GameGuard>
-            <EditProfile />
+            <GroupFormingHost />
           </GameGuard>
         </Route> */}
 
