@@ -35,25 +35,25 @@ const NavigationBar = () => {
 
   // Code to update the indicator based on the presence of new notifications
   //For Future Use when is connected to backend
-  // useEffect(() => {
-  //   const fetchNotifications = async () => {
-  //     try {
-  //       const response = await api.get(
-  //         `/users/${localStorage.getItem("userId")}/invitations`,
-  //         { headers }
-  //       );
-  //       const data = response.data;
-  //       if (data.length > 0) {
-  //         setHasNewNotifications(true);
-  //         setNotificationData(data);
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await api.get(
+          `/users/${localStorage.getItem("userId")}/invitations`,
+          { headers }
+        );
+        const data = response.data;
+        if (data.length > 0) {
+          setHasNewNotifications(true);
+          setNotificationData(data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  //   fetchNotifications();
-  // }, []);
+    fetchNotifications();
+  }, []);
   //////////////////////////
 
   return (

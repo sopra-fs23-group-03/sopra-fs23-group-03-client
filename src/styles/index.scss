@@ -1,10 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&family=Roboto+Mono:wght@300;400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&family=Roboto+Mono:wght@300;400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Material+Icons"); // Import Material Icons
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,100,0,0");
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0");
-@import 'styles/theme';
-
+@import "styles/theme";
 /**
 This file contains the general and shared style of the application.
  */
@@ -39,42 +38,42 @@ button {
 }
 
 li {
-	margin: 10px;
+  margin: 10px;
   font-weight: 400;
   line-height: 27px;
   text-align: left;
   width: 80%;
-  border: 1px solid #E1E1E1;
+  border: 1px solid #e1e1e1;
   border-radius: 8px;
   background: #ededed;
   padding-left: 10px;
 }
 
 span {
-	border-bottom: 1px dashed transparent;
+  border-bottom: 1px dashed transparent;
 }
 
 li[data-new="true"] {
-	color: #333333;
+  //color: #333333;
+  color: #777;
 }
 
 li input {
-	display: none;
-	border: 0;
-	outline: 0;
-	padding: 0;
+  display: none;
+  border: 0;
+  outline: 0;
+  padding: 0;
 }
 
 li.edit span {
-	display: none;
+  display: none;
 }
 
 li.edit input {
-	display: initial;
-	border-bottom: 1px dashed #000;
+  display: initial;
+  border-bottom: 1px dashed #000;
 }
 
 ul {
   padding-inline-start: 10px;
 }
-
