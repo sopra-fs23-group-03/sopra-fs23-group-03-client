@@ -34,9 +34,25 @@ const Profile = (props) => {
   //isEditable is a variable that is set to false by defalut and becomes true when the modify profile button is pressed
   const [isEditable, setIsEditable] = useState(false);
 
+
   const [username, setUsername] = useState(user?.username);
-  const [password, setPassword] = useState(null);
+  const [currentPassword, setCurrentPassword] = useState(null);
+  const [newPassword, setNewPassword] = useState(null);
   const [diet, setDiet] = useState(null);
+  const [allergies, setAllergies] = ([]);
+  const [favcuisine, setFavcuisine] = ([]);
+
+  const handleUpdate = async () => {
+    try {
+      const response = await api.put('/users/' + userId, { username : username, specialDiet : diet, password : newPassword  }, { headers});
+    } catch (error) {
+      console.error(
+        `Something went wrong while updating the profile: \n${handleError(error).info
+        }`
+      );
+    }
+  };
+
     
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
@@ -106,9 +122,9 @@ const Profile = (props) => {
           {isEditable && (
             <div className="profile modify-section">
               <InfoField label="Username" value={username} onChange={(u)=>setUsername(u)} />
-              <InfoField label="Current Password" />
-              <InfoField label="Diet preference" onChange={setDiet}/>
-              <InfoField label="New Password" onChange={setPassword}/>
+              <InfoField label="Current Password" onChange={(cp)=>setCurrentPassword(cp)}/>
+              <InfoField label="New Password" onChange={(np)=>setNewPassword(np)}/>
+              <InfoField label="Diet preference" onChange={(d)=>setDiet(d)}/>
 
               <div className="profile list">
                 <div className="profile titles">Allergies</div>
@@ -157,6 +173,7 @@ const Profile = (props) => {
                   width="24%"
                   onClick={() => {
                     toggleEdit();
+                    handleUpdate();
                   }}
                 >
                   Save
