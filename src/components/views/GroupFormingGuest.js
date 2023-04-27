@@ -2,13 +2,13 @@ import { useEffect, useState, useMemo } from "react";
 import { api, handleError } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
 import { Button } from "components/ui/Button";
-import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
 import Group from "models/Group";
+import { useParams } from "react-router-dom";
 //http://localhost:3000/groupforming/guest:1
 
 const Player = ({ user }) => (
@@ -44,10 +44,7 @@ const GroupFormingGuest = () => {
         // Get the returned group and update the state.
         setGroup(new Group(groupResponse.data));
         // Get the returned members and update the state.
-        const members = membersResponse.data.map((member) => {
-          return { ...member, accepted: false };
-        });
-        setUsers(members);
+        setUsers(membersResponse.data);
       } catch (error) {
         console.error(
           `Something went wrong while fetching the group and its members: \n${handleError(
@@ -60,7 +57,6 @@ const GroupFormingGuest = () => {
         );
       }
     }
-
     fetchData();
   }, []);
 
@@ -74,14 +70,6 @@ const GroupFormingGuest = () => {
           headers,
         }
       );
-      // Update the accepted property of the user who accepted the invitation
-      const updatedUsers = users.map((user) => {
-        if (user.id === guestId) {
-          return { ...user, accepted: true };
-        }
-        return user;
-      });
-      setUsers(updatedUsers);
     } catch (error) {
       console.error(error);
     }
@@ -99,7 +87,15 @@ const GroupFormingGuest = () => {
         }
       );
     } catch (error) {
-      console.error(error);
+      console.error(
+        `Something went wrong while fetching the group and its members: \n${handleError(
+          error
+        )}`
+      );
+      console.error("Details:", error);
+      alert(
+        "Something went wrong while fetching the group and its members! See the console for details."
+      );
     }
   };
 
@@ -107,7 +103,6 @@ const GroupFormingGuest = () => {
 
   if (users) {
     const otherUsers = users.filter((user) => user.id !== userId);
-
     content = (
       <BaseContainer>
         <div className="groupforming form">
@@ -173,7 +168,7 @@ const GroupFormingGuest = () => {
                         localStorage.getItem("userId")
                       );
                       // history.push("/ingredients/:1");
-                      history.push(`/final/${groupId}`);
+                      history.push(`/final/:${groupId}`);
                     }}
                   >
                     I'm ready
