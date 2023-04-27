@@ -4,6 +4,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import ToDoList from "components/ui/List";
 import { useParams } from "react-router-dom";
 import { api, handleError } from "helpers/api";
+import { useHistory } from "react-router-dom";
 import AppContainer from "components/ui/AppContainer";
 import PropTypes from "prop-types";
 
@@ -28,7 +29,8 @@ InfoField.propTypes = {
   onChange: PropTypes.func,
 };
 
-const Profile = (props) => {
+const Profile = () => {
+  const history = useHistory()
   const { userId } = useParams();
   const [user, setUser] = useState(null);
   //isEditable is a variable that is set to false by defalut and becomes true when the modify profile button is pressed
@@ -44,7 +46,10 @@ const Profile = (props) => {
 
   const handleUpdate = async () => {
     try {
-      const response = await api.put('/users/' + userId, { username : username, specialDiet : diet, password : newPassword  }, { headers});
+      const requestBody = JSON.stringify({ username : username, specialDiet : diet, password : newPassword, currentPassword : currentPassword, allergies : allergies, favoriteCuisine : favcuisine });
+      await api.put(`/users/${userId}`, requestBody, { headers });
+      window.location.reload();
+      //history.push(`/profile/${userId}`);
     } catch (error) {
       console.error(
         `Something went wrong while updating the profile: \n${handleError(error).info
@@ -61,7 +66,7 @@ const Profile = (props) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await api.get("/users/" + userId, { headers });
+        const response = await api.get(`/users/${userId}`, { headers });
 
         // Get the returned users and update the state.
         setUser(response.data);
@@ -83,6 +88,13 @@ const Profile = (props) => {
     fetchData();
   }, []);
 
+  const [allTasks, setAllTasks] = useState([]);
+
+  const handleTasksChange = (tasks) => {
+  setAllTasks(tasks);
+  setAllergies = allTasks;
+};
+
   return (
     <AppContainer>
       <BaseContainer>
@@ -94,10 +106,7 @@ const Profile = (props) => {
             )}
             {!isEditable && (
               <div className="profile diet">
-                {" "}
-                {user?.specialDiet === null
-                  ? "diet preference"
-                  : user?.specialDiet}{" "}
+                {user?.specialDiet}
               </div>
             )}
           </div>
@@ -106,16 +115,12 @@ const Profile = (props) => {
             <div className="profile sections">
               <div className="profile preferences">
                 <div className="profile titles">Allergies</div>
-
-                <div className="profile item">Wheat</div>
-                <div className="profile item">Milk</div>
+                {user?.allergiesSet == null? [] : user.allergiesSet.map((allergy) => (<div className="profile item" key={allergy}> {allergy} </div>))}
               </div>
 
               <div className="profile preferences">
                 <div className="profile titles">Favourite cuisine</div>
-
-                <div className="profile item">Pizza</div>
-                <div className="profile item">Mexican</div>
+                {user?.favoriteCuisineSet == null? [] : user.favoriteCuisineSet.map((cuisine) => (<div className="profile item" key={cuisine}> {cuisine} </div>))}
               </div>
             </div>
           )}
@@ -124,19 +129,20 @@ const Profile = (props) => {
             <div className="profile modify-section">
               <InfoField label="Username" value={username} onChange={(u)=>setUsername(u)} />
               <InfoField label="Current Password" onChange={(cp)=>setCurrentPassword(cp)}/>
+              <InfoField label="Diet preference" value= {diet} onChange={(d)=>setDiet(d)}/>
               <InfoField label="New Password" onChange={(np)=>setNewPassword(np)}/>
-              <InfoField label="Diet preference" onChange={(d)=>setDiet(d)}/>
+              
 
               <div className="profile list">
                 <div className="profile titles">Allergies</div>
 
-                <ToDoList></ToDoList>
+                <ToDoList onChange={(i) => setAllergies}></ToDoList>
               </div>
 
               <div className="profile list">
                 <div className="profile titles">Favorite cuisine</div>
 
-                <ToDoList></ToDoList>
+                <ToDoList onTasksChange={handleTasksChange}></ToDoList>
               </div>
             </div>
           )}
