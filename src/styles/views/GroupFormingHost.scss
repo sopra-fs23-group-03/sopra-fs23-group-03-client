@@ -103,6 +103,9 @@
     font-size: 20px;
     height: 40px;
   }
+  &.accepted {
+    background-color: green;
+  }
 
   .reply-button {
     &:hover {
@@ -115,6 +118,7 @@
         transform: none;
       }
     }
+
     cursor: pointer;
     color: #92929d;
     display: flex;

@@ -44,9 +44,10 @@ const GroupFormingGuest = () => {
         // Get the returned group and update the state.
         setGroup(new Group(groupResponse.data));
         // Get the returned members and update the state.
-        setUsers(membersResponse.data);
-        console.log("groupresponse", groupResponse);
-        console.log("memberresponse", membersResponse);
+        const members = membersResponse.data.map((member) => {
+          return { ...member, accepted: false };
+        });
+        setUsers(members);
       } catch (error) {
         console.error(
           `Something went wrong while fetching the group and its members: \n${handleError(
@@ -73,6 +74,14 @@ const GroupFormingGuest = () => {
           headers,
         }
       );
+      // Update the accepted property of the user who accepted the invitation
+      const updatedUsers = users.map((user) => {
+        if (user.id === guestId) {
+          return { ...user, accepted: true };
+        }
+        return user;
+      });
+      setUsers(updatedUsers);
     } catch (error) {
       console.error(error);
     }
@@ -164,7 +173,7 @@ const GroupFormingGuest = () => {
                         localStorage.getItem("userId")
                       );
                       // history.push("/ingredients/:1");
-                      history.push(`/final/:${groupId}`);
+                      history.push(`/final/${groupId}`);
                     }}
                   >
                     I'm ready

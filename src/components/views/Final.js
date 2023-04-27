@@ -13,6 +13,7 @@ const InfoField = (props) => {
     <div className="final field">
       <label className="final label">{props.label}</label>
       <input className="final input" />
+      <span className="final input">{props.value}</span>
     </div>
   );
 };
@@ -21,7 +22,8 @@ const Final = () => {
   const history = useHistory();
   const [recipe, setRecipe] = useState(null);
   const { groupId } = useParams();
-  console.log(groupId + ",groupId");
+  const numericGroupId = groupId.substring(1);
+  console.log("groupId,", groupId);
 
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
@@ -30,14 +32,15 @@ const Final = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await api.get(`/groups/${groupId}/result`, {
+        const response = await api.get(`/groups/${numericGroupId}/result`, {
           headers,
         });
 
         // Get the returned users and update the state.
         setRecipe(response.data);
 
-        console.log(response);
+        console.log(response.data); // log the response data to the console
+        setRecipe(response.data);
       } catch (error) {
         console.error(
           `Something went wrong while fetching the users: \n${
@@ -54,6 +57,10 @@ const Final = () => {
     fetchData();
   }, []);
 
+  if (!recipe) {
+    return null;
+  }
+
   return (
     <AppContainer>
       <BaseContainer>
@@ -63,9 +70,9 @@ const Final = () => {
         </div>
 
         <div className="final section">
-          <InfoField label="Recipe" />
-          <InfoField label="Approx. time" />
-          <InfoField label="Difficulty" />
+          <InfoField label="Recipe" value={recipe?.title} />
+          <InfoField label="Approx. time" value={recipe?.readyInMinutes} />
+          {/* <InfoField label="Difficulty" value={recipe?.difficulty} /> */}
         </div>
         <div className="final button" onClick={() => history.push("/game")}>
           Back to main page
