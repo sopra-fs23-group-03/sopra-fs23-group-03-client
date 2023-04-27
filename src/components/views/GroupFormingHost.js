@@ -85,33 +85,8 @@ const GroupFormingHost = () => {
                           <span className="groupforming player username">
                             {member.username}
                           </span>
-<<<<<<< HEAD
                         </div>
                       ))}
-=======
-                          {/* <button className="material-icons reply-button">
-      done
-    </button> */}
-                          {/* <button className="material-icons reply-button">
-      delete_outline
-    </button> */}
-                        </div>
-                      ))}
-                      {/* <div className="groupforming group-join-request">
-                        <span className=" player username">player B</span>
-                        <div className="groupforming button-container"></div>
-                        <button className="groupforming material-icons reply-button">
-                          delete_outline
-                        </button>
-                      </div>
-                      <div className="groupforming group-join-request">
-                        <span className="player username ">player C</span>
-                        <div className="groupforming button-container"></div>
-                        <button className="groupforming material-icons reply-button">
-                          delete_outline
-                        </button>
-                      </div> */}
->>>>>>> 0b24755e035de2333c8fb5d882d1c928b9c60384
                     </div>
                   </div>
                 </div>
