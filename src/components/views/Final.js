@@ -1,44 +1,78 @@
-import AppContainer from "components/ui/AppContainer";
+import React, { useEffect, useState, useMemo } from "react";
+import "styles/views/Profile.scss";
 import BaseContainer from "components/ui/BaseContainer";
-import React from "react";
-import "styles/views/Final.scss"
+import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
+import AppContainer from "components/ui/AppContainer";
+import "styles/views/Final.scss";
+import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
 
 const InfoField = (props) => {
-    return (
-      <div className="final field">
-        <label className="final label">{props.label}</label>
-        <input
-          className="final input"
-          value={props.value}
-          onChange={(e) => props.onChange(e.target.value)}
-        />
-      </div>
-    );
-  };
+  return (
+    <div className="final field">
+      <label className="final label">{props.label}</label>
+      <input className="final input" />
+    </div>
+  );
+};
 
 const Final = () => {
-    const history = useHistory();
+  const history = useHistory();
+  const [recipe, setRecipe] = useState(null);
+  const { groupId } = useParams();
+  console.log(groupId + ",groupId");
 
-    return (
-        <AppContainer>
-            <BaseContainer>
-                <div className="final main">
-                    <i className="final icon">sentiment_satisfied</i>
-                    <div className="final title">Everything is set!</div>
-                </div>
+  const headers = useMemo(() => {
+    return { "X-Token": localStorage.getItem("token") };
+  }, []);
 
-                <div className="final section">
-                    <InfoField label="Recipe"/>
-                    <InfoField label="Approx. time"/>
-                    <InfoField label="Difficulty"/>
-                </div>
-                <div className="final button" onClick={() => history.push("/game")}>Back to main page</div>
-                
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await api.get(`/groups/${groupId}/result`, {
+          headers,
+        });
 
-            </BaseContainer>
-        </AppContainer>
-    )
-}
+        // Get the returned users and update the state.
+        setRecipe(response.data);
 
-export default Final
+        console.log(response);
+      } catch (error) {
+        console.error(
+          `Something went wrong while fetching the users: \n${
+            handleError(error).info
+          }`
+        );
+        console.error("Details:", error);
+        alert(
+          "Something went wrong while fetching the users! See the console for details."
+        );
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  return (
+    <AppContainer>
+      <BaseContainer>
+        <div className="final main">
+          <i className="final icon">sentiment_satisfied</i>
+          <div className="final title">Everything is set!</div>
+        </div>
+
+        <div className="final section">
+          <InfoField label="Recipe" />
+          <InfoField label="Approx. time" />
+          <InfoField label="Difficulty" />
+        </div>
+        <div className="final button" onClick={() => history.push("/game")}>
+          Back to main page
+        </div>
+      </BaseContainer>
+    </AppContainer>
+  );
+};
+
+export default Final;
