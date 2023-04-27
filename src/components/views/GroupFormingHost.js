@@ -113,21 +113,24 @@ const GroupFormingHost = () => {
                     <div className="groupforming group-join-requests">
                       {users.map((member) => (
                         <div
-                          className="groupforming group-join-request"
+                          className={`groupforming group-join-request ${
+                            member.accepted ? "accepted" : ""
+                          }`}
                           key={member.username}
                         >
                           <span className="groupforming player username">
                             {member.username}
                           </span>
-                          {/* <button className="material-icons reply-button">
-      done
-    </button> */}
-                          {/* <button className="material-icons reply-button">
-      delete_outline
-    </button> */}
                         </div>
                       ))}
-                      {/* <div className="groupforming group-join-request">
+                    </div>
+                    {/* <button className="material-icons reply-button">
+      done
+    </button> */}
+                    {/* <button className="material-icons reply-button">
+      delete_outline
+    </button> */}
+                    {/* <div className="groupforming group-join-request">
                         <span className=" player username">player B</span>
                         <div className="groupforming button-container"></div>
                         <button className="groupforming material-icons reply-button">
@@ -141,7 +144,6 @@ const GroupFormingHost = () => {
                           delete_outline
                         </button>
                       </div> */}
-                    </div>
                   </div>
                 </div>
                 <div className="groupforming buttons">
