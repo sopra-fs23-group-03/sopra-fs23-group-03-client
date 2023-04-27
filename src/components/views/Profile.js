@@ -142,7 +142,7 @@ const Profile = () => {
               <div className="profile list">
                 <div className="profile titles">Favorite cuisine</div>
 
-                <ToDoList onTasksChange={handleTasksChange}></ToDoList>
+                <ToDoList></ToDoList>
               </div>
             </div>
           )}

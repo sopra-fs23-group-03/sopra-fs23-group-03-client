@@ -17,7 +17,7 @@ const AddTaskForm = ({ addTask }) => {
         type="text"
         value={value}
         placeholder="add new entry"
-        onChange={(e) => setValue(e.target.value)}
+        onChange={e => setValue(e.target.value)}
       />
       <button className="list button" type="submit">
         <i className="list icon">add</i>
@@ -26,31 +26,26 @@ const AddTaskForm = ({ addTask }) => {
   );
 };
 
-export const ToDoList = ({ onTasksChange }) => {
+export const ToDoList = () => {
+
   const [tasks, setTasks] = useState([]);
 
-  const addTask = (text) => (isMaxReached() ? null : setTasks([...tasks, { text }]));
+  const addTask = (text) =>
+    isMaxReached() ? null : setTasks([...tasks, { text }]);
 
   const isMaxReached = (_) => {
     return tasks?.length >= 20;
   };
-
   const removeTask = (index) => {
     const newTasks = [...tasks];
     newTasks.splice(index, 1);
     setTasks(newTasks);
   };
 
-  // Collect all tasks in an array
-  const allTasks = tasks.map((task) => task.text);
-
-  // Call the onTasksChange function with the updated tasks array
-  onTasksChange(allTasks);
-
   return (
     <div className="list todo-list">
       {tasks.map((task, index) => (
-        <div className="list todo" key={index}>
+        <div className="list todo">
           <span className="list todo-text">{task.text}</span>
           <button className="list button" onClick={() => removeTask(index)}>
             <i className="list icon">delete</i>
