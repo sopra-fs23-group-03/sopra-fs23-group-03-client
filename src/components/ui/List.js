@@ -4,35 +4,39 @@ import "styles/ui/List.scss";
 const AddTaskForm = ({ addTask }) => {
   const [value, setValue] = useState("");
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    value && addTask(value)
+    value && addTask(value);
     setValue("");
   };
 
   return (
     <form className="list form" onSubmit={handleSubmit}>
-      <input className="list input"
+      <input
+        className="list input"
         type="text"
         value={value}
         placeholder="add new entry"
         onChange={e => setValue(e.target.value)}
       />
-      <button className="list button" type="submit"><i className="list icon">add</i></button>
+      <button className="list button" type="submit">
+        <i className="list icon">add</i>
+      </button>
     </form>
   );
-}
+};
 
 export const ToDoList = () => {
 
   const [tasks, setTasks] = useState([]);
 
-  const addTask = text => isMaxReached() ? null : setTasks([...tasks, { text }]);
+  const addTask = (text) =>
+    isMaxReached() ? null : setTasks([...tasks, { text }]);
 
-  const isMaxReached = _ => {
-    return tasks?.length >= 3;
-  }
-  const removeTask = index => {
+  const isMaxReached = (_) => {
+    return tasks?.length >= 20;
+  };
+  const removeTask = (index) => {
     const newTasks = [...tasks];
     newTasks.splice(index, 1);
     setTasks(newTasks);
@@ -42,18 +46,15 @@ export const ToDoList = () => {
     <div className="list todo-list">
       {tasks.map((task, index) => (
         <div className="list todo">
-          <span className="list todo-text">
-            {task.text}
-          </span>
-          <button className="list button" onClick={() => removeTask(index)}><i className="list icon">delete</i></button>
+          <span className="list todo-text">{task.text}</span>
+          <button className="list button" onClick={() => removeTask(index)}>
+            <i className="list icon">delete</i>
+          </button>
         </div>
       ))}
-      { 
-      !isMaxReached() &&
-        <AddTaskForm addTask={addTask} />
-      }
+      {!isMaxReached() && <AddTaskForm addTask={addTask} />}
     </div>
   );
-}
+};
 
 export default ToDoList;

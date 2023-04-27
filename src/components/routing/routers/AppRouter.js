@@ -11,7 +11,10 @@ import Final from "components/views/Final";
 import { ProfileGuard } from "components/routing/routeProtectors/ProfileGuard";
 import { useContext } from "react";
 import AuthContext from "components/contexts/AuthContext";
-
+import GroupFormingGuest from "components/views/GroupFormingGuest";
+import GroupFormingHost from "components/views/GroupFormingHost";
+import Ingredient from "components/views/Ingredient";
+import IngredientSolo from "components/views/IngredientSolo";
 
 
 const AppRouter = () => {
@@ -40,26 +43,58 @@ const AppRouter = () => {
             <Register />
           </LoginGuard>
         </Route>
-        
+
         <Route exact path="/profile/:userId">
-          <ProfileGuard>
+          <GameGuard>
             <Profile />
-          </ProfileGuard>
+          </GameGuard>
         </Route>
 
         <Route path="/group-creation">
-          <ProfileGuard>
+          <GameGuard>
             <GroupCreation />
-          </ProfileGuard>
+          </GameGuard>
         </Route>
 
         <Route path="/final">
+          <GameGuard>
             <Final />
+          </GameGuard>
         </Route>
 
         <Route exact path="/users/:userId">
           <GameGuard>
             <Profile />
+          </GameGuard>
+        </Route>
+
+        <Route exact path="/groupforming/host/:userId">
+          <GameGuard>
+            <GroupFormingHost />
+          </GameGuard>
+        </Route>
+
+        <Route exact path="/groupforming/guest/:userId">
+          <GameGuard>
+            <GroupFormingGuest />
+          </GameGuard>
+        </Route>
+
+        <Route exact path="/ingredients/:userId">
+          <GameGuard>
+            <Ingredient />
+          </GameGuard>
+        </Route>
+
+        <Route exact path="/invitation/:groupName">
+          <GameGuard>
+            <GroupFormingGuest />
+          </GameGuard>
+        </Route>
+
+        <Route exact path="/solo">
+          <GameGuard>
+            <IngredientSolo />
           </GameGuard>
         </Route>
 

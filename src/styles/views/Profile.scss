@@ -44,10 +44,10 @@
     min-height: 300px;
   }
 
-  &.item{
+  &.item {
     text-align: left;
     width: 80%;
-    border: 1px solid #E1E1E1;
+    border: 1px solid #e1e1e1;
     border-radius: 8px;
     background: #ededed;
     padding-left: 10px;
@@ -169,6 +169,7 @@
     flex-direction: column;
     height: 20%;
     display: flex;
+    width: 200px;
     flex-direction: column;
     white-space: nowrap;
 

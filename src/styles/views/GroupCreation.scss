@@ -1,160 +1,164 @@
 @import "styles/theme";
 
 .group-creation {
+  &.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%;
+    min-width: 500px;
+    height: 100%;
+    font-family: "Poppins";
+  }
 
-    &.form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 20px;
-      width: 100%;
-      min-width: 500px;
-      height: 100%;
-      font-family: 'Poppins';
-      }
+  &.title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    text-align: center;
+    letter-spacing: 0.1px;
+  }
 
-    &.title {
-      font-style: normal;
-      font-weight: 700;
-      font-size: 24px;
-      line-height: 36px;
-      text-align: center;
-      letter-spacing: 0.1px;
-      color: #333333;
+  &.field {
+    display: flex;
+    flex-direction: column;
+    //align-items: start;
+    width: 75%;
+
+    color: #333333;
+  }
+
+  &.label {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 26px;
+    text-align: left;
+    color: #333333;
+    padding: 10px;
+  }
+
+  &.input {
+    height: 35px;
+    width: 100%;
+    padding-left: 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 0.75em;
+    background: #f2f2f2;
+    color: #333333;
+  }
+
+  &.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 15%;
+    margin-top: 20px;
+  }
+
+  &.button {
+    background-color: #c3c3c3;
+    color: #ffffff;
+    border-radius: 32px;
+    width: 38%;
+    height: 50px;
+    vertical-align: middle;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
+
+    &.continue {
+      background-color: #333333;
     }
 
-    &.field {
-      display: flex;
-      flex-direction: column;
-      align-items: start;
-      width: 75%;
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  &.voting {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &.voting-button {
+    width: 48%;
+    height: 45px;
+    border-radius: 32px;
+    cursor: pointer;
+    border: 0px;
+    background-color: #c3c3c3;
+    color: #ffffff;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+    letter-spacing: 0.1px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    transition: background-color 0.2s ease-in-out;
+
+    margin: 5px;
+
+    &.majority {
+      justify-content: center;
+      gap: 5px;
     }
 
-    &.label {
-      font-style: normal;
-      font-weight: 600;
-      font-size: 17px;
-      line-height: 26px;
-      text-align: left;
-      color: #333333;
+    &:hover {
+      background-color: #333333;
     }
 
-    &.input {
-      height: 35px;
-      width: 100%;
-      padding-left: 15px;
-      border: 1px solid #E1E1E1;
-      border-radius: 8px;
-      background: #f2f2f2;
-      color: #333333;
+    &:focus {
+      background-color: #333333;
     }
+  }
 
-    &.buttons {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      width: 100%;
-      height: 15%;
-    }
+  &.icon {
+    font-family: "Material Symbols Rounded";
+    font-style: normal;
+    font-size: 25px;
+    text-align: left;
+    color: rgba(146, 146, 157, 1);
+    vertical-align: middle;
+    margin-right: 3px;
+  }
 
-    &.button {
-      background-color: #c3c3c3;
-      color: #FFFFFF;
-      border-radius: 32px;
-      width: 38%;
-      height: 50px;
-      vertical-align: middle;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      align-items: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
-
-      &.continue{
-        background-color: #333333;
-      }
-
-      &:hover {
-        transform: translateY(-2px);
-      }
-    }
-
-      
-
-    &.voting {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      width: 100%;
-    }
-
-    &.voting-button {
-      width: 48%;
-      height: 45px;
-      border-radius: 32px;
-      cursor: pointer;
-      border: 0px;
-      background-color: #c3c3c3;
-      color: #FFFFFF;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 15px;
-      line-height: 22px;
-      letter-spacing: 0.1px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      align-items: center;
-      transition: background-color 0.2s ease-in-out;
-
-      &.majority {
-        justify-content: center;
-        gap: 5px;
-      }
-
-      &:hover {
-        background-color: #333333;
-      }
-
-      &:focus {
-        background-color: #333333;
-      }
-    }
-
-    &.icon {
-      font-family: "Material Symbols Rounded";
-      font-style: normal;
-      font-size: 25px;
-      text-align: left;
-      color: rgba(146, 146, 157, 1);
-      vertical-align: middle;
-      margin-right: 3px;
-    }
-
-    &.people {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 98%;
-      height:280px;
-      background-color: #ffffff;
-      border-radius: 0.75em;
-    }
+  &.people {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 98%;
+    height: 200px;
+    background-color: #ffffff;
+    //border-radius: 0.75em;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
 }
 
 .person {
-
   &.container {
+    display: flex;
+    flex-direction: row;
     width: 100%;
     height: 37px;
     background-color: #f2f2f2;
-    border: 1px solid #E1E1E1;
+    border: 1px solid #e1e1e1;
     border-radius: 8px;
-    display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding-left: 20px;
@@ -164,15 +168,19 @@
   &.username {
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;   
+    font-size: 16px;
     letter-spacing: 0.1px;
-    color: #44444F;
+    color: #44444f;
   }
 
   &.add {
     font-family: "Material Symbols Outlined";
     font-style: normal;
-    font-size: 30px;
+    font-size: 24px;
+
+    border: none;
     cursor: pointer;
+    // padding: 0;
+    // margin: 0;
   }
 }

@@ -1,15 +1,13 @@
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 
-
-
-export const ProfileGuard = props => {
+export const ProfileGuard = (props) => {
   if (localStorage.getItem("token")) {
     return props.children;
   }
-  return <Redirect to="/register"/>;
+  return <Redirect to="/login" />;
 };
 
 ProfileGuard.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
 };

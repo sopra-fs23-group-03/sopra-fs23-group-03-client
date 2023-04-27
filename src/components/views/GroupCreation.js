@@ -1,75 +1,50 @@
 import React from "react";
 import { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
-import 'styles/views/GroupCreation.scss';
+import "styles/views/GroupCreation.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import AppContainer from "components/ui/AppContainer";
 import { api, handleError } from "helpers/api";
 import { useHistory, useParams } from "react-router-dom";
 
-const Person = ({ user }) => (
-  <div className="person container">
-    <div className="person username">{user.username}</div>
-    <button><i className="person add">person_add</i></button>
-  </div>
-);
-
-Person.propTypes = {
-  user: PropTypes.object,
-};
-
-
-const GroupCreation = (props) => {
+const GroupCreation = () => {
   const history = useHistory();
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
-  
+
   const [users, setUsers] = useState(null);
+  const [isInvited, setIsInvited] = useState(false);
+  const [groupName, setGroupName] = useState("");
+  const [invitedUsers, setInvitedUsers] = useState([]);
+  const [votingType, setVotingType] = useState("MAJORITYVOTE");
+  const [hostId, setHostId] = useState(localStorage.getItem("userId"));
 
-
-  //list of ids of invited users
-  const [guests, setGuests] = useState([]);
-  const [groupName, setGroupName] = useState(null);
-  const [votingType, setVotingType] = useState(null);
-  const hostId = localStorage.getItem("userId");
-
-  function addGuest(newGuest) {
-    setGuests([...guests, newGuest]);
-  }
-
-  function removeGuest(guestToRemove) {
-    setGuests(guests.filter(guest => guest !== guestToRemove));
-  }
-
-  const handleCreation = async () => {
+  const createGroup = async () => {
     try {
-      const requestBody = JSON.stringify({"groupName" : groupName, "votingType" : votingType, "hostId" : hostId });
-      const response = await api.post("/groups", requestBody, {headers});
-
-      //NAVIGATE TO INGREDIENT TYPING
+      const requestBody = {
+        hostId: Number(hostId),
+        groupName: groupName,
+        votingType: votingType,
+      };
+      const response = await api.post("/groups", requestBody, { headers });
+      history.push(`/groupforming/host/${localStorage.getItem("userId")}`);
     } catch (error) {
-      alert(
-        `Something went wrong during the creation of this group: \n${handleError(error)}`
+      console.error(
+        `Something went wrong while creating the group: \n${handleError(error)}`
       );
-      history.push(`/game`);
+      console.error("Details:", error);
+      alert(
+        "Something went wrong while creating the group! See the console for details."
+      );
     }
   };
 
   useEffect(() => {
-    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
         const response = await api.get("/users", { headers });
-        //const groupsResponse = await api.get("/groups");
-
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        // Get the returned users and update the state.
         setUsers(response.data);
-        //setGroups(groupsResponse.data);
-
-        // See here to get more data.
         console.log(response);
       } catch (error) {
         console.error(
@@ -87,8 +62,26 @@ const GroupCreation = (props) => {
     fetchData();
   });
 
+  const toggleInvitation = (user) => {
+    if (invitedUsers.includes(user.id)) {
+      setInvitedUsers(invitedUsers.filter((id) => id !== user.id));
+    } else {
+      setInvitedUsers([...invitedUsers, user.id]);
+    }
+  };
 
+  const Person = ({ user }) => (
+    <div key={user.id} className="person container">
+      <div className="person username">{user.username}</div>
+      <button onClick={() => toggleInvitation(user)}>
+        <i className="person add">person_add</i>
+      </button>
+    </div>
+  );
 
+  Person.propTypes = {
+    user: PropTypes.object,
+  };
 
     return (
       <AppContainer>
@@ -144,11 +137,74 @@ const GroupCreation = (props) => {
               </div>
 
 
+          <div className="group-creation field">
+            <div className="group-creation label"> Group Name </div>
+            <input
+              className="group-creation input"
+              placeholder="enter here.."
+              value={groupName}
+              onChange={(e) => setGroupName(e.target.value)}
+            />
+          </div>
 
+          <div className="group-creation field">
+            <div className="group-creation label"> Voting Type </div>
+            <div className="group-creation voting">
+              <button className="group-creation voting-button">
+                <i className="group-creation icon">timeline</i>
+                Point Distribution
+              </button>
+              <button className="group-creation voting-button majority">
+                <i className="group-creation icon">star</i>
+                Majority
+              </button>
             </div>
-          </BaseContainer>
-      </AppContainer>
-    );
+          </div>
+
+          <div className="group-creation field">
+            <div className="group-creation label">
+              Who do you want to invite?
+            </div>
+            <div className="group-creation people">
+              {users
+                ?.filter(
+                  (user) =>
+                    user.id != localStorage.getItem("userId") &&
+                    user.status === "ONLINE" &&
+                    !user.groupId
+                )
+                .map((user) => (
+                  <div className="person container" key={user.id}>
+                    <div className="person username">{user.username}</div>
+                    <button
+                      className="person add"
+                      onClick={() => toggleInvitation(user)}
+                    >
+                      {invitedUsers.includes(user.id) ? "done" : "person_add"}
+                    </button>
+                  </div>
+                ))}
+            </div>
+
+            <div className="group-creation buttons">
+              <div
+                className="group-creation button"
+                onClick={() => history.push("/game")}
+              >
+                Delete group
+              </div>
+              <div
+                className="group-creation button continue"
+                onClick={createGroup}
+              >
+                Continue
+              </div>
+            </div>
+          </div>
+        </div>
+      </BaseContainer>
+    </AppContainer>
+  );
 };
 
 export default GroupCreation;
