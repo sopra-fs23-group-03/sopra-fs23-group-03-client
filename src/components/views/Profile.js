@@ -87,7 +87,7 @@ const Profile = () => {
 
         // Get the returned users and update the state.
         setUser(response.data);
-        setAllergies(user?.allergies)
+        setAllergies(user?.allergiesSet)
 
         console.log(response);
       } catch (error) {
