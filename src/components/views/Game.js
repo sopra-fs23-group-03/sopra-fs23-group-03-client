@@ -119,7 +119,7 @@ const Game = () => {
               <Button
                 className={`player container ${user.status.toLowerCase()}`}
                 key={user.id}
-                onClick={() => history.push(`/users/${user.id}`)}
+                onClick={() => history.push(`/profile/${user.id}`)}
               >
                 <div className="status-circle" />
 

@@ -1,46 +1,36 @@
-.list{
-
-  &.small {
-    opacity: .4;
-    margin-top: 20px;
-    display: block;
-  }
-  
-  &.h1 {
-    color: #fff;
-    text-align: center;
-    margin-bottom: 0;
-    font-size: 2em;
-    line-height: 1.3em;
-    font-weight: bold;
-    margin-top: 0.67em;
-  }
-  
+.list {
   &.todo-list {
-    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    min-height: 105px;
+    overflow-y: auto;
   }
-  
-  &.todo {
+
+  .todo {
+    display: flex;
+    flex-direction: row;
     height: 30px;
     background: #ededed;
     padding: 3px 10px;
     margin-bottom: 6px;
     border-radius: 0.75em;
     border: 1px solid #e1e1e1;
-    display: flex;
-    align-items: center;
     justify-content: space-between;
     color: #333333;
+    align-items: center;
   }
-  
+
   &.todo-text {
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis; //if text is too long, the end of the text will be hidden and replaced by ...
+    //white-space: nowrap;
   }
-  
+
   &.todo-completed {
     text-decoration: line-through;
   }
-  
+
   &.button {
     border: 0;
     outline: 0;
@@ -51,14 +41,14 @@
     flex-direction: row;
     align-items: center;
   }
-  
+
   &.todo button {
     color: #333333;
     background: #ededed;
     border: 0;
     outline: 0;
   }
-  
+
   &.input {
     background: #ededed;
     padding: 7px 10px;
@@ -73,11 +63,11 @@
     flex: 1;
     width: 100%;
   }
-  
+
   &.form {
     display: flex;
   }
-  
+
   &.form button {
     color: #333333;
     background: #ededed;
@@ -91,6 +81,5 @@
   &.icon {
     font-family: "Material Symbols Outlined";
     font-style: normal;
-
   }
 }

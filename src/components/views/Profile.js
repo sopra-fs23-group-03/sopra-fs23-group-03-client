@@ -37,7 +37,7 @@ const Profile = (props) => {
   const [username, setUsername] = useState(user?.username);
   const [password, setPassword] = useState(null);
   const [diet, setDiet] = useState(null);
-    
+
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
@@ -53,7 +53,8 @@ const Profile = (props) => {
         console.log(response);
       } catch (error) {
         console.error(
-          `Something went wrong while fetching the users: \n${handleError(error).info
+          `Something went wrong while fetching the users: \n${
+            handleError(error).info
           }`
         );
         console.error("Details:", error);
@@ -69,46 +70,50 @@ const Profile = (props) => {
   return (
     <AppContainer>
       <BaseContainer>
-
         <div className="profile form">
           <div className="profile main">
             <i className="profile icon">account_circle</i>
-            {!isEditable && <div className="profile text"> {user?.username} </div>}
             {!isEditable && (
-              <div className="profile diet"> {user?.specialDiet===null? "diet preference" : user?.specialDiet} </div>
+              <div className="profile text"> {user?.username} </div>
+            )}
+            {!isEditable && (
+              <div className="profile diet">
+                {" "}
+                {user?.specialDiet === null
+                  ? "diet preference"
+                  : user?.specialDiet}{" "}
+              </div>
             )}
           </div>
 
           {!isEditable && (
             <div className="profile sections">
               <div className="profile preferences">
-                <div className="profile titles">
-                  Allergies
-                </div>
-                
+                <div className="profile titles">Allergies</div>
+
                 <div className="profile item">Wheat</div>
                 <div className="profile item">Milk</div>
-                
               </div>
 
               <div className="profile preferences">
-                <div className="profile titles">
-                  Favourite cuisine
-                </div>
+                <div className="profile titles">Favourite cuisine</div>
 
                 <div className="profile item">Pizza</div>
                 <div className="profile item">Mexican</div>
-
               </div>
             </div>
           )}
 
           {isEditable && (
             <div className="profile modify-section">
-              <InfoField label="Username" value={username} onChange={(u)=>setUsername(u)} />
+              <InfoField
+                label="Username"
+                value={username}
+                onChange={(u) => setUsername(u)}
+              />
               <InfoField label="Current Password" />
-              <InfoField label="Diet preference" onChange={setDiet}/>
-              <InfoField label="New Password" onChange={setPassword}/>
+              <InfoField label="Diet preference" onChange={setDiet} />
+              <InfoField label="New Password" onChange={setPassword} />
 
               <div className="profile list">
                 <div className="profile titles">Allergies</div>
@@ -116,17 +121,16 @@ const Profile = (props) => {
                 <ToDoList></ToDoList>
               </div>
 
-
               <div className="profile list">
                 <div className="profile titles">Favorite cuisine</div>
-                
+
                 <ToDoList></ToDoList>
               </div>
             </div>
           )}
 
-          {localStorage.getItem("userId") == userId &&
-            (<div className="profile buttons">
+          {localStorage.getItem("userId") == userId && (
+            <div className="profile buttons">
               {!isEditable && (
                 <button
                   className="profile general-button"
@@ -163,8 +167,7 @@ const Profile = (props) => {
                 </button>
               )}
             </div>
-            )
-          }
+          )}
         </div>
       </BaseContainer>
     </AppContainer>
@@ -177,7 +180,6 @@ const Profile = (props) => {
   function setDefaultValues() {
     setUsername(user?.username);
   }
-
 };
 /**
  * You can get access to the history object's properties via the withRouter.
