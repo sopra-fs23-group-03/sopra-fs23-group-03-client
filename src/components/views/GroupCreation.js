@@ -21,6 +21,7 @@ const GroupCreation = (props) => {
   const [invitedUsers, setInvitedUsers] = useState([]);
   const [votingType, setVotingType] = useState("MAJORITYVOTE");
   const [hostId, setHostId] = useState(localStorage.getItem("userId"));
+  //const [group, setGroup] = useState(null);
 
   const createGroup = async () => {
     try {
@@ -101,11 +102,11 @@ const GroupCreation = (props) => {
     user: PropTypes.object,
   };
 
-  return (
-    <AppContainer>
-      <BaseContainer>
-        <div className="group-creation form">
-          <h1 className="group-creation title"> Form your group </h1>
+    return (
+      <AppContainer>
+        <BaseContainer>
+            <div className="group-creation form">
+              <h1 className="group-creation title"> Form your group </h1>
 
           <div className="group-creation field">
             <div className="group-creation label"> Group Name </div>
