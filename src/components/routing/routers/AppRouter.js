@@ -61,7 +61,7 @@ const AppRouter = () => {
           </GameGuard>
         </Route>
 
-        <Route path="/final">
+        <Route path="/final/:groupId">
           <GameGuard>
             <Final />
           </GameGuard>
@@ -73,25 +73,25 @@ const AppRouter = () => {
           </GameGuard>
         </Route>
 
-        <Route exact path="/groupforming/host/:userId">
+        <Route exact path="/groupforming/:groupId/host">
           <GameGuard>
             <GroupFormingHost />
           </GameGuard>
         </Route>
 
-        <Route exact path="/groupforming/guest/:userId">
+        <Route exact path="/groupforming/:groupId/guest">
           <GameGuard>
             <GroupFormingGuest />
           </GameGuard>
         </Route>
 
-        <Route exact path="/ingredients/:userId">
+        <Route exact path="/ingredients/:groupId">
           <GameGuard>
             <Ingredient />
           </GameGuard>
         </Route>
 
-        <Route exact path="/invitation/:groupName">
+        <Route exact path="/invitation/:groupId">
           <GameGuard>
             <GroupFormingGuest />
           </GameGuard>

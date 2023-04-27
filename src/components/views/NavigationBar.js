@@ -13,6 +13,8 @@ const NavigationBar = () => {
   const [showNotificationBar, setShowNotificationBar] = useState(false); // For displaying the notification bar
   const [hasNewNotifications, setHasNewNotifications] = useState(false); // For displaying the indicator
   const [notificationData, setNotificationData] = useState([]); // For fetching the notification content
+  const [notificationButtonClicked, setNotificationButtonClicked] =
+    useState(false);
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
@@ -33,8 +35,6 @@ const NavigationBar = () => {
     }
   };
 
-  // Code to update the indicator based on the presence of new notifications
-  //For Future Use when is connected to backend
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
@@ -46,6 +46,13 @@ const NavigationBar = () => {
         if (data.length > 0) {
           setHasNewNotifications(true);
           setNotificationData(data);
+          if (notificationButtonClicked) {
+            setShowNotificationBar(true);
+          }
+        } else {
+          setHasNewNotifications(false);
+          setNotificationData([]);
+          setShowNotificationBar(false);
         }
       } catch (error) {
         console.error(error);
@@ -53,8 +60,15 @@ const NavigationBar = () => {
     };
 
     fetchNotifications();
+
+    //   // Fetch notifications every 5 seconds
+    const intervalId = setInterval(() => {
+      fetchNotifications();
+    }, 2000);
+
+    // Clear the interval on unmount
+    return () => clearInterval(intervalId);
   }, []);
-  //////////////////////////
 
   return (
     <div className="navbar container">
@@ -89,7 +103,10 @@ const NavigationBar = () => {
             className={`navbar notification-icon ${
               hasNewNotifications ? "has-new-notifications" : ""
             }`}
-            onClick={() => setShowNotificationBar(!showNotificationBar)}
+            onClick={() => {
+              setShowNotificationBar(!showNotificationBar);
+              setNotificationButtonClicked(true);
+            }}
           >
             notifications
           </button>

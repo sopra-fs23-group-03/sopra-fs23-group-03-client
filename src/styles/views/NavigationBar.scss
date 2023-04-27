@@ -83,20 +83,8 @@
     cursor: pointer;
     position: relative;
   }
-  &.has-new-notifications {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: red;
-  }
 
-  //just for testing, remove later when the backend is connected
-  //////////////////
-  .notification-icon::after {
+  .has-new-notifications::after {
     content: "";
     position: absolute;
     right: 0;

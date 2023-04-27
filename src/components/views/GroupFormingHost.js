@@ -7,7 +7,8 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
-//http://localhost:x3000/groupforming/host/:1
+import Group from "models/Group";
+import { useParams } from "react-router-dom";
 
 const Player = ({ user }) => (
   <div className="player container">
@@ -21,38 +22,38 @@ Player.propTypes = {
 
 const GroupFormingHost = () => {
   const history = useHistory();
+  const { groupId } = useParams();
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
-  const [userId, setId] = useState(localStorage.getItem("userId"));
 
+  const [userId, setId] = useState(localStorage.getItem("userId"));
   const [users, setUsers] = useState(null);
-  // const [group, setGroup] = useState(null);
+  const [group, setGroup] = useState(null);
 
   useEffect(() => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
-        const response = await api.get("/users", { headers });
-        //const groupsResponse = await api.get("/groups");
-
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        // Get the returned users and update the state.
-        setUsers(response.data);
-        //setGroups(groupsResponse.data);
-
-        // See here to get more data.
-        console.log(response);
+        const groupResponse = await api.get(`/groups/${groupId}`, { headers });
+        const membersResponse = await api.get(`/groups/${groupId}/members`, {
+          headers,
+        });
+        // Get the returned group and update the state.
+        setGroup(new Group(groupResponse.data));
+        // Get the returned members and update the state.
+        setUsers(membersResponse.data);
+        console.log("groupresponse", groupResponse);
+        console.log("memberresponse", membersResponse);
       } catch (error) {
         console.error(
-          `Something went wrong while fetching the users: \n${handleError(
+          `Something went wrong while fetching the group and its members: \n${handleError(
             error
           )}`
         );
         console.error("Details:", error);
         alert(
-          "Something went wrong while fetching the users! See the console for details."
+          "Something went wrong while fetching the group and its members! See the console for details."
         );
       }
     }
@@ -69,7 +70,8 @@ const GroupFormingHost = () => {
       <div className="groupforming main-container">
         <div className=" groupforming sidebar">
           <div className="groupforming sidebar-buttons">
-            <i className="material-icons">person</i> &nbsp; Host: host_user
+            <i className="material-icons">person</i> &nbsp; Host:{" "}
+            {group.hostName}
             &nbsp;
           </div>
 
@@ -78,7 +80,7 @@ const GroupFormingHost = () => {
             &nbsp; Voting System: Majority &nbsp;
           </div>
 
-          <ul className="groupforming invite-users">
+          {/* <ul className="groupforming invite-users">
             <h3 className="player container">
               <i className="material-icons">people_outline</i>
               &nbsp; Invite Users &nbsp;
@@ -95,34 +97,34 @@ const GroupFormingHost = () => {
                 {user.username}
               </div>
             ))}
-          </ul>
+          </ul> */}
         </div>
 
         <BaseContainer>
           <div className="groupforming form">
             <div className="groupforming main">
               <i className="group-icon">groups</i>
-              <div className="groupforming text"> Group A </div>
+              <div className="groupforming text"> {group.groupName}</div>
 
               <div className="groupforming sections">
                 <div className="groupforming preferences">
                   <div className="groupforming titles">
-                    Guests
+                    Members
                     <div className="groupforming group-join-requests">
-                      {users.map((user) => (
+                      {users.map((member) => (
                         <div
                           className="groupforming group-join-request"
-                          key={user.username}
+                          key={member.username}
                         >
                           <span className="groupforming player username">
-                            {user.username}
+                            {member.username}
                           </span>
                           {/* <button className="material-icons reply-button">
-                            done
-                          </button> */}
-                          <button className="material-icons reply-button">
-                            delete_outline
-                          </button>
+      done
+    </button> */}
+                          {/* <button className="material-icons reply-button">
+      delete_outline
+    </button> */}
                         </div>
                       ))}
                       {/* <div className="groupforming group-join-request">
@@ -143,7 +145,7 @@ const GroupFormingHost = () => {
                   </div>
                 </div>
                 <div className="groupforming buttons">
-                  <button
+                  {/* <button
                     className="groupforming cancel-button"
                     width="24%"
                     onClick={() => {
@@ -155,19 +157,20 @@ const GroupFormingHost = () => {
                         history.push("/game");
                       }
                     }}
-                    // onClick={() => {
-                    //   history.push("/dashboard");
+                    onClick={() => {
+                      history.push("/dashboard");
                     // send notification to all users in group
                     // cancel the notifications for the invites
-                    // }}
+                    }}
                   >
                     Delete Group
-                  </button>
+                  </button> */}
                   <button
                     className="groupforming general-button"
                     width="24%"
                     onClick={() => {
-                      history.push("/ingredients/:1");
+                      //history.push(`/ingredients/:${groupId}`);
+                      history.push(`/final/:${groupId}`);
                     }}
                   >
                     Continue
