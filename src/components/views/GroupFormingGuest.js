@@ -2,11 +2,13 @@ import { useEffect, useState, useMemo } from "react";
 import { api, handleError } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
 import { Button } from "components/ui/Button";
+import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
+import Group from "models/Group";
 //http://localhost:3000/groupforming/guest:1
 
 const Player = ({ user }) => (
@@ -21,39 +23,39 @@ Player.propTypes = {
 
 const GroupFormingGuest = () => {
   const history = useHistory();
+  const guestId = localStorage.getItem("userId");
+  const { groupId } = useParams();
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
   const [userId, setId] = useState(localStorage.getItem("userId"));
-
   const [users, setUsers] = useState(null);
-  // const [group, setGroup] = useState(null);
+  const [group, setGroup] = useState(null);
   const [joinedGroup, setJoinedGroup] = useState(false); // add state variable for tracking if user joined group
 
   useEffect(() => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
-        const response = await api.get("/users", { headers });
-        //const groupsResponse = await api.get("/groups");
-
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        // Get the returned users and update the state.
-        setUsers(response.data);
-        //setGroups(groupsResponse.data);
-
-        // See here to get more data.
-        console.log(response);
+        const groupResponse = await api.get(`/groups/${groupId}`, { headers });
+        const membersResponse = await api.get(`/groups/${groupId}/members`, {
+          headers,
+        });
+        // Get the returned group and update the state.
+        setGroup(new Group(groupResponse.data));
+        // Get the returned members and update the state.
+        setUsers(membersResponse.data);
+        console.log("groupresponse", groupResponse);
+        console.log("memberresponse", membersResponse);
       } catch (error) {
         console.error(
-          `Something went wrong while fetching the users: \n${handleError(
+          `Something went wrong while fetching the group and its members: \n${handleError(
             error
           )}`
         );
         console.error("Details:", error);
         alert(
-          "Something went wrong while fetching the users! See the console for details."
+          "Something went wrong while fetching the group and its members! See the console for details."
         );
       }
     }
@@ -61,36 +63,55 @@ const GroupFormingGuest = () => {
     fetchData();
   }, []);
 
+  const handleAcceptInvitation = async (groupId, guestId) => {
+    try {
+      console.log(groupId, guestId);
+      await api.put(
+        `/groups/${groupId}/invitations/accept`,
+        JSON.stringify({ guestId }),
+        {
+          headers,
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+    history.push(`/groupforming/${groupId}/guest`);
+  };
+
+  const handleRejectInvitation = async (groupId, guestId) => {
+    try {
+      console.log(groupId, guestId);
+      await api.put(
+        `/groups/${groupId}/invitations/reject`,
+        JSON.stringify({ guestId }),
+        {
+          headers,
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   let content = <Spinner />;
 
   if (users) {
     const otherUsers = users.filter((user) => user.id !== userId);
 
     content = (
-      // <div className="groupforming main-container">
-      //   <div className=" groupforming sidebar">
-      //     <div className="groupforming sidebar-buttons">
-      //       <i className="material-icons">person</i> &nbsp; Host: host_user
-      //       &nbsp;
-      //     </div>
-
-      //     <div className="groupforming sidebar-buttons">
-      //       <i className="material-icons">bar_chart</i>
-      //       &nbsp; Voting System: Majority &nbsp;
-      //     </div>
-      //   </div>
-
       <BaseContainer>
         <div className="groupforming form">
           <div className="groupforming main">
             <i className="group-icon">groups</i>
             {/* <i className="group-icon" data-feather="users"></i> */}
-            <div className="groupforming text"> Group A </div>
+            <div className="groupforming text"> {group.groupName}</div>
 
             <div className="groupforming buttons">
               {" "}
               <div className="groupforming sidebar-buttons">
-                <i className="material-icons">person</i> &nbsp; Host: host_user
+                <i className="material-icons">person</i> &nbsp; Host: &nbsp;{" "}
+                {group.hostName}
                 &nbsp;{" "}
               </div>
               <div className="groupforming sidebar-buttons">
@@ -102,7 +123,7 @@ const GroupFormingGuest = () => {
             <div className="groupforming sections">
               <div className="groupforming preferences">
                 <div className="groupforming titles">
-                  Guests
+                  Members
                   <div className="groupforming group-join-requests">
                     {users.map((user) => (
                       <div
@@ -114,12 +135,6 @@ const GroupFormingGuest = () => {
                         </span>
                       </div>
                     ))}
-                    <div className="groupforming group-join-request">
-                      <span className=" player username">player B</span>
-                    </div>
-                    <div className="groupforming group-join-request">
-                      <span className="player username ">player C</span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -144,7 +159,12 @@ const GroupFormingGuest = () => {
                     className="groupforming general-button"
                     width="24%"
                     onClick={() => {
-                      history.push("/ingredients/:1");
+                      handleRejectInvitation(
+                        groupId,
+                        localStorage.getItem("userId")
+                      );
+                      // history.push("/ingredients/:1");
+                      history.push(`/final/:${groupId}`);
                     }}
                   >
                     I'm ready
@@ -156,6 +176,7 @@ const GroupFormingGuest = () => {
                     onClick={() => {
                       // join the group
                       setJoinedGroup(true);
+                      handleAcceptInvitation(groupId, guestId);
                     }}
                   >
                     Join Group

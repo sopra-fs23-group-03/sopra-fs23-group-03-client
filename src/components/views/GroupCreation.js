@@ -7,6 +7,7 @@ import AppContainer from "components/ui/AppContainer";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import Group from "models/Group"; //added
+import NotificationBar from "components/views/NotificationBar";
 
 const GroupCreation = (props) => {
   const history = useHistory();
@@ -32,15 +33,21 @@ const GroupCreation = (props) => {
       const response = await api.post("/groups", requestBody, { headers });
       const group = new Group(response.data); //added
       const groupId = group.id;
-      console.log(invitedUsers)
+      console.log(invitedUsers);
 
-      if (!Array.isArray(invitedUsers) || invitedUsers.some(id => typeof id !== 'number')) {
-        throw new Error('invitedUsers must be an array of Long values');
+      if (
+        !Array.isArray(invitedUsers) ||
+        invitedUsers.some((id) => typeof id !== "number")
+      ) {
+        throw new Error("invitedUsers must be an array of Long values");
       }
-      await api.post(`/groups/${groupId}/invitations`, invitedUsers, { headers });
-      
+      await api.post(`/groups/${groupId}/invitations`, invitedUsers, {
+        headers,
+      });
+      setInvitedUsers(invitedUsers);
+      <NotificationBar invitedUsers={invitedUsers} />;
 
-      history.push(`/groupforming/host/${localStorage.getItem("userId")}`);
+      history.push(`/groupforming/${groupId}/host`);
     } catch (error) {
       console.error(
         `Something went wrong while creating the group: \n${handleError(error)}`
