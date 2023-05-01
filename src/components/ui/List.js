@@ -16,8 +16,8 @@ const AddTaskForm = ({ addTask }) => {
         className="list input"
         type="text"
         value={value}
-        placeholder="Add new entry..."
-        onChange={(e) => setValue(e.target.value)}
+        placeholder="add new entry"
+        onChange={e => setValue(e.target.value)}
       />
       <button className="list button" type="submit">
         <i className="list icon">add</i>
@@ -27,12 +27,8 @@ const AddTaskForm = ({ addTask }) => {
 };
 
 export const ToDoList = () => {
-  const [tasks, setTasks] = useState([
-    {
-      text: "Example",
-      isCompleted: false,
-    },
-  ]);
+
+  const [tasks, setTasks] = useState([]);
 
   const addTask = (text) =>
     isMaxReached() ? null : setTasks([...tasks, { text }]);

@@ -4,6 +4,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import ToDoList from "components/ui/List";
 import { useParams } from "react-router-dom";
 import { api, handleError } from "helpers/api";
+import { useHistory } from "react-router-dom";
 import AppContainer from "components/ui/AppContainer";
 import PropTypes from "prop-types";
 
@@ -28,16 +29,53 @@ InfoField.propTypes = {
   onChange: PropTypes.func,
 };
 
-const Profile = (props) => {
+const Profile = () => {
+  const history = useHistory()
   const { userId } = useParams();
   const [user, setUser] = useState(null);
   //isEditable is a variable that is set to false by defalut and becomes true when the modify profile button is pressed
   const [isEditable, setIsEditable] = useState(false);
 
-  const [username, setUsername] = useState(user?.username);
-  const [password, setPassword] = useState(null);
-  const [diet, setDiet] = useState(null);
+  const [allergy1, setAllergy1] = useState("");
+  const [allergy2, setAllergy2] = useState("");
+  const [allergy3, setAllergy3] = useState("");
 
+  const [favc1, setFavc1] = useState("");
+  const [favc2, setFavc2] = useState("");
+  const [favc3, setFavc3] = useState("");
+
+
+  const [username, setUsername] = useState(user?.username);
+  const [currentPassword, setCurrentPassword] = useState(null);
+  const [newPassword, setNewPassword] = useState(null);
+  const [diet, setDiet] = useState(null);
+  const [allergies, setAllergies] = useState([]);
+  
+
+  const handleUpdate = async () => {
+    try {
+      let allergies  = [];
+      allergies.length = 0;
+      allergies.push(allergy1);
+      allergies.push(allergy2);
+      allergies.push(allergy3);
+      let favcuisine = [];
+      favcuisine.push(favc3);
+      favcuisine.push(favc2);
+      favcuisine.push(favc1);
+      const requestBody = JSON.stringify({ username : username, specialDiet : diet, password : newPassword, currentPassword : currentPassword, allergies : allergies, favoriteCuisine : favcuisine });
+      await api.put(`/users/${userId}`, requestBody, { headers });
+      window.location.reload();
+      //history.push(`/profile/${userId}`);
+    } catch (error) {
+      console.error(
+        `Something went wrong while updating the profile: \n${handleError(error).info
+        }`
+      );
+    }
+  };
+
+    
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
@@ -45,10 +83,11 @@ const Profile = (props) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await api.get("/users/" + userId, { headers });
+        const response = await api.get(`/users/${userId}`, { headers });
 
         // Get the returned users and update the state.
         setUser(response.data);
+        setAllergies(user?.allergiesSet)
 
         console.log(response);
       } catch (error) {
@@ -67,6 +106,7 @@ const Profile = (props) => {
     fetchData();
   }, []);
 
+
   return (
     <AppContainer>
       <BaseContainer>
@@ -78,10 +118,7 @@ const Profile = (props) => {
             )}
             {!isEditable && (
               <div className="profile diet">
-                {" "}
-                {user?.specialDiet === null
-                  ? "diet preference"
-                  : user?.specialDiet}{" "}
+                {user?.specialDiet}
               </div>
             )}
           </div>
@@ -90,43 +127,45 @@ const Profile = (props) => {
             <div className="profile sections">
               <div className="profile preferences">
                 <div className="profile titles">Allergies</div>
-
-                <div className="profile item">Wheat</div>
-                <div className="profile item">Milk</div>
+                {user && user.allergies && user.allergies.filter(Boolean).map((allergy) => (<div className="profile item" key={allergy}> {allergy} </div>))}
               </div>
 
               <div className="profile preferences">
                 <div className="profile titles">Favourite cuisine</div>
-
-                <div className="profile item">Pizza</div>
-                <div className="profile item">Mexican</div>
+                {user && user.favoriteCuisine && user.favoriteCuisine.filter(Boolean).map((cuisine) => (<div className="profile item" key={cuisine}> {cuisine} </div>))}
               </div>
             </div>
           )}
 
           {isEditable && (
             <div className="profile modify-section">
-              <InfoField
-                label="Username"
-                value={username}
-                onChange={(u) => setUsername(u)}
-              />
-              <InfoField label="Current Password" />
-              <InfoField label="Diet preference" onChange={setDiet} />
-              <InfoField label="New Password" onChange={setPassword} />
+              <InfoField label="Username" value={username} onChange={(u)=>setUsername(u)} />
+              <InfoField label="Current Password" onChange={(cp)=>setCurrentPassword(cp)}/>
+              <InfoField label="Diet preference" value= {diet} onChange={(d)=>setDiet(d)}/>
+              <InfoField label="New Password" onChange={(np)=>setNewPassword(np)}/>
+              
 
               <div className="profile list">
                 <div className="profile titles">Allergies</div>
+                <div className="profile preference-section"> 
 
-                <ToDoList></ToDoList>
+                <InfoField onChange={(o)=>setAllergy1(o)}/>
+                <InfoField onChange={(p)=>setAllergy2(p)}/>
+                <InfoField onChange={(q)=>setAllergy3(q)}/>
+                </div>
+                
               </div>
 
               <div className="profile list">
                 <div className="profile titles">Favorite cuisine</div>
-
-                <ToDoList></ToDoList>
-              </div>
+                <div className="profile preference-section"> 
+                <InfoField onChange={(r)=>setFavc1(r)}/>
+                <InfoField onChange={(s)=>setFavc2(s)}/>
+                <InfoField onChange={(t)=>setFavc3(t)}/>
+                </div>
             </div>
+            </div>
+
           )}
 
           {localStorage.getItem("userId") == userId && (
@@ -161,6 +200,7 @@ const Profile = (props) => {
                   width="24%"
                   onClick={() => {
                     toggleEdit();
+                    handleUpdate();
                   }}
                 >
                   Save

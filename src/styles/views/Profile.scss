@@ -74,7 +74,6 @@
     font-size: 18px;
     text-align: left;
     font-weight: 600;
-    margin-bottom: 20px;
   }
 
   &.field {
@@ -89,10 +88,11 @@
     width: 100%;
     padding-left: 15px;
     border: 1px solid #e1e1e1;
-    border-radius: 0.75em;
+    border-radius: 8px;
     margin-bottom: 20px;
     background: #ededed;
     color: #333333;
+    padding: 3px 10px;
   }
 
   &.icon {
@@ -163,21 +163,15 @@
     box-shadow: $dropShadow;
   }
 
+  &.preference-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80px;
+  }
+
   &.list {
     display: flex;
     flex-direction: column;
-    height: 20%;
-    display: flex;
-    width: 200px;
-    flex-direction: column;
-    white-space: nowrap;
-
-    ul {
-      margin: 0px;
-    }
-    li {
-      margin-top: 0px;
-      width: 93.5%;
-    }
   }
 }
