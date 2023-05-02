@@ -46,9 +46,9 @@ const Profile = () => {
 
 
   const [username, setUsername] = useState(user?.username);
-  const [currentPassword, setCurrentPassword] = useState(null);
-  const [newPassword, setNewPassword] = useState(null);
-  const [diet, setDiet] = useState(null);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [diet, setDiet] = useState("");
   const [allergies, setAllergies] = useState([]);
   
 
@@ -68,7 +68,7 @@ const Profile = () => {
       window.location.reload();
       //history.push(`/profile/${userId}`);
     } catch (error) {
-      console.error(
+      alert(
         `Something went wrong while updating the profile: \n${handleError(error).info
         }`
       );
@@ -83,23 +83,19 @@ const Profile = () => {
   useEffect(() => {
     async function fetchData() {
       try {
+
         const response = await api.get(`/users/${userId}`, { headers });
 
         // Get the returned users and update the state.
         setUser(response.data);
         setAllergies(user?.allergiesSet)
 
-        console.log(response);
       } catch (error) {
-        console.error(
-          `Something went wrong while fetching the users: \n${
-            handleError(error).info
-          }`
+        alert(
+          `Something went wrong while getting this user: \n ${ handleError(error).info }`
         );
         console.error("Details:", error);
-        alert(
-          "Something went wrong while fetching the users! See the console for details."
-        );
+        history.push("/game")
       }
     }
 
@@ -168,7 +164,7 @@ const Profile = () => {
 
           )}
 
-          {localStorage.getItem("userId") == userId && (
+          {localStorage.getItem("userId") == user?.id && (
             <div className="profile buttons">
               {!isEditable && (
                 <button
