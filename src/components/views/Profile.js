@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import "styles/views/Profile.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import ToDoList from "components/ui/List";
+import Dropdown from "components/ui/Dropdown";
 import { useParams } from "react-router-dom";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
@@ -46,10 +47,23 @@ const Profile = () => {
 
 
   const [username, setUsername] = useState(user?.username);
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState(null);
+  const [newPassword, setNewPassword] = useState(null);
   const [diet, setDiet] = useState("");
   const [allergies, setAllergies] = useState([]);
+
+  const options = [
+    {value:"vegan", label: "vegan"},
+    {value:"vegetarian", label: "vegetarian"},
+    {value:"paleo", label: "paleo"},
+    {value:"gluten-free", label: "gluten-free"},
+    {value:"ketogenic", label: "ketogenic"},
+    {value:"lacto-vegetarian", label: "lacto-vegetarian"},
+    {value:"ovo-vegetarian", label: "ovo-vegetarian"},
+    {value:"pescetarian", label: "pescetarian"},
+    {value:"omnivore", label: "omnivore"},
+    {value:"primal", label: "primal"}
+  ]
   
 
   const handleUpdate = async () => {
@@ -137,7 +151,16 @@ const Profile = () => {
             <div className="profile modify-section">
               <InfoField label="Username" value={username} onChange={(u)=>setUsername(u)} />
               <InfoField label="Current Password" onChange={(cp)=>setCurrentPassword(cp)}/>
-              <InfoField label="Diet preference" value= {diet} onChange={(d)=>setDiet(d)}/>
+              
+              <div className="profile diet-dropdown">
+              <label className="profile titles"> Diet preference </label>
+              <Dropdown 
+              placeHolder="select diet"
+              value = {diet} 
+              options={options} 
+              onChange={(d) => setDiet(d.value)}/>
+              </div>
+
               <InfoField label="New Password" onChange={(np)=>setNewPassword(np)}/>
               
 
@@ -145,7 +168,7 @@ const Profile = () => {
                 <div className="profile titles">Allergies</div>
                 <div className="profile preference-section"> 
 
-                <InfoField onChange={(o)=>setAllergy1(o)}/>
+                <InfoField value = {user.allergies[0]} onChange={(o)=>setAllergy1(o)}/>
                 <InfoField onChange={(p)=>setAllergy2(p)}/>
                 <InfoField onChange={(q)=>setAllergy3(q)}/>
                 </div>
