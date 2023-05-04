@@ -21,7 +21,16 @@ const GroupCreation = (props) => {
   const [invitedUsers, setInvitedUsers] = useState([]);
   const [votingType, setVotingType] = useState("MAJORITYVOTE");
   const [hostId, setHostId] = useState(localStorage.getItem("userId"));
-  //const [group, setGroup] = useState(null);
+  
+
+  const handleMajorityButton = () => {
+    setVotingType("MAJORITYVOTE");
+  }
+
+  const handlePointsButton = () => {
+    setVotingType("POINTDISTRIBUTION")
+  }
+  
 
   const createGroup = async () => {
     try {
@@ -64,7 +73,6 @@ const GroupCreation = (props) => {
       try {
         const response = await api.get("/users", { headers });
         setUsers(response.data);
-        console.log(response);
       } catch (error) {
         console.error(
           `Something went wrong while fetching the users: \n${handleError(
@@ -76,6 +84,7 @@ const GroupCreation = (props) => {
           "Something went wrong while fetching the users! See the console for details."
         );
       }
+      console.log(invitedUsers, groupName);
     }
 
     fetchData();
@@ -121,17 +130,17 @@ const GroupCreation = (props) => {
           <div className="group-creation field">
             <div className="group-creation label"> Voting Type </div>
             <div className="group-creation voting">
-              <button className="group-creation voting-button">
+              <button className="group-creation voting-button" onClick={handlePointsButton} style={{backgroundColor: votingType==="POINTDISTRIBUTION"? "#333333" : ""}}>
                 <i className="group-creation icon">timeline</i>
                 Point Distribution
               </button>
-              <button className="group-creation voting-button majority">
+              <button className="group-creation voting-button majority" onClick={handleMajorityButton} style={{backgroundColor: votingType==="MAJORITYVOTE"? "#333333" : ""}}>
                 <i className="group-creation icon">star</i>
                 Majority
               </button>
             </div>
           </div>
-
+          
           <div className="group-creation field">
             <div className="group-creation label">
               Who do you want to invite?
@@ -158,18 +167,19 @@ const GroupCreation = (props) => {
             </div>
 
             <div className="group-creation buttons">
-              <div
+              <button
                 className="group-creation button"
                 onClick={() => history.push("/game")}
               >
                 Delete group
-              </div>
-              <div
+              </button>
+              <button
                 className="group-creation button continue"
+                disabled = {groupName === "" || invitedUsers.length === 0}
                 onClick={createGroup}
               >
                 Continue
-              </div>
+              </button>
             </div>
           </div>
         </div>
