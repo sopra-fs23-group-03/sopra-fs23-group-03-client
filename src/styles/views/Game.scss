@@ -85,7 +85,12 @@
     &.container {
       display: flex;
       flex-direction: row;
-      //max-width: 10em;
+      max-width: 10em;
+      // if name is too long, it will be cut off and replaced with "..."
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
       //padding: 1px;
       margin: 0.2em 0;
       border-radius: $borderRadius;
@@ -149,7 +154,7 @@
     letter-spacing: 0.1px;
     //margin-right: 3em;
     white-space: nowrap;
-    width: 80px;
+    width: 120px;
   }
 
   &.group {
@@ -189,7 +194,7 @@
     //padding: 0.5rem;
     //box-shadow: 0px 4px 2px rgba(0.25, 0.25, 0.25, 0.25);
     border-radius: 10px;
-    margin-bottom: -3px;
+    margin-bottom: -6px;
     //min-width: 630px;
   }
 
@@ -199,9 +204,12 @@
     line-height: 21px;
     letter-spacing: 0.1px;
     margin-left: 0em;
+
+    width: 99px;
+    max-width: 99px;
     white-space: nowrap;
-    width: 59px;
-    //background: #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .host-text {
@@ -210,9 +218,11 @@
     line-height: 21px;
     letter-spacing: 0.1px;
     //margin-right: 3em;
+    width: 83px;
+    max-width: 83px;
     white-space: nowrap;
-    width: 39px;
-    //background: #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &.group-members {
@@ -225,37 +235,8 @@
     margin-right: 0em;
     //padding: none;
     background: none;
-    width: 230px;
-    max-width: 230px;
+    width: 260px;
+    max-width: 260px;
     overflow-x: auto;
-    //background: #000000;
   }
-
-  // &.group-container-labels {
-  //   display: flex;
-  //   flex-wrap: wrap;
-  //   background: #f1f1f5;
-  //   height: 50px;
-  //   padding: 0.5rem;
-  //   box-shadow: 0px 4px 2px rgba(0.25, 0.25, 0.25, 0.25);
-  //   border-radius: 10px;
-  //   margin-bottom: 10px;
-  //   //min-width: 630px;
-
-  //   .label-container {
-  //     width: 33.3%;
-  //     display: flex;
-  //     flex-direction: column;
-
-  //     .label-text {
-  //       font-weight: 600;
-  //       font-size: 14px;
-  //       line-height: 21px;
-  //       color: #92929d;
-  //       letter-spacing: 0.1px;
-  //       margin-right: 3em;
-  //       white-space: nowrap;
-  //     }
-  //   }
-  // }
 }
