@@ -179,7 +179,9 @@ const Game = () => {
                   <li className="game group-members">
                     {members[group.id] &&
                       members[group.id].map((member) => (
-                        <Player key={member.id} user={member} hideStatus />
+                        <li className="game player username">
+                          {member.username}
+                        </li>
                       ))}
                   </li>
                 </ul>
