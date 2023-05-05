@@ -3,6 +3,7 @@ import "styles/views/Profile.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import ToDoList from "components/ui/List";
 import Dropdown from "components/ui/Dropdown";
+import MultiDropdown from "components/ui/MultiDropdown";
 import { useParams } from "react-router-dom";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
@@ -37,20 +38,15 @@ const Profile = () => {
   //isEditable is a variable that is set to false by defalut and becomes true when the modify profile button is pressed
   const [isEditable, setIsEditable] = useState(false);
 
-  const [allergy1, setAllergy1] = useState("");
-  const [allergy2, setAllergy2] = useState("");
-  const [allergy3, setAllergy3] = useState("");
-
-  const [favc1, setFavc1] = useState("");
-  const [favc2, setFavc2] = useState("");
-  const [favc3, setFavc3] = useState("");
-
-
   const [username, setUsername] = useState(user?.username);
   const [currentPassword, setCurrentPassword] = useState(null);
   const [newPassword, setNewPassword] = useState(null);
-  const [diet, setDiet] = useState("");
+  const [diet, setDiet] = useState(null);
   const [allergies, setAllergies] = useState([]);
+
+  const allergyArray = [];
+
+  const cuisineArray = [];
 
   const options = [
     {value:"vegan", label: "vegan"},
@@ -64,20 +60,53 @@ const Profile = () => {
     {value:"omnivore", label: "omnivore"},
     {value:"primal", label: "primal"}
   ]
+
+  const allergens = [
+    {value:"dairy", label: "dairy"},
+    {value:"egg", label: "egg"},
+    {value:"gluten", label: "gluten"},
+    {value:"grain", label: "grain"},
+    {value:"peanut", label: "peanut"},
+    {value:"seafood", label: "seafood"},
+    {value:"sesame", label: "sesame"},
+    {value:"shellfish", label: "shellfish"},
+    {value:"soy", label: "soy"},
+    {value:"sulfite", label: "sulfite"},
+    {value:"tree-nut", label: "tree-nut"},
+    {value:"wheat", label: "wheat"}
+  ]
+
+  const cuisines = [
+    {value:"african", label: "african"},
+    {value:"american", label: "american"},
+    {value:"british", label: "british"},
+    {value:"cajun", label: "cajun"},
+    {value:"caribbean", label: "caribbean"},
+    {value:"chinese", label: "chinese"},
+    {value:"eastern european", label: "eastern european"},
+    {value:"european", label: "european"},
+    {value:"french", label: "french"},
+    {value:"german", label: "german"},
+    {value:"greek", label: "greek"},
+    {value:"indian", label: "indian"},
+    {value:"irish", label: "irish"},
+    {value:"italian", label: "italian"},
+    {value:"japanese", label: "japanese"},
+    {value:"jewish", label: "jewish"},
+    {value:"korean", label: "korean"},
+    {value:"mediterranean", label: "mediterranean"},
+    {value:"mexican", label: "mexican"},
+    {value:"middle eastern", label: "middle eastern"},
+    {value:"nordic", label: "nordic"},
+    {value:"spanish", label: "spanish"},
+    {value:"thai", label: "thai"},
+    {value:"vietnamese", label: "vietnamese"}
+  ]
   
 
   const handleUpdate = async () => {
     try {
-      let allergies  = [];
-      allergies.length = 0;
-      allergies.push(allergy1);
-      allergies.push(allergy2);
-      allergies.push(allergy3);
-      let favcuisine = [];
-      favcuisine.push(favc3);
-      favcuisine.push(favc2);
-      favcuisine.push(favc1);
-      const requestBody = JSON.stringify({ username : username, specialDiet : diet, password : newPassword, currentPassword : currentPassword, allergies : allergies, favoriteCuisine : favcuisine });
+      const requestBody = JSON.stringify({ username : username, specialDiet : diet, password : newPassword, currentPassword : currentPassword, allergies : allergyArray, favoriteCuisine : cuisineArray });
       await api.put(`/users/${userId}`, requestBody, { headers });
       window.location.reload();
       //history.push(`/profile/${userId}`);
@@ -141,7 +170,7 @@ const Profile = () => {
               </div>
 
               <div className="profile preferences">
-                <div className="profile titles">Favourite cuisine</div>
+                <div className="profile titles">Favourite cuisines</div>
                 {user && user.favoriteCuisine && user.favoriteCuisine.filter(Boolean).map((cuisine) => (<div className="profile item" key={cuisine}> {cuisine} </div>))}
               </div>
             </div>
@@ -149,6 +178,7 @@ const Profile = () => {
 
           {isEditable && (
             <div className="profile modify-section">
+            <div className="profile singles">
               <InfoField label="Username" value={username} onChange={(u)=>setUsername(u)} />
               <InfoField label="Current Password" onChange={(cp)=>setCurrentPassword(cp)}/>
               
@@ -162,28 +192,33 @@ const Profile = () => {
               </div>
 
               <InfoField label="New Password" onChange={(np)=>setNewPassword(np)}/>
-              
-
-              <div className="profile list">
-                <div className="profile titles">Allergies</div>
-                <div className="profile preference-section"> 
-
-                <InfoField value = {user.allergies[0]} onChange={(o)=>setAllergy1(o)}/>
-                <InfoField onChange={(p)=>setAllergy2(p)}/>
-                <InfoField onChange={(q)=>setAllergy3(q)}/>
-                </div>
-                
               </div>
-
-              <div className="profile list">
-                <div className="profile titles">Favorite cuisine</div>
-                <div className="profile preference-section"> 
-                <InfoField onChange={(r)=>setFavc1(r)}/>
-                <InfoField onChange={(s)=>setFavc2(s)}/>
-                <InfoField onChange={(t)=>setFavc3(t)}/>
+              
+              <div className="profile dropdowns">
+                <div className="profile list">
+                  <div className="profile titles">Allergies</div>
+                  <MultiDropdown
+                  isSearchable
+                  isMulti
+                  placeHolder="add allergy"
+                  options={allergens}
+                  onChange={(a) => a.map((allergene) => allergyArray.push(allergene.value))}
+                  />                
                 </div>
-            </div>
-            </div>
+            
+                <div className="profile list">
+                  <div className="profile titles">Favorite cuisines</div>
+                  <MultiDropdown
+                  isSearchable
+                  isMulti
+                  placeHolder="add cuisine"
+                  options={cuisines}
+                  onChange={(a) => a.map((cuisine) => cuisineArray.push(cuisine.value))}
+                  />
+                  </div>
+                </div>
+              </div>
+              
 
           )}
 
