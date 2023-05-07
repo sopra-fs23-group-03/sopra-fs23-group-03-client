@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import AppRouter from "components/routing/routers/AppRouter";
 import AuthContext from "components/contexts/AuthContext";
+import { useState, useEffect } from "react";
+import { NotificationProvider } from "components/contexts/NotificationContext";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -10,14 +12,16 @@ const App = () => {
 
   useEffect(() => {
     localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
-  }, [isLoggedIn]);
+  }, []);
 
-  console.log(isLoggedIn);
+  console.log("isloggedin", isLoggedIn);
 
   return (
     <div>
       <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-        <AppRouter />
+        <NotificationProvider>
+          <AppRouter />
+        </NotificationProvider>
       </AuthContext.Provider>
     </div>
   );

@@ -1,23 +1,24 @@
-import React, { useContext, useState, useEffect, useMemo } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import "styles/views/NavigationBar.scss";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import AuthContext from "components/contexts/AuthContext";
 import NotificationBar from "components/views/NotificationBar";
-import { api, handleError } from "helpers/api";
+import { api } from "helpers/api";
+import {
+  NotificationContext,
+  NotificationProvider,
+} from "components/contexts/NotificationContext";
 
 const NavigationBar = () => {
   const history = useHistory();
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { notifications, hasNewNotifications } =
+    useContext(NotificationContext);
   const [showNotificationBar, setShowNotificationBar] = useState(false); // For displaying the notification bar
-  const [hasNewNotifications, setHasNewNotifications] = useState(false); // For displaying the indicator
-  const [notificationData, setNotificationData] = useState([]); // For fetching the notification content
   const [notificationButtonClicked, setNotificationButtonClicked] =
     useState(false);
-  const headers = useMemo(() => {
-    return { "X-Token": localStorage.getItem("token") };
-  }, []);
 
   const logout = async () => {
     try {
@@ -34,41 +35,6 @@ const NavigationBar = () => {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await api.get(
-          `/users/${localStorage.getItem("userId")}/invitations`,
-          { headers }
-        );
-        const data = response.data;
-        if (data.length > 0) {
-          setHasNewNotifications(true);
-          setNotificationData(data);
-          if (notificationButtonClicked) {
-            setShowNotificationBar(true);
-          }
-        } else {
-          setHasNewNotifications(false);
-          setNotificationData([]);
-          setShowNotificationBar(false);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchNotifications();
-
-    //   // Fetch notifications every 5 seconds
-    const intervalId = setInterval(() => {
-      fetchNotifications();
-    }, 2000);
-
-    // Clear the interval on unmount
-    return () => clearInterval(intervalId);
-  }, []);
 
   return (
     <div className="navbar container">
@@ -112,7 +78,7 @@ const NavigationBar = () => {
           </button>
           {showNotificationBar && (
             // Pass the notification data as a prop to the NotificationBar component
-            <NotificationBar notificationData={notificationData} />
+            <NotificationBar notificationData={notifications} />
           )}
 
           <button
