@@ -12,6 +12,7 @@ const InfoField = (props) => {
   return (
     <div className="final field">
       <label className="final label">{props.label}</label>
+      <input className="final input" />
       <span className="final input">{props.value}</span>
     </div>
   );

@@ -15,6 +15,7 @@ import GroupFormingGuest from "components/views/GroupFormingGuest";
 import GroupFormingHost from "components/views/GroupFormingHost";
 import Ingredient from "components/views/Ingredient";
 import IngredientSolo from "components/views/IngredientSolo";
+import IngredientsVoting from "components/views/IngredientsVoting";
 
 /**
  * Main router of your application.
@@ -100,6 +101,12 @@ const AppRouter = () => {
         <Route exact path="/solo">
           <GameGuard>
             <IngredientSolo />
+          </GameGuard>
+        </Route>
+
+        <Route exact path="/ingredientsvoting">
+          <GameGuard>
+            <IngredientsVoting />
           </GameGuard>
         </Route>
 

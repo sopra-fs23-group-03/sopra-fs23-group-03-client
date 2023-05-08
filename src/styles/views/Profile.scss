@@ -11,8 +11,16 @@
     height: 100%;
   }
 
+  &.singles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, auto);
+    grid-row-gap: 20px;
+    grid-column-gap: 40px;
+    background: none;
+  }
+
   &.main {
-    //padding: 20px;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -70,11 +78,23 @@
     text-align: center;
   }
 
+  &.diet-dropdown{
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.dropdowns{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    gap: 45px;
+  }
+
   &.titles {
     font-size: 18px;
     text-align: left;
     font-weight: 600;
-    margin-bottom: 20px;
   }
 
   &.field {
@@ -89,10 +109,11 @@
     width: 100%;
     padding-left: 15px;
     border: 1px solid #e1e1e1;
-    border-radius: 0.75em;
+    border-radius: 8px;
     margin-bottom: 20px;
     background: #ededed;
     color: #333333;
+    padding: 3px 10px;
   }
 
   &.icon {
@@ -131,7 +152,7 @@
   }
 
   &.cancel-button {
-    background: #979797;
+    background: #c3c3c3;
     box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
     border-radius: 32px;
     border: 0px;
@@ -155,29 +176,20 @@
     padding: 35px;
     padding-left: 10%;
     padding-right: 10%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(3, auto);
-    grid-row-gap: 20px;
-    grid-column-gap: 40px;
+    display: flex;
+    flex-direction: column;
     box-shadow: $dropShadow;
+  }
+
+  &.preference-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80px;
   }
 
   &.list {
     display: flex;
     flex-direction: column;
-    height: 20%;
-    display: flex;
-    width: 200px;
-    flex-direction: column;
-    white-space: nowrap;
-
-    ul {
-      margin: 0px;
-    }
-    li {
-      margin-top: 0px;
-      width: 93.5%;
-    }
   }
 }
