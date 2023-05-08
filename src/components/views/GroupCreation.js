@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 import Group from "models/Group"; //added
 import NotificationBar from "components/views/NotificationBar";
 
-const GroupCreation = (props) => {
+const GroupCreation = () => {
   const history = useHistory();
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
@@ -33,6 +33,17 @@ const GroupCreation = (props) => {
   
 
   const createGroup = async () => {
+
+    if (groupName.length < 3 || groupName.length > 9) {
+      alert("Group name has to be between 3 and 9 characters");
+      return;
+    }
+
+    if (groupName.includes(" ")) {
+      alert("Group name cannot include spaces");
+      return;
+    }
+
     try {
       const requestBody = {
         hostId: Number(hostId),

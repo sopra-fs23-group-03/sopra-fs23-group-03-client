@@ -4,16 +4,10 @@ import User from "models/User";
 import { useHistory, Link } from "react-router-dom"; //
 import { Button } from "components/ui/Button";
 import "styles/views/Login.scss";
-import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import AuthContext from "components/contexts/AuthContext";
 
-/*
-It is possible to add multiple components inside a single file,
-however be sure not to clutter your files with an endless amount!
-As a rule of thumb, use one file per component and only add small,
-specific components that belong to the main one in the same file.
- */
+
 const FormField = (props) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -66,12 +60,6 @@ const Register = (props) => {
       alert("The two passwords are not matching");
       return;
     }
-
-    // if (username === password) {
-    //   alert("Username and password can't be the same")
-    //   return;
-    // }
-
     doRegister();
   };
 
