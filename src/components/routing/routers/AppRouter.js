@@ -82,7 +82,7 @@ const AppRouter = () => {
 
         <Route exact path="/groupforming/:groupId/guest">
           <GameGuard>
-            <GroupFormingGuest />
+            <GroupFormingGuest buttonLabel={"Ready"} />
           </GameGuard>
         </Route>
 
@@ -94,7 +94,7 @@ const AppRouter = () => {
 
         <Route exact path="/invitation/:groupId">
           <GameGuard>
-            <GroupFormingGuest />
+            <GroupFormingGuest buttonLabel={"Join"} />
           </GameGuard>
         </Route>
 
@@ -103,6 +103,7 @@ const AppRouter = () => {
             <IngredientSolo />
           </GameGuard>
         </Route>
+
 
         <Route exact path="/ingredientsvoting/:groupId">
           <GameGuard>

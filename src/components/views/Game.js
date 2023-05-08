@@ -27,40 +27,17 @@ const Game = () => {
   }, []);
   const [userId, setId] = useState(localStorage.getItem("userId"));
 
-  // define a state variable (using the state hook).
-  // if this variable changes, the component will re-render, but the variable will
-  // keep its value throughout render cycles.
-  // a component can have as many state variables as you like.
-  // more information can be found under https://reactjs.org/docs/hooks-state.html
+  // define state variables for users and groups
   const [users, setUsers] = useState(null);
   const [groups, setGroups] = useState(null);
+  const [members, setMembers] = useState({});
 
-  // the effect hook can be used to react to change in your component.
-  // in this case, the effect hook is only run once, the first time the component is mounted
-  // this can be achieved by leaving the second argument an empty array.
-  // for more information on the effect hook, please see https://reactjs.org/docs/hooks-effect.html
+  // useEffect hook to fetch data for users
   useEffect(() => {
-    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-    async function fetchData() {
+    async function fetchUsers() {
       try {
         const response = await api.get("/users", { headers });
-        //const groupsResponse = await api.get("/groups");
-
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        // Get the returned users and update the state.
         setUsers(response.data);
-        //setGroups(groupsResponse.data);
-
-        // This is just some data for you to see what is available.
-        // Feel free to remove it.
-        console.log("request to:", response.request.responseURL);
-        console.log("status code:", response.status);
-        console.log("status text:", response.statusText);
-        console.log("requested data:", response.data);
-
-        // See here to get more data.
-        console.log(response);
       } catch (error) {
         console.error(
           `Something went wrong while fetching the users: \n${handleError(
@@ -74,13 +51,68 @@ const Game = () => {
       }
     }
 
-    fetchData();
+    fetchUsers();
+  }, []);
+
+  // useEffect hook to fetch data for group members
+  useEffect(() => {
+    async function fetchMembers(groupId) {
+      try {
+        const membersResponse = await api.get(`/groups/${groupId}/members`, {
+          headers,
+        });
+        setMembers((prevMembers) => {
+          return {
+            ...prevMembers,
+            [groupId]: membersResponse.data.map((member) => ({
+              id: member.id,
+              username: member.username,
+            })),
+          };
+        });
+      } catch (error) {
+        console.error(
+          `Something went wrong while fetching the group members: \n${handleError(
+            error
+          )}`
+        );
+        console.error("Details:", error);
+        alert(
+          "Something went wrong while fetching the group members! See the console for details."
+        );
+      }
+    }
+
+    async function fetchGroups() {
+      try {
+        const groupsResponse = await api.get("/groups", { headers });
+        setGroups(groupsResponse.data);
+        console.log(groupsResponse.data);
+
+        // Fetch the members for each group
+        groupsResponse.data.forEach((group) => {
+          fetchMembers(group.id);
+        });
+      } catch (error) {
+        console.error(
+          `Something went wrong while fetching the groups: \n${handleError(
+            error
+          )}`
+        );
+        console.error("Details:", error);
+        alert(
+          "Something went wrong while fetching the groups! See the console for details."
+        );
+      }
+    }
+
+    fetchGroups();
   }, []);
 
   let content = <Spinner />;
 
   if (users) {
-    const otherUsers = users.filter((user) => user.id !== userId);
+    //const otherUsers = users.filter((user) => user.id !== userId);
     const sortUsersByStatus = (userA, userB) => {
       if (userA.status === "ONLINE" && userB.status !== "ONLINE") {
         return -1;
@@ -115,7 +147,7 @@ const Game = () => {
               &nbsp; Users &nbsp;
             </h3>
 
-            {otherUsers.sort(sortUsersByStatus).map((user) => (
+            {users.sort(sortUsersByStatus).map((user) => (
               <Button
                 className={`player container ${user.status.toLowerCase()}`}
                 key={user.id}
@@ -133,29 +165,26 @@ const Game = () => {
           <h2>Groups</h2>
 
           <div className="game group-container-labels">
-            <label className="game label-text"> Group Name</label>
-            <label className="game label-text"> Host</label>
-            <label className="game label-text"> Members</label>
+            <label className="game label-text">Group</label>
+            <label className="game label-text">Host</label>
+            <label className="game label-text">Members</label>
           </div>
-          <div className="game group-list">
+
+          <div className="game group">
             {groups ? (
               groups.map((group) => (
-                <div className="group" key={group.id}>
-                  <h2>{group.name}</h2>
-                  <ul className="game group user-list">
-                    {group.users.map((userId) => {
-                      const user = users.find((user) => user.id === userId);
-                      if (user) {
-                        return (
-                          <li key={user.id}>
-                            <Player user={user} />
-                          </li>
-                        );
-                      }
-                      return null;
-                    })}
-                  </ul>
-                </div>
+                <ul className="game group-list">
+                  <li className="game group-text">{group.groupName}</li>
+                  <li className="game host-text">{group.hostName}</li>
+                  <li className="game group-members">
+                    {members[group.id] &&
+                      members[group.id].map((member) => (
+                        <li className="game player username">
+                          {member.username}
+                        </li>
+                      ))}
+                  </li>
+                </ul>
               ))
             ) : (
               <div className="game group list">
