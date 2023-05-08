@@ -25,33 +25,12 @@ const GroupFormingHost = () => {
         <div className=" groupforming sidebar">
           <div className="groupforming sidebar-buttons">
             <i className="material-icons">person</i> &nbsp; Host:{" "}
-            {group.hostName}
-            &nbsp;
+            {group.hostName}&nbsp;
           </div>
-
           <div className="groupforming sidebar-buttons">
             <i className="material-icons">bar_chart</i>
             &nbsp; Voting System: Majority &nbsp;
           </div>
-
-          {/* <ul className="groupforming invite-users">
-            <h3 className="player container">
-              <i className="material-icons">people_outline</i>
-              &nbsp; Invite Users &nbsp;
-            </h3>
-
-            {otherUsers.map((user) => (
-              <div
-                className={`player container ${user.status.toLowerCase()}`}
-                key={user.id}
-                // onClick={() => history.push(`/users/${user.id}`)}
-              >
-                <i className="person-icon">person_add</i>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                {user.username}
-              </div>
-            ))}
-          </ul> */}
         </div>
 
         <BaseContainer>

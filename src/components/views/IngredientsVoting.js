@@ -9,10 +9,11 @@ import { api, handleError } from "helpers/api";
 import "styles/views/IngredientsVoting.scss";
 import "styles/views/GroupFormingHost.scss";
 
+
 const IngredientsVoting = () => {
 
     const history = useHistory();
-    const { groupId } = useParams();
+
     const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
     }, []);
@@ -20,6 +21,8 @@ const IngredientsVoting = () => {
     const [userId, setId] = useState(localStorage.getItem("userId"));
     const [users, setUsers] = useState(null);
     const [group, setGroup] = useState(null);
+    const groupId = localStorage.getItem("groupId");
+
 
     useEffect(() => {
 
@@ -59,7 +62,8 @@ const IngredientsVoting = () => {
                 <div className="groupforming main-container">
                     <div className="groupforming sidebar">
                         <div className="groupforming sidebar-buttons">
-                            <i className="ingredientsvoting icon"> location_home </i> &nbsp; Host:{" "} chiara &nbsp;
+                            <i className="ingredientsvoting icon"> location_home </i> &nbsp; Host:{" "} {group?.hostName} &nbsp;
+
                         </div>
 
                         <div className="groupforming sidebar-buttons">
@@ -72,22 +76,32 @@ const IngredientsVoting = () => {
                             <div className="groupforming main">
                                 <i className="group-icon">groups</i>
                                 <div className="groupforming text"> 
-                                {/* {group.groupName}  */}
+                                {group?.groupName}
+
                                 </div>
                                 <div className="groupforming sections">
                                     <div className="groupforming preferences">
                                         <div className="groupforming titles"> Overall ingredients </div>
+                                        <div className="ingredientsvoting ingredients">
+                                            <div className="ingredientsvoting item">
+                                                Tofu
+                                                <div className="ingredientsvoting reactions">
+                                                    <i className="ingredientsvoting icon reaction">sentiment_satisfied</i>
+                                                    <i className="ingredientsvoting icon reaction">sentiment_neutral</i>
+                                                    <i className="ingredientsvoting icon reaction">sentiment_dissatisfied</i>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>                                
                             </div>
                             <button
                             className="groupforming general-button"
                             width="24%"
-                            onClick={() => {
-                            //history.push(`/ingredients/:${groupId}`);
-                            // history.push(`/final/:${groupId}`);
-                            }}>
-                                Continue
+                            onClick={() => { history.push(`/final/:${groupId}`)}}>
+                                Submit
+
                             </button>
                         </div>
 

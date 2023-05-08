@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
 import { Button } from "components/ui/Button";
-import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
@@ -11,6 +10,7 @@ import AppContainer from "components/ui/AppContainer";
 import Group from "models/Group";
 import useInvitationActions from "hooks/useInvitationActions";
 import useGroupMembers from "hooks/useGroupMembers";
+import { useParams } from "react-router-dom";
 
 const GroupFormingGuest = ({ buttonLabel }) => {
   const history = useHistory();
