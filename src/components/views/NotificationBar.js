@@ -4,46 +4,14 @@ import PropTypes from "prop-types";
 import "styles/views/NavigationBar.scss";
 import { useHistory } from "react-router-dom";
 import { api } from "helpers/api";
+import useInvitationActions from "hooks/useInvitationActions";
 
 const NotificationBar = ({ notificationData }) => {
   const history = useHistory();
-  const guestId = localStorage.getItem("userId");
-  const headers = useMemo(() => {
-    return { "X-Token": localStorage.getItem("token") };
-  }, []);
 
   console.log(notificationData);
-
-  const handleAcceptInvitation = async (groupId, guestId) => {
-    try {
-      console.log(groupId, guestId);
-      await api.put(
-        `/groups/${groupId}/invitations/accept`,
-        JSON.stringify({ guestId }),
-        {
-          headers,
-        }
-      );
-    } catch (error) {
-      console.error(error);
-    }
-    history.push(`/groupforming/${groupId}/guest`);
-  };
-
-  const handleRejectInvitation = async (groupId, guestId) => {
-    try {
-      console.log(groupId, guestId);
-      await api.put(
-        `/groups/${groupId}/invitations/reject`,
-        JSON.stringify({ guestId }),
-        {
-          headers,
-        }
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { handleAcceptInvitation, handleRejectInvitation } =
+    useInvitationActions();
 
   return (
     <div className="notification-bar">
@@ -63,18 +31,13 @@ const NotificationBar = ({ notificationData }) => {
               </button>
               <button
                 className="material-icons reply-button"
-                onClick={() => handleAcceptInvitation(notification.id, guestId)}
+                onClick={() => handleAcceptInvitation(notification.id)}
               >
                 done
               </button>
               <button
                 className="material-icons reply-button"
-                onClick={() =>
-                  handleRejectInvitation(
-                    notification.id,
-                    localStorage.getItem("userId")
-                  )
-                }
+                onClick={() => handleRejectInvitation(notification.id)}
               >
                 clear
               </button>

@@ -83,7 +83,6 @@ const GroupCreation = () => {
       try {
         const response = await api.get("/users", { headers });
         setUsers(response.data);
-
       } catch (error) {
         console.error(
           `Something went wrong while fetching the users: \n${handleError(

@@ -13,6 +13,7 @@ import "styles/views/GroupFormingHost.scss";
 const IngredientsVoting = () => {
 
     const history = useHistory();
+
     const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
     }, []);
@@ -21,6 +22,7 @@ const IngredientsVoting = () => {
     const [users, setUsers] = useState(null);
     const [group, setGroup] = useState(null);
     const groupId = localStorage.getItem("groupId");
+
 
     useEffect(() => {
 
@@ -61,6 +63,7 @@ const IngredientsVoting = () => {
                     <div className="groupforming sidebar">
                         <div className="groupforming sidebar-buttons">
                             <i className="ingredientsvoting icon"> location_home </i> &nbsp; Host:{" "} {group?.hostName} &nbsp;
+
                         </div>
 
                         <div className="groupforming sidebar-buttons">
@@ -74,6 +77,7 @@ const IngredientsVoting = () => {
                                 <i className="group-icon">groups</i>
                                 <div className="groupforming text"> 
                                 {group?.groupName}
+
                                 </div>
                                 <div className="groupforming sections">
                                     <div className="groupforming preferences">
@@ -88,6 +92,7 @@ const IngredientsVoting = () => {
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>                                
                             </div>
@@ -96,6 +101,7 @@ const IngredientsVoting = () => {
                             width="24%"
                             onClick={() => { history.push(`/final/:${groupId}`)}}>
                                 Submit
+
                             </button>
                         </div>
 
