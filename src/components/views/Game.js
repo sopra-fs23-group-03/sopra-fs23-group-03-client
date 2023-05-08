@@ -7,6 +7,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 import AppContainer from "components/ui/AppContainer";
+import useGroupMembers from "hooks/useGroupMembers";
 
 const Player = ({ user }) => (
   <div className="player container">
@@ -39,6 +40,8 @@ const Game = () => {
         const response = await api.get("/users", { headers });
         setUsers(response.data);
       } catch (error) {
+        localStorage.removeItem("token");
+        history.push("/login");
         console.error(
           `Something went wrong while fetching the users: \n${handleError(
             error
@@ -187,7 +190,7 @@ const Game = () => {
                 </ul>
               ))
             ) : (
-              <div className="game group list">
+              <div className="game group ">
                 <h3>No Groups Yet</h3>
               </div>
             )}
