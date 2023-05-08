@@ -30,6 +30,16 @@ const GroupCreation = () => {
   const handlePointsButton = () => {
     setVotingType("POINTDISTRIBUTION")
   }
+
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseOver = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseOut = () => {
+    setIsHovering(false);
+  };
   
 
   const createGroup = async () => {
@@ -144,10 +154,11 @@ const GroupCreation = () => {
                 <i className="group-creation icon">timeline</i>
                 Point Distribution
               </button>
-              <button className="group-creation voting-button majority" onClick={handleMajorityButton} style={{backgroundColor: votingType==="MAJORITYVOTE"? "#333333" : ""}}>
+              <button className="group-creation voting-button majority" onClick={handleMajorityButton} style={{backgroundColor: votingType==="MAJORITYVOTE"? "#333333" : ""}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
                 <i className="group-creation icon">star</i>
                 Majority
               </button>
+              {isHovering && <div className="group-creation info-window">Host and guest rate yes/no/indifferent per ingredient. Only the ingredients which obtained the majority stay in the final overview. </div>}
             </div>
           </div>
           
