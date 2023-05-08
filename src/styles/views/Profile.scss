@@ -11,8 +11,16 @@
     height: 100%;
   }
 
+  &.singles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, auto);
+    grid-row-gap: 20px;
+    grid-column-gap: 40px;
+    background: none;
+  }
+
   &.main {
-    //padding: 20px;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -68,6 +76,19 @@
     font-size: 20px;
     color: #666666;
     text-align: center;
+  }
+
+  &.diet-dropdown{
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.dropdowns{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    gap: 45px;
   }
 
   &.titles {
@@ -131,7 +152,7 @@
   }
 
   &.cancel-button {
-    background: #979797;
+    background: #c3c3c3;
     box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
     border-radius: 32px;
     border: 0px;
@@ -155,11 +176,8 @@
     padding: 35px;
     padding-left: 10%;
     padding-right: 10%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(3, auto);
-    grid-row-gap: 20px;
-    grid-column-gap: 40px;
+    display: flex;
+    flex-direction: column;
     box-shadow: $dropShadow;
   }
 

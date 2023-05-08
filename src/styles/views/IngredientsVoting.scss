@@ -1,0 +1,17 @@
+@import "styles/theme";
+
+.ingredientsvoting {
+    &.icon {
+        font-family: "Material Symbols Outlined";
+        font-style: normal;
+        font-size: 40px;
+        text-align: center;
+        color: #595959;
+        margin-top: -20px;
+        margin-bottom: -15px;
+
+        &.majority {
+            font-size: 25px;
+        }
+      }
+}
