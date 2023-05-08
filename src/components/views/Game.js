@@ -145,11 +145,10 @@ const Game = () => {
           </Button>
 
           <ul className="game user-list">
-            <h3 className="player container">
+            <ul className="game user-list-title">
               <i className="material-icons">group</i>
               &nbsp; Users &nbsp;
-            </h3>
-
+            </ul>
             {users.sort(sortUsersByStatus).map((user) => (
               <Button
                 className={`player container ${user.status.toLowerCase()}`}
@@ -176,17 +175,17 @@ const Game = () => {
           <div className="game group">
             {groups ? (
               groups.map((group) => (
-                <ul className="game group-list">
+                <ul className="game group-list" key={group.id}>
                   <li className="game group-text">{group.groupName}</li>
                   <li className="game host-text">{group.hostName}</li>
-                  <li className="game group-members">
+                  <ul className="game group-members">
                     {members[group.id] &&
                       members[group.id].map((member) => (
-                        <li className="game player username">
+                        <li className="game player username" key={member.id}>
                           {member.username}
                         </li>
                       ))}
-                  </li>
+                  </ul>
                 </ul>
               ))
             ) : (
