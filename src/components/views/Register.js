@@ -104,18 +104,21 @@ const Register = (props) => {
           value={username}
           onChange={(un) => setUsername(un)}
         />
+        <div className="login small-text">only alpha letters allowed</div>
         <FormField
           label="Password"
           name="Password"
           value={password}
           onChange={(n) => setPassword(n)}
         />
+          <div className="login small-text">username and password must differ</div>
         <FormField
           label="Repeat password"
           name="Password"
           value={repeatPassword}
           onChange={(n) => setRepeatPassword(n)}
         />
+
         <div>
           <div className="login button-container">
             <Button
