@@ -60,7 +60,7 @@ const IngredientsVoting = () => {
                 <div className="groupforming main-container">
                     <div className="groupforming sidebar">
                         <div className="groupforming sidebar-buttons">
-                            <i className="ingredientsvoting icon"> location_home </i> &nbsp; Host:{" "} chiara &nbsp;
+                            <i className="ingredientsvoting icon"> location_home </i> &nbsp; Host:{" "} {group?.hostName} &nbsp;
                         </div>
 
                         <div className="groupforming sidebar-buttons">
@@ -73,7 +73,7 @@ const IngredientsVoting = () => {
                             <div className="groupforming main">
                                 <i className="group-icon">groups</i>
                                 <div className="groupforming text"> 
-                                {groupId}
+                                {group?.groupName}
                                 </div>
                                 <div className="groupforming sections">
                                     <div className="groupforming preferences">
@@ -94,10 +94,7 @@ const IngredientsVoting = () => {
                             <button
                             className="groupforming general-button"
                             width="24%"
-                            onClick={() => {
-                            //history.push(`/ingredients/:${groupId}`);
-                            // history.push(`/final/:${groupId}`);
-                            }}>
+                            onClick={() => { history.push(`/final/:${groupId}`)}}>
                                 Submit
                             </button>
                         </div>
