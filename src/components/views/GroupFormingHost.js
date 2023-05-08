@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useState } from "react";
 import { api, handleError } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
 import { Button } from "components/ui/Button";
@@ -9,65 +9,17 @@ import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
 import Group from "models/Group";
 import { useParams } from "react-router-dom";
-
-const Player = ({ user }) => (
-  <div className="player container">
-    <div className="player username">{user.username}</div>
-  </div>
-);
-
-Player.propTypes = {
-  user: PropTypes.object,
-};
+import useGroupMembers from "hooks/useGroupMembers";
 
 const GroupFormingHost = () => {
   const history = useHistory();
   const { groupId } = useParams();
-  const headers = useMemo(() => {
-    return { "X-Token": localStorage.getItem("token") };
-  }, []);
-
-  const [userId, setId] = useState(localStorage.getItem("userId"));
-  const [users, setUsers] = useState(null);
   const [invitationStatus, setInvitationStatus] = useState({});
-
-  const [group, setGroup] = useState(null);
-
-  useEffect(() => {
-    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-    async function fetchData() {
-      try {
-        const groupResponse = await api.get(`/groups/${groupId}`, { headers });
-        const membersResponse = await api.get(`/groups/${groupId}/members`, {
-          headers,
-        });
-        // Get the returned group and update the state.
-        setGroup(new Group(groupResponse.data));
-        // Get the returned members and update the state.
-        setUsers(membersResponse.data);
-        console.log("groupresponse", groupResponse);
-        console.log("memberresponse", membersResponse);
-      } catch (error) {
-        console.error(
-          `Something went wrong while fetching the group and its members: \n${handleError(
-            error
-          )}`
-        );
-        console.error("Details:", error);
-        alert(
-          "Something went wrong while fetching the group and its members! See the console for details."
-        );
-      }
-    }
-
-    fetchData();
-  }, []);
+  const { group, users } = useGroupMembers(groupId);
 
   let content = <Spinner />;
 
   if (users) {
-    const otherUsers = users.filter((user) => user.id !== userId);
-
     content = (
       <div className="groupforming main-container">
         <div className=" groupforming sidebar">
@@ -124,30 +76,16 @@ const GroupFormingHost = () => {
                           {/* <button className="material-icons reply-button">
       done
     </button> */}
-                          {/* <button className="material-icons reply-button">
-      delete_outline
-    </button> */}
+                          <button className="material-icons reply-button">
+                            delete_outline
+                          </button>
                         </div>
                       ))}
-                      {/* <div className="groupforming group-join-request">
-                        <span className=" player username">player B</span>
-                        <div className="groupforming button-container"></div>
-                        <button className="groupforming material-icons reply-button">
-                          delete_outline
-                        </button>
-                      </div>
-                      <div className="groupforming group-join-request">
-                        <span className="player username ">player C</span>
-                        <div className="groupforming button-container"></div>
-                        <button className="groupforming material-icons reply-button">
-                          delete_outline
-                        </button>
-                      </div> */}
                     </div>
                   </div>
                 </div>
                 <div className="groupforming buttons">
-                  {/* <button
+                  <button
                     className="groupforming cancel-button"
                     width="24%"
                     onClick={() => {
@@ -159,20 +97,14 @@ const GroupFormingHost = () => {
                         history.push("/game");
                       }
                     }}
-                    onClick={() => {
-                      history.push("/dashboard");
-                    // send notification to all users in group
-                    // cancel the notifications for the invites
-                    }}
                   >
                     Delete Group
-                  </button> */}
+                  </button>
                   <button
                     className="groupforming general-button"
                     width="24%"
                     onClick={() => {
-                      //history.push(`/ingredients/:${groupId}`);
-                      history.push(`/final/:${groupId}`);
+                      history.push(`/ingredients/:${groupId}`);
                     }}
                   >
                     Continue
