@@ -13,7 +13,6 @@ import "styles/views/GroupFormingHost.scss";
 const IngredientsVoting = () => {
 
     const history = useHistory();
-    const { groupId } = useParams();
     const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
     }, []);
@@ -21,6 +20,7 @@ const IngredientsVoting = () => {
     const [userId, setId] = useState(localStorage.getItem("userId"));
     const [users, setUsers] = useState(null);
     const [group, setGroup] = useState(null);
+    const groupId = localStorage.getItem("groupId");
 
     useEffect(() => {
 
@@ -73,7 +73,7 @@ const IngredientsVoting = () => {
                             <div className="groupforming main">
                                 <i className="group-icon">groups</i>
                                 <div className="groupforming text"> 
-                                {/* {group.groupName}  */}
+                                {groupId}
                                 </div>
                                 <div className="groupforming sections">
                                     <div className="groupforming preferences">

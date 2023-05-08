@@ -61,10 +61,9 @@ const GroupCreation = () => {
       ) {
         throw new Error("invitedUsers must be an array of Long values");
       }
-      await api.post(`/groups/${groupId}/invitations`, invitedUsers, {
-        headers,
-      });
+      await api.post(`/groups/${groupId}/invitations`, invitedUsers, { headers });
       setInvitedUsers(invitedUsers);
+      localStorage.setItem("groupId", group.id);
       <NotificationBar invitedUsers={invitedUsers} />;
 
       history.push(`/groupforming/${groupId}/host`);
@@ -84,6 +83,7 @@ const GroupCreation = () => {
       try {
         const response = await api.get("/users", { headers });
         setUsers(response.data);
+
       } catch (error) {
         console.error(
           `Something went wrong while fetching the users: \n${handleError(
