@@ -115,7 +115,7 @@ const GroupFormingHost = () => {
                     width="24%"
                     onClick={() => {
                       //history.push(`/ingredients/:${groupId}`);
-                      history.push(`/final/:${groupId}`);
+                      history.push(`/ingredients/:${groupId}`);
                     }}
                   >
                     Continue
