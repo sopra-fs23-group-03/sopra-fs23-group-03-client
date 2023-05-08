@@ -6,10 +6,7 @@ import { useHistory } from "react-router-dom";
 import AuthContext from "components/contexts/AuthContext";
 import NotificationBar from "components/views/NotificationBar";
 import { api } from "helpers/api";
-import {
-  NotificationContext,
-  NotificationProvider,
-} from "components/contexts/NotificationContext";
+import { NotificationContext } from "components/contexts/NotificationContext";
 
 const NavigationBar = () => {
   const history = useHistory();
@@ -17,8 +14,6 @@ const NavigationBar = () => {
   const { notifications, hasNewNotifications } =
     useContext(NotificationContext);
   const [showNotificationBar, setShowNotificationBar] = useState(false); // For displaying the notification bar
-  const [notificationButtonClicked, setNotificationButtonClicked] =
-    useState(false);
 
   const logout = async () => {
     // try {
@@ -70,7 +65,6 @@ const NavigationBar = () => {
             }`}
             onClick={() => {
               setShowNotificationBar(!showNotificationBar);
-              setNotificationButtonClicked(true);
             }}
           >
             notifications

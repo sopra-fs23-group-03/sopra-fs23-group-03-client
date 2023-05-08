@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
 import { Button } from "components/ui/Button";
@@ -9,100 +9,26 @@ import PropTypes from "prop-types";
 import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
 import Group from "models/Group";
-//http://localhost:3000/groupforming/guest:1
+import useInvitationActions from "hooks/useInvitationActions";
+import useGroupMembers from "hooks/useGroupMembers";
 
-const Player = ({ user }) => (
-  <div className="player container">
-    <div className="player username">{user.username}</div>
-  </div>
-);
-
-Player.propTypes = {
-  user: PropTypes.object,
-};
-
-const GroupFormingGuest = () => {
+const GroupFormingGuest = ({ buttonLabel }) => {
   const history = useHistory();
-  const guestId = localStorage.getItem("userId");
   const { groupId } = useParams();
-  const headers = useMemo(() => {
-    return { "X-Token": localStorage.getItem("token") };
-  }, []);
-  const [userId, setId] = useState(localStorage.getItem("userId"));
-  const [users, setUsers] = useState(null);
-  const [group, setGroup] = useState(null);
   const [joinedGroup, setJoinedGroup] = useState(false); // add state variable for tracking if user joined group
+  const { group, users } = useGroupMembers(groupId);
 
-  useEffect(() => {
-    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-    async function fetchData() {
-      try {
-        const groupResponse = await api.get(`/groups/${groupId}`, { headers });
-        const membersResponse = await api.get(`/groups/${groupId}/members`, {
-          headers,
-        });
-        // Get the returned group and update the state.
-        setGroup(new Group(groupResponse.data));
-        // Get the returned members and update the state.
-        setUsers(membersResponse.data);
-      } catch (error) {
-        console.error(
-          `Something went wrong while fetching the group and its members: \n${handleError(
-            error
-          )}`
-        );
-        console.error("Details:", error);
-        alert(
-          "Something went wrong while fetching the group and its members! See the console for details."
-        );
-      }
-    }
-
-    fetchData();
-  }, []);
-
-  const handleAcceptInvitation = async (groupId, guestId) => {
-    try {
-      console.log(groupId, guestId);
-      await api.put(
-        `/groups/${groupId}/invitations/accept`,
-        JSON.stringify({ guestId }),
-        {
-          headers,
-        }
-      );
-    } catch (error) {
-      console.error(error);
-    }
-    history.push(`/groupforming/${groupId}/guest`);
-  };
-
-  const handleRejectInvitation = async (groupId, guestId) => {
-    try {
-      console.log(groupId, guestId);
-      await api.put(
-        `/groups/${groupId}/invitations/reject`,
-        JSON.stringify({ guestId }),
-        {
-          headers,
-        }
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { handleAcceptInvitation, handleRejectInvitation } =
+    useInvitationActions();
 
   let content = <Spinner />;
 
   if (users) {
-    const otherUsers = users.filter((user) => user.id !== userId);
-
     content = (
       <BaseContainer>
         <div className="groupforming form">
           <div className="groupforming main">
             <i className="group-icon">groups</i>
-            {/* <i className="group-icon" data-feather="users"></i> */}
             <div className="groupforming text"> {group.groupName}</div>
 
             <div className="groupforming buttons">
@@ -136,50 +62,52 @@ const GroupFormingGuest = () => {
                   </div>
                 </div>
               </div>
-              <div className="groupforming buttons">
-                <button
-                  className="groupforming cancel-button"
-                  width="24%"
-                  onClick={() => {
-                    if (
-                      window.confirm(
-                        "By leaving the group, you'll miss out on the fun! Are you sure you want to exit?"
-                      )
-                    ) {
-                      history.push("/game");
-                    }
-                  }}
-                >
-                  Exit Group
-                </button>
-                {joinedGroup ? (
+              <div className="game container">
+                {content}
+                <div className="groupforming buttons">
                   <button
-                    className="groupforming general-button"
+                    className="groupforming cancel-button"
                     width="24%"
                     onClick={() => {
-                      handleRejectInvitation(
-                        groupId,
-                        localStorage.getItem("userId")
-                      );
-                      // history.push("/ingredients/:1");
-                      history.push(`/final/:${groupId}`);
+                      if (
+                        window.confirm(
+                          "By leaving the group, you'll miss out on the fun! Are you sure you want to exit?"
+                        )
+                      ) {
+                        history.push("/game");
+                      }
                     }}
                   >
-                    I'm ready
+                    Exit Group
                   </button>
-                ) : (
-                  <button
-                    className="groupforming general-button"
-                    width="24%"
-                    onClick={() => {
-                      // join the group
-                      setJoinedGroup(true);
-                      handleAcceptInvitation(groupId, guestId);
-                    }}
-                  >
-                    Join Group
-                  </button>
-                )}
+                  {joinedGroup ? (
+                    <button
+                      className="groupforming general-button"
+                      width="24%"
+                      onClick={() => {
+                        handleRejectInvitation(
+                          groupId,
+                          localStorage.getItem("userId")
+                        );
+                        history.push(`/ingredients/:${groupId}`);
+                      }}
+                    >
+                      {buttonLabel}
+                    </button>
+                  ) : (
+                    <button
+                      className="groupforming general-button"
+                      width="24%"
+                      onClick={() => {
+                        // join the group
+                        setJoinedGroup(true);
+                        handleAcceptInvitation(groupId);
+                      }}
+                    >
+                      {buttonLabel}
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -194,6 +122,10 @@ const GroupFormingGuest = () => {
       <div className="game container">{content}</div>;
     </AppContainer>
   );
+};
+
+GroupFormingGuest.propTypes = {
+  buttonLabel: PropTypes.string.isRequired,
 };
 
 export default GroupFormingGuest;
