@@ -11,7 +11,44 @@
         margin-bottom: -15px;
 
         &.majority {
-            font-size: 25px;
+
+            font-size: 23px;
+        }
+
+        &.reaction {
+            font-size: 23px;
+            cursor: pointer;
         }
       }
+
+    &.ingredients {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &.item {
+        border: 1px solid rgba(102, 102, 102, 0.5);
+        border-radius: 8px;
+        height: 28px;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    &.reactions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        padding-top: 2px;
+    }
 }

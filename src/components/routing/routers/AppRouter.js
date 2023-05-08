@@ -104,7 +104,8 @@ const AppRouter = () => {
           </GameGuard>
         </Route>
 
-        <Route exact path="/ingredientsvoting">
+
+        <Route exact path="/ingredientsvoting/:groupId">
           <GameGuard>
             <IngredientsVoting />
           </GameGuard>

@@ -47,6 +47,7 @@ const GroupFormingHost = () => {
   }, []);
   const [userId, setId] = useState(localStorage.getItem("userId"));
   const [users, setUsers] = useState(null);
+  const groupId = localStorage.getItem("groupId");
   // const [group, setGroup] = useState(null);
 
   useEffect(() => {
@@ -139,7 +140,7 @@ const GroupFormingHost = () => {
                     className="groupforming general-button"
                     width="24%"
                     onClick={() => {
-                      history.push("/final");
+                      history.push(`/ingredientsvoting/:${groupId}`);
                     }}
                   >
                     Submit
