@@ -180,7 +180,7 @@ const GroupCreation = () => {
             <div className="group-creation buttons">
               <button
                 className="group-creation button"
-                onClick={() => history.push("/game")}
+                onClick={() => history.push("dashboard")}
               >
                 Delete group
               </button>

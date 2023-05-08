@@ -138,7 +138,7 @@ const Profile = () => {
           `Something went wrong while getting this user: \n ${ handleError(error).info }`
         );
         console.error("Details:", error);
-        history.push("/game")
+        history.push("/dashboard")
       }
     }
 

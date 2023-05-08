@@ -74,7 +74,7 @@ const Final = () => {
           <InfoField label="Approx. time" value={recipe?.readyInMinutes} />
           {/* <InfoField label="Difficulty" value={recipe?.difficulty} /> */}
         </div>
-        <div className="final button" onClick={() => history.push("/game")}>
+        <div className="final button" onClick={() => history.push("dashboard")}>
           Back to main page
         </div>
       </BaseContainer>

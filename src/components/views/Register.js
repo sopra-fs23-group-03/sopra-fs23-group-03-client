@@ -77,7 +77,7 @@ const Register = (props) => {
       localStorage.setItem("userId", user.id);
       setIsLoggedIn(true);
 
-      // Register successfully worked --> navigate to the route /game in the GameRouter
+      // Register successfully worked --> navigate to the route /dashboard in the GameRouter
       history.push(`/profile/ ${user.id}`);
     } catch (error) {
       alert(

@@ -16,11 +16,12 @@ import GroupFormingHost from "components/views/GroupFormingHost";
 import Ingredient from "components/views/Ingredient";
 import IngredientSolo from "components/views/IngredientSolo";
 import IngredientsVoting from "components/views/IngredientsVoting";
+import Dashboard from "components/views/Dashboard";
 
 /**
  * Main router of your application.
  * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
- * and another Router that matches the route "/game".
+ * and another Router that matches the route "dashboard".
  * The main difference between these two routes is the following:
  * /login renders another component without any sub-route
  * /game renders a Router that contains other sub-routes that render in turn other react components
@@ -34,9 +35,9 @@ const AppRouter = () => {
     <BrowserRouter>
       <NavigationBar isLoggedIn={isLoggedIn} />
       <Switch>
-        <Route path="/game">
+        <Route path="/dashboard">
           <GameGuard>
-            <GameRouter base="/game" />
+            <Dashboard/>
           </GameGuard>
         </Route>
         <Route exact path="/login">
@@ -111,7 +112,7 @@ const AppRouter = () => {
         </Route>
 
         <Route exact path="/">
-          <Redirect to="/game" />
+          <Redirect to="/dashboard" />
         </Route>
       </Switch>
     </BrowserRouter>
