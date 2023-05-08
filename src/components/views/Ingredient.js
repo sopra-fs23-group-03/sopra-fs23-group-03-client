@@ -139,7 +139,7 @@ const GroupFormingHost = () => {
                     className="groupforming general-button"
                     width="24%"
                     onClick={() => {
-                      history.push("/final");
+                      history.push("/ingredientsvoting/:3");
                     }}
                   >
                     Submit

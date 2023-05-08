@@ -9,6 +9,7 @@ import { api, handleError } from "helpers/api";
 import "styles/views/IngredientsVoting.scss";
 import "styles/views/GroupFormingHost.scss";
 
+
 const IngredientsVoting = () => {
 
     const history = useHistory();
@@ -77,6 +78,16 @@ const IngredientsVoting = () => {
                                 <div className="groupforming sections">
                                     <div className="groupforming preferences">
                                         <div className="groupforming titles"> Overall ingredients </div>
+                                        <div className="ingredientsvoting ingredients">
+                                            <div className="ingredientsvoting item">
+                                                Tofu
+                                                <div className="ingredientsvoting reactions">
+                                                    <i className="ingredientsvoting icon reaction">sentiment_satisfied</i>
+                                                    <i className="ingredientsvoting icon reaction">sentiment_neutral</i>
+                                                    <i className="ingredientsvoting icon reaction">sentiment_dissatisfied</i>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>                                
                             </div>
@@ -87,7 +98,7 @@ const IngredientsVoting = () => {
                             //history.push(`/ingredients/:${groupId}`);
                             // history.push(`/final/:${groupId}`);
                             }}>
-                                Continue
+                                Submit
                             </button>
                         </div>
 
