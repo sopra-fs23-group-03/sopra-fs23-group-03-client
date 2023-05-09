@@ -51,8 +51,7 @@ const NotificationBar = ({ notificationData }) => {
   );
 };
 
-NotificationBar.propTypes = {
-  notificationData: PropTypes.array.isRequired,
+NotificationBar.defaultProps = {
+  notificationData: [],
 };
-
 export default NotificationBar;

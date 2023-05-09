@@ -9,6 +9,7 @@ import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
 import useGroupMembers from "hooks/useGroupMembers";
 import "styles/ui/List.scss";
+import { useParams } from "react-router-dom";
 
 const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
   const headers = useMemo(() => {
@@ -114,12 +115,13 @@ DrodownList.propTypes = {
 
 const Ingredient = () => {
   const history = useHistory();
+  const { groupId } = useParams();
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
 
   const userId = localStorage.getItem("userId");
-  const groupId = localStorage.getItem("groupId");
+  //const groupId = localStorage.getItem("groupId");
 
   const { group, users } = useGroupMembers(groupId);
   const [ingredients, setIngredients] = useState([]);

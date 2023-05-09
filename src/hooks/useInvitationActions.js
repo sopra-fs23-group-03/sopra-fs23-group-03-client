@@ -9,6 +9,7 @@ const useInvitationActions = () => {
   const guestId = localStorage.getItem("userId");
 
   const handleAcceptInvitation = async (groupId) => {
+    console.log("groupId", groupId);
     try {
       await api.put(
         `/groups/${groupId}/invitations/accept`,
@@ -18,6 +19,7 @@ const useInvitationActions = () => {
         }
       );
       history.push(`/groupforming/${groupId}/guest`);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }

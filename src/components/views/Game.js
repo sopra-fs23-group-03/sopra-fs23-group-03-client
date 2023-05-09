@@ -35,10 +35,14 @@ const Game = () => {
 
   // useEffect hook to fetch data for users
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchUsers() {
       try {
         const response = await api.get("/users", { headers });
-        setUsers(response.data);
+        if (isMounted) {
+          setUsers(response.data);
+        }
       } catch (error) {
         localStorage.removeItem("token");
         history.push("/login");
@@ -55,24 +59,32 @@ const Game = () => {
     }
 
     fetchUsers();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // useEffect hook to fetch data for group members
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchMembers(groupId) {
       try {
         const membersResponse = await api.get(`/groups/${groupId}/members`, {
           headers,
         });
-        setMembers((prevMembers) => {
-          return {
-            ...prevMembers,
-            [groupId]: membersResponse.data.map((member) => ({
-              id: member.id,
-              username: member.username,
-            })),
-          };
-        });
+        if (isMounted) {
+          setMembers((prevMembers) => {
+            return {
+              ...prevMembers,
+              [groupId]: membersResponse.data.map((member) => ({
+                id: member.id,
+                username: member.username,
+              })),
+            };
+          });
+        }
       } catch (error) {
         console.error(
           `Something went wrong while fetching the group members: \n${handleError(
@@ -89,13 +101,15 @@ const Game = () => {
     async function fetchGroups() {
       try {
         const groupsResponse = await api.get("/groups", { headers });
-        setGroups(groupsResponse.data);
-        console.log(groupsResponse.data);
+        if (isMounted) {
+          setGroups(groupsResponse.data);
+          console.log(groupsResponse.data);
 
-        // Fetch the members for each group
-        groupsResponse.data.forEach((group) => {
-          fetchMembers(group.id);
-        });
+          // Fetch the members for each group
+          groupsResponse.data.forEach((group) => {
+            fetchMembers(group.id);
+          });
+        }
       } catch (error) {
         console.error(
           `Something went wrong while fetching the groups: \n${handleError(
@@ -110,6 +124,10 @@ const Game = () => {
     }
 
     fetchGroups();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   let content = <Spinner />;
