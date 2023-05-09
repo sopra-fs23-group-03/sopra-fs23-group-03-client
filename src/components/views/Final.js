@@ -74,7 +74,10 @@ const Final = () => {
 
           <div className="final section">
             <InfoField label="Recipe" value={recipe?.title} />
-            <InfoField label="Approx. time" value={recipe?.readyInMinutes} />
+            <InfoField
+              label="Approx. time"
+              value={(recipe?.readyInMinutes + " minutes").replace("null", "'")}
+            />
             {/* <InfoField label="Difficulty" value={recipe?.difficulty} /> */}
           </div>
           <div className="final button" onClick={() => history.push("/game")}>
