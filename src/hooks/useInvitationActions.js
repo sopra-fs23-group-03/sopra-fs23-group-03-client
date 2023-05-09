@@ -18,6 +18,7 @@ const useInvitationActions = () => {
           headers,
         }
       );
+      localStorage.setItem("groupId", groupId);
       history.push(`/groupforming/${groupId}/guest`);
       window.location.reload();
     } catch (error) {

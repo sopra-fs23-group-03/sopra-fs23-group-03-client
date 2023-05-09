@@ -1,7 +1,6 @@
-import { useEffect, useState, useMemo } from "react";
-import { api, handleError } from "helpers/api";
+import { useState, useMemo } from "react";
+import { api } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
-import { Button } from "components/ui/Button";
 import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
@@ -139,7 +138,8 @@ const Ingredient = () => {
       await api.put(`/user/${userId}/ingredients`, formattedIngredients, {
         headers,
       });
-      history.push(`/final/${userId}`);
+      //history.push(`/final/${userId}`);
+      history.push(`/ingredientsvoting/:${groupId}`);
     } catch (error) {
       console.error(
         `Something went wrong while updating user ingredients: \n${error}`
@@ -215,7 +215,6 @@ const Ingredient = () => {
                     width="24%"
                     onClick={() => {
                       handleSubmit(ingredients);
-                      history.push(`/ingredientsvoting/:${groupId}`);
                     }}
                   >
                     Submit

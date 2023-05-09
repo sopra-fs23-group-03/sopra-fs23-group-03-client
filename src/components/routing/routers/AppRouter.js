@@ -61,7 +61,7 @@ const AppRouter = () => {
           </GameGuard>
         </Route>
 
-        <Route path="/final/:groupId">
+        <Route exact path="/final/:groupId">
           <GameGuard>
             <Final />
           </GameGuard>

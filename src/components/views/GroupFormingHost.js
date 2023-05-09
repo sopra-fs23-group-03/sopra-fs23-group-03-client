@@ -83,7 +83,7 @@ const GroupFormingHost = () => {
                     className="groupforming general-button"
                     width="24%"
                     onClick={() => {
-                      history.push(`/ingredients/:${groupId}`);
+                      history.push(`/ingredients/${groupId}`);
                     }}
                   >
                     Continue
