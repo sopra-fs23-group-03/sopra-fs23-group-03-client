@@ -71,7 +71,7 @@ const Game = () => {
 
     async function fetchMembers(groupId) {
       try {
-        const membersResponse = await api.get(`/groups/${groupId}/members`, {
+        const membersResponse = await api.get(`/groups/${groupId}/guests`, {
           headers,
         });
         if (isMounted) {
@@ -187,7 +187,7 @@ const Game = () => {
           <div className="game group-container-labels">
             <label className="game label-text">Group</label>
             <label className="game label-text">Host</label>
-            <label className="game label-text">Members</label>
+            <label className="game label-text">Guests</label>
           </div>
 
           <div className="game group">

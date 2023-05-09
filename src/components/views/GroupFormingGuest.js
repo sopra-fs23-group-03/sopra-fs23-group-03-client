@@ -44,7 +44,7 @@ const GroupFormingGuest = ({ buttonLabel }) => {
             <div className="groupforming sections">
               <div className="groupforming preferences">
                 <div className="groupforming titles">
-                  Members
+                  Guests
                   <div className="groupforming group-join-requests">
                     {users.map((user) => (
                       <div
