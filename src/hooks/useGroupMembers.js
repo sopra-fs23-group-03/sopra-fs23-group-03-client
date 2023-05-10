@@ -18,7 +18,7 @@ const useGroupMembers = (groupId) => {
         });
 
         setGroup(groupResponse.data);
-        setUsers(membersResponse.data);
+        setUsers(membersResponse.data || []);
       } catch (error) {
         console.error(
           `Something went wrong while fetching the group and its members: \n${handleError(

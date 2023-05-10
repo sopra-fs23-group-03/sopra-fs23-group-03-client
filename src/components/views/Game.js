@@ -70,18 +70,22 @@ const Game = () => {
     let isMounted = true;
 
     async function fetchMembers(groupId) {
+      let isMounted = true;
       try {
         const membersResponse = await api.get(`/groups/${groupId}/guests`, {
           headers,
         });
         if (isMounted) {
+          const membersData = membersResponse.data;
           setMembers((prevMembers) => {
             return {
               ...prevMembers,
-              [groupId]: membersResponse.data.map((member) => ({
-                id: member.id,
-                username: member.username,
-              })),
+              [groupId]: membersData.length
+                ? membersData.map((member) => ({
+                    id: member.id,
+                    username: member.username,
+                  }))
+                : [],
             };
           });
         }
@@ -96,6 +100,10 @@ const Game = () => {
           "Something went wrong while fetching the group members! See the console for details."
         );
       }
+
+      return () => {
+        isMounted = false;
+      };
     }
 
     async function fetchGroups() {
@@ -198,10 +206,14 @@ const Game = () => {
                   <li className="game host-text">{group.hostName}</li>
                   <ul className="game group-members">
                     {members[group.id] &&
-                      members[group.id].map((member) => (
-                        <li className="game player username" key={member.id}>
-                          {member.username}
-                        </li>
+                      (members[group.id].length > 0 ? (
+                        members[group.id].map((member) => (
+                          <li className="game player username" key={member.id}>
+                            {member.username}
+                          </li>
+                        ))
+                      ) : (
+                        <li className="game no-members">No members yet</li>
                       ))}
                   </ul>
                 </ul>

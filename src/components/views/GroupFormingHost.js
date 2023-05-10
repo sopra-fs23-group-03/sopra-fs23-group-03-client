@@ -17,7 +17,7 @@ const GroupFormingHost = () => {
   const [invitationStatus, setInvitationStatus] = useState({});
   const { group, users } = useGroupMembers(groupId);
 
-  let content = <Spinner />;
+  let content = [];
 
   if (users) {
     content = (
