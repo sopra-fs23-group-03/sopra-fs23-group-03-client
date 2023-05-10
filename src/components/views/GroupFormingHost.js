@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { api, handleError } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
 import { Button } from "components/ui/Button";
@@ -14,12 +14,11 @@ import useGroupMembers from "hooks/useGroupMembers";
 const GroupFormingHost = () => {
   const history = useHistory();
   const { groupId } = useParams();
-  const [invitationStatus, setInvitationStatus] = useState({});
   const { group, users } = useGroupMembers(groupId);
 
-  let content = <Spinner />;
+  let content = [];
 
-  if (users) {
+  if (group) {
     content = (
       <div className="groupforming main-container">
         <div className=" groupforming sidebar">
@@ -44,22 +43,23 @@ const GroupFormingHost = () => {
                   <div className="groupforming titles">
                     Guests
                     <div className="groupforming group-join-requests">
-                      {users.map((member) => (
-                        <div
-                          className="groupforming group-join-request"
-                          key={member.username}
-                        >
-                          <span className="groupforming player username">
-                            {member.username}
-                          </span>
-                          {/* <button className="material-icons reply-button">
+                      {users &&
+                        users.map((member) => (
+                          <div
+                            className="groupforming group-join-request"
+                            key={member.username}
+                          >
+                            <span className="groupforming player username">
+                              {member.username}
+                            </span>
+                            {/* <button className="material-icons reply-button">
       done
     </button> */}
-                          <button className="material-icons reply-button">
-                            delete_outline
-                          </button>
-                        </div>
-                      ))}
+                            <button className="material-icons reply-button">
+                              delete_outline
+                            </button>
+                          </div>
+                        ))}
                     </div>
                   </div>
                 </div>

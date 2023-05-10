@@ -21,8 +21,6 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
     if (text && !isMaxReached()) {
       const newTasks = [...tasks, { text }];
       setTasks(newTasks);
-      const newIngredients = newTasks.map((task) => ({ name: task.text }));
-      setIngredients(newIngredients);
       setInputValue("");
     }
   };
@@ -33,19 +31,25 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
 
   const removeTask = (index) => {
     const newTasks = [...tasks];
-    newTasks.splice(index, 1);
+    const removedTask = newTasks.splice(index, 1)[0];
     setTasks(newTasks);
+
+    const newIngredients = ingredients.filter(
+      (ingredient) => ingredient.name !== removedTask.text
+    );
+    setIngredients(newIngredients);
   };
 
   const [suggestions, setSuggestions] = useState([]);
+  const [allIngredients, setAllIngredients] = useState([]);
 
   const fetchIngredients = async (text) => {
-    if (text.length >= 3 && !text.includes(" ")) {
+    if (text.length === 3) {
       try {
         const response = await api.get(`/ingredients?initialString=${text}`, {
           headers,
         });
-        setSuggestions(response.data);
+        setAllIngredients(response.data);
       } catch (error) {
         console.error(
           `Something went wrong while fetching ingredients: \n${error}`
@@ -54,9 +58,18 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
           "Something went wrong while fetching ingredients! See the console for details."
         );
       }
-    } else {
-      setSuggestions([]);
     }
+
+    setSuggestions(
+      allIngredients.filter((ingredient) => {
+        return (
+          ingredient.toLowerCase().startsWith(text.toLowerCase()) &&
+          !tasks.some(
+            (task) => task.text.toLowerCase() === ingredient.toLowerCase()
+          )
+        );
+      })
+    );
   };
 
   return (
@@ -91,6 +104,11 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
                     key={index}
                     onClick={() => {
                       addTask(suggestion);
+                      const newIngredients = [
+                        ...ingredients,
+                        { name: suggestion },
+                      ];
+                      setIngredients(newIngredients);
                       setSuggestions([]);
                     }}
                   >
@@ -120,7 +138,6 @@ const Ingredient = () => {
   }, []);
 
   const userId = localStorage.getItem("userId");
-  //const groupId = localStorage.getItem("groupId");
 
   const { group, users } = useGroupMembers(groupId);
   const [ingredients, setIngredients] = useState([]);
@@ -149,6 +166,8 @@ const Ingredient = () => {
       );
     }
   };
+
+  const isSubmitDisabled = ingredients.length === 0;
 
   let content = <Spinner />;
 
@@ -216,6 +235,7 @@ const Ingredient = () => {
                     onClick={() => {
                       handleSubmit(ingredients);
                     }}
+                    disabled={isSubmitDisabled} // add disabled prop
                   >
                     Submit
                   </button>

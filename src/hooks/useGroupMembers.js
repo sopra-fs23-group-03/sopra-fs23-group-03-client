@@ -16,9 +16,8 @@ const useGroupMembers = (groupId) => {
         const membersResponse = await api.get(`/groups/${groupId}/guests`, {
           headers,
         });
-
         setGroup(groupResponse.data);
-        setUsers(membersResponse.data);
+        setUsers(membersResponse.data || []);
       } catch (error) {
         console.error(
           `Something went wrong while fetching the group and its members: \n${handleError(
@@ -32,8 +31,16 @@ const useGroupMembers = (groupId) => {
       }
     }
 
-    fetchData();
-  }, []);
+    fetchData(); // Call once on component mount
+
+    const intervalId = setInterval(() => {
+      fetchData(); // Call again after the specified interval
+    }, 5000); // Poll every 5 seconds
+
+    return () => {
+      clearInterval(intervalId); // Clear the interval on component unmount
+    };
+  }, []); // Only run once on component mount
 
   return { group, users };
 };

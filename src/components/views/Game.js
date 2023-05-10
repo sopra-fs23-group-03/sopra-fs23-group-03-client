@@ -33,101 +33,50 @@ const Game = () => {
   const [groups, setGroups] = useState(null);
   const [members, setMembers] = useState({});
 
-  // useEffect hook to fetch data for users
   useEffect(() => {
-    let isMounted = true;
-
-    async function fetchUsers() {
+    const interval = setInterval(async () => {
       try {
-        const response = await api.get("/users", { headers });
-        if (isMounted) {
-          setUsers(response.data);
-        }
-      } catch (error) {
-        localStorage.removeItem("token");
-        history.push("/login");
-        console.error(
-          `Something went wrong while fetching the users: \n${handleError(
-            error
-          )}`
-        );
-        console.error("Details:", error);
-        alert(
-          "Something went wrong while fetching the users! See the console for details."
-        );
-      }
-    }
+        // Fetch updated data for users
+        const usersResponse = await api.get("/users", { headers });
+        setUsers(usersResponse.data);
 
-    fetchUsers();
+        // Fetch updated data for groups
+        const groupsResponse = await api.get("/groups", { headers });
+        setGroups(groupsResponse.data);
 
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+        // Fetch updated data for group members
+        groupsResponse.data.forEach(async (group) => {
+          const membersResponse = await api.get(`/groups/${group.id}/guests`, {
+            headers,
+          });
 
-  // useEffect hook to fetch data for group members
-  useEffect(() => {
-    let isMounted = true;
-
-    async function fetchMembers(groupId) {
-      try {
-        const membersResponse = await api.get(`/groups/${groupId}/guests`, {
-          headers,
-        });
-        if (isMounted) {
+          const membersData = membersResponse.data;
           setMembers((prevMembers) => {
             return {
               ...prevMembers,
-              [groupId]: membersResponse.data.map((member) => ({
-                id: member.id,
-                username: member.username,
-              })),
+              [group.id]: membersData.length
+                ? membersData.map((member) => ({
+                    id: member.id,
+                    username: member.username,
+                  }))
+                : [],
             };
           });
-        }
+        });
       } catch (error) {
         console.error(
-          `Something went wrong while fetching the group members: \n${handleError(
+          `Something went wrong while fetching the data: \n${handleError(
             error
           )}`
         );
         console.error("Details:", error);
         alert(
-          "Something went wrong while fetching the group members! See the console for details."
+          "Something went wrong while fetching the data! See the console for details."
         );
       }
-    }
+    }, 5000); // Fetch data every 5 seconds
 
-    async function fetchGroups() {
-      try {
-        const groupsResponse = await api.get("/groups", { headers });
-        if (isMounted) {
-          setGroups(groupsResponse.data);
-          console.log(groupsResponse.data);
-
-          // Fetch the members for each group
-          groupsResponse.data.forEach((group) => {
-            fetchMembers(group.id);
-          });
-        }
-      } catch (error) {
-        console.error(
-          `Something went wrong while fetching the groups: \n${handleError(
-            error
-          )}`
-        );
-        console.error("Details:", error);
-        alert(
-          "Something went wrong while fetching the groups! See the console for details."
-        );
-      }
-    }
-
-    fetchGroups();
-
-    return () => {
-      isMounted = false;
-    };
+    return () => clearInterval(interval);
   }, []);
 
   let content = <Spinner />;
@@ -198,10 +147,14 @@ const Game = () => {
                   <li className="game host-text">{group.hostName}</li>
                   <ul className="game group-members">
                     {members[group.id] &&
-                      members[group.id].map((member) => (
-                        <li className="game player username" key={member.id}>
-                          {member.username}
-                        </li>
+                      (members[group.id].length > 0 ? (
+                        members[group.id].map((member) => (
+                          <li className="game player username" key={member.id}>
+                            {member.username}
+                          </li>
+                        ))
+                      ) : (
+                        <li className="game no-members">No members yet</li>
                       ))}
                   </ul>
                 </ul>
