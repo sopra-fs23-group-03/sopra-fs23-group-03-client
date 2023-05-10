@@ -42,7 +42,7 @@ const GroupFormingHost = () => {
               <div className="groupforming sections">
                 <div className="groupforming preferences">
                   <div className="groupforming titles">
-                    Members
+                    Guests
                     <div className="groupforming group-join-requests">
                       {users.map((member) => (
                         <div
@@ -83,7 +83,7 @@ const GroupFormingHost = () => {
                     className="groupforming general-button"
                     width="24%"
                     onClick={() => {
-                      history.push(`/ingredients/:${groupId}`);
+                      history.push(`/ingredients/${groupId}`);
                     }}
                   >
                     Continue

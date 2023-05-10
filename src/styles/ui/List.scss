@@ -2,84 +2,93 @@
   &.todo-list {
     display: flex;
     flex-direction: column;
-    min-height: 105px;
-    overflow-y: auto;
-  }
-
-  .todo {
-    display: flex;
-    flex-direction: row;
-    height: 30px;
-    background: #ededed;
-    padding: 3px 10px;
-    margin-bottom: 6px;
-    border-radius: 8px;
-    border: 1px solid #e1e1e1;
-    justify-content: space-between;
-    color: #333333;
-    align-items: center;
-  }
-
-  &.todo-text {
-    cursor: pointer;
+    min-height: 205px;
+    //position: absolute;
     overflow: hidden;
-    text-overflow: ellipsis; //if text is too long, the end of the text will be hidden and replaced by ...
-    //white-space: nowrap;
-  }
+    width: 90%;
 
-  &.todo-completed {
-    text-decoration: line-through;
-  }
+    .todo {
+      height: 30px;
+      background: #ededed;
+      padding: 3px 10px;
+      margin-bottom: 6px;
+      border-radius: 0.75em;
+      border: 1px solid #e1e1e1;
+      justify-content: space-between;
+      color: #333333;
+      align-items: center;
 
-  &.button {
-    border: 0;
-    outline: 0;
-    cursor: pointer;
-    font-size: 20px;
-    background: #ededed;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
+      &.todo-text {
+        cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
-  &.todo button {
-    color: #333333;
-    background: #ededed;
-    border: 0;
-    outline: 0;
-  }
+      &.todo-completed {
+        text-decoration: line-through;
+      }
 
-  &.input {
-    color: #333333;
-    background: #ededed;
-    border: 1px solid #e1e1e1;
-    padding: 3px 10px;
-    border-right: 0px;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    outline: 0;
-    flex: 1;
-    width: 100%;
-  }
+      & button {
+        color: #333333;
+        background: #ededed;
+        border: 0;
+        outline: 0;
+      }
+    }
 
-  &.form {
-    display: flex;
-  }
+    &.form {
+      display: flex;
+    }
+    .input {
+      background: none;
+      border: none;
+      color: #333333;
+      width: 100%;
+    }
 
-  &.form button {
-    color: #333333;
-    background: #ededed;
-    border: 1px solid #e1e1e1;
-    padding: 3px 10px;
-    border-left: 0px;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    width: 20%;
-    padding-right: 35px;
+    .button {
+      color: #333333;
+      background: #ededed;
+      border: 1px solid #e1e1e1;
+      border-top-right-radius: 0.75em;
+      border-bottom-right-radius: 0.75em;
+      border-left: 0px;
+      padding: 0 15px;
+      outline: 0;
+      cursor: pointer;
+    }
+
+    .suggestions {
+      display: flex;
+      flex-direction: column;
+      //position: absolute;
+      //top: calc(100%);
+      width: 90%;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 1;
+      background-color: #fff;
+      border-radius: 0.75em;
+      border: 1px solid #e1e1e1;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 5px;
+      margin: 0;
+    }
+
+    .list.suggestion {
+      padding: 8px;
+      cursor: pointer;
+      background-color: #fff;
+    }
+
+    &.list.suggestion:hover {
+      background-color: #ddd;
+    }
   }
 
   &.icon {
     font-family: "Material Symbols Outlined";
     font-style: normal;
+    font-weight: normal;
   }
 }

@@ -16,18 +16,20 @@ const NavigationBar = () => {
   const [showNotificationBar, setShowNotificationBar] = useState(false); // For displaying the notification bar
 
   const logout = async () => {
-    // try {
-    //   await api.post(`/users/${localStorage.getItem("userId")}/logout`, null, {
-    //     headers: {
-    //       "X-Token": localStorage.getItem("token"),
-    //     },
-    //   });
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
+    try {
+      await api.post(`/users/${localStorage.getItem("userId")}/logout`, null, {
+        headers: {
+          "X-Token": localStorage.getItem("token"),
+        },
+      });
+      // localStorage.removeItem("token");
+      // localStorage.removeItem("userId");
+      localStorage.clear();
       setIsLoggedIn(false);
       history.push("/login");
-    // } catch (error) {
-    //   console.error(error);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

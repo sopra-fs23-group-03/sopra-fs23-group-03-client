@@ -8,7 +8,6 @@ import NavigationBar from "components/views/NavigationBar";
 import Profile from "components/views/Profile";
 import GroupCreation from "components/views/GroupCreation";
 import Final from "components/views/Final";
-import { ProfileGuard } from "components/routing/routeProtectors/ProfileGuard";
 import { useContext } from "react";
 import AuthContext from "components/contexts/AuthContext";
 import GroupFormingGuest from "components/views/GroupFormingGuest";
@@ -63,7 +62,7 @@ const AppRouter = () => {
           </GameGuard>
         </Route>
 
-        <Route path="/final/:groupId">
+        <Route exact path="/final/:groupId">
           <GameGuard>
             <Final />
           </GameGuard>
@@ -104,7 +103,6 @@ const AppRouter = () => {
             <IngredientSolo />
           </GameGuard>
         </Route>
-
 
         <Route exact path="/ingredientsvoting/:groupId">
           <GameGuard>

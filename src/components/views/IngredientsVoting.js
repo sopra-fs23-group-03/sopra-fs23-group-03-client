@@ -9,14 +9,12 @@ import { api, handleError } from "helpers/api";
 import "styles/views/IngredientsVoting.scss";
 import "styles/views/GroupFormingHost.scss";
 
-
 const IngredientsVoting = () => {
+  const history = useHistory();
 
-    const history = useHistory();
-
-    const headers = useMemo(() => {
+  const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
-    }, []);
+  }, []);
 
     const [userId, setId] = useState(localStorage.getItem("userId"));
     const [guests, setGuests] = useState([]);
@@ -61,15 +59,15 @@ const IngredientsVoting = () => {
         fetchData();
       }, []);
 
-    return (
-        <AppContainer>
-            <div className="game container">
-                <div className="groupforming main-container">
-                    <div className="groupforming sidebar">
-                        <div className="groupforming sidebar-buttons">
-                            <i className="ingredientsvoting icon"> location_home </i> &nbsp; Host:{" "} {group?.hostName} &nbsp;
-
-                        </div>
+  return (
+    <AppContainer>
+      <div className="game container">
+        <div className="groupforming main-container">
+          <div className="groupforming sidebar">
+            <div className="groupforming sidebar-buttons">
+              <i className="ingredientsvoting icon"> location_home </i> &nbsp;
+              Host: {group?.hostName} &nbsp;
+            </div>
 
                         <div className="groupforming sidebar-buttons">
                             <i className="ingredientsvoting icon majority">bar_chart</i> Voting System: Majority &nbsp;
