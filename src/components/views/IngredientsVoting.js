@@ -19,9 +19,14 @@ const IngredientsVoting = () => {
     }, []);
 
     const [userId, setId] = useState(localStorage.getItem("userId"));
-    const [users, setUsers] = useState(null);
+    const [guests, setGuests] = useState([]);
     const [group, setGroup] = useState(null);
     const groupId = localStorage.getItem("groupId");
+
+    const [ingredients, setIngredients] = useState([]);
+    
+
+    const votes = {}
 
 
     useEffect(() => {
@@ -29,16 +34,16 @@ const IngredientsVoting = () => {
         async function fetchData() {
           try {
             const groupResponse = await api.get(`/groups/${groupId}`, { headers });
-            const membersResponse = await api.get(`/groups/${groupId}/members`, {
-              headers,
-            });
+            const guestsResponse = await api.get(`/groups/${groupId}/guests`, {headers});
+            const ingredientsResponse = await api.get (`/groups/${groupId}/ingredients`, {headers})
             // Get the returned group and update the state.
             setGroup(new Group(groupResponse.data));
             // Get the returned members and update the state.
-            setUsers(membersResponse.data);
+            setGuests(guestsResponse.data);
 
-            console.log("groupresponse", groupResponse);
-            console.log("memberresponse", membersResponse);
+            setIngredients(ingredientsResponse.data);
+
+
 
           } catch (error) {
             console.error(
@@ -70,6 +75,21 @@ const IngredientsVoting = () => {
                             <i className="ingredientsvoting icon majority">bar_chart</i> Voting System: Majority &nbsp;
                         </div>
 
+                        <ul className="groupforming invite-users">
+                            <h3 className="player container">
+                              <i className="material-icons">people_outline</i>
+                              &nbsp; Guests &nbsp;
+                            </h3>
+
+                            {guests && guests.map((guest) => (
+                              <div
+                                className={`player container ${guest.status.toLowerCase()}`}
+                                key={guest.id}>
+                                {guest.username}
+                             </div>
+                            ))}
+                        </ul>
+
                     </div>
                     <BaseContainer>
                         <div className="groupforming form">
@@ -83,15 +103,20 @@ const IngredientsVoting = () => {
                                     <div className="groupforming preferences">
                                         <div className="groupforming titles"> Overall ingredients </div>
                                         <div className="ingredientsvoting ingredients">
-                                            <div className="ingredientsvoting item">
-                                                Tofu
-                                                <div className="ingredientsvoting reactions">
-                                                    <i className="ingredientsvoting icon reaction">sentiment_satisfied</i>
-                                                    <i className="ingredientsvoting icon reaction">sentiment_neutral</i>
-                                                    <i className="ingredientsvoting icon reaction">sentiment_dissatisfied</i>
-                                                </div>
+                                            
+                                                {ingredients && ingredients.map((ingredient) => (
+                                                    <div className="ingredientsvoting item">
+                                                        {ingredient.name}
+                                                        <div className="ingredientsvoting reactions">
+                                                            <i className="ingredientsvoting icon reaction" onClick={ votes[ingredient.id]="1" }> sentiment_satisfied </i>
+                                                            <i className="ingredientsvoting icon reaction" onClick={ votes[ingredient.id]="0" }> sentiment_neutral </i>
+                                                            <i className="ingredientsvoting icon reaction" onClick={ votes[ingredient.id]="-1" }> sentiment_dissatisfied </i>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                                
                                             </div>
-                                        </div>
+                                        
 
                                     </div>
                                 </div>                                
