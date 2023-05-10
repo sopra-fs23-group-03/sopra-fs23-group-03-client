@@ -7,6 +7,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 import AppContainer from "components/ui/AppContainer";
+import useGroupMembers from "hooks/useGroupMembers";
 
 const Player = ({ user }) => (
   <div className="player container">
@@ -34,11 +35,17 @@ const Game = () => {
 
   // useEffect hook to fetch data for users
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchUsers() {
       try {
         const response = await api.get("/users", { headers });
-        setUsers(response.data);
+        if (isMounted) {
+          setUsers(response.data);
+        }
       } catch (error) {
+        localStorage.removeItem("token");
+        history.push("/login");
         console.error(
           `Something went wrong while fetching the users: \n${handleError(
             error
@@ -52,24 +59,32 @@ const Game = () => {
     }
 
     fetchUsers();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // useEffect hook to fetch data for group members
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchMembers(groupId) {
       try {
-        const membersResponse = await api.get(`/groups/${groupId}/members`, {
+        const membersResponse = await api.get(`/groups/${groupId}/guests`, {
           headers,
         });
-        setMembers((prevMembers) => {
-          return {
-            ...prevMembers,
-            [groupId]: membersResponse.data.map((member) => ({
-              id: member.id,
-              username: member.username,
-            })),
-          };
-        });
+        if (isMounted) {
+          setMembers((prevMembers) => {
+            return {
+              ...prevMembers,
+              [groupId]: membersResponse.data.map((member) => ({
+                id: member.id,
+                username: member.username,
+              })),
+            };
+          });
+        }
       } catch (error) {
         console.error(
           `Something went wrong while fetching the group members: \n${handleError(
@@ -86,13 +101,15 @@ const Game = () => {
     async function fetchGroups() {
       try {
         const groupsResponse = await api.get("/groups", { headers });
-        setGroups(groupsResponse.data);
-        console.log(groupsResponse.data);
+        if (isMounted) {
+          setGroups(groupsResponse.data);
+          console.log(groupsResponse.data);
 
-        // Fetch the members for each group
-        groupsResponse.data.forEach((group) => {
-          fetchMembers(group.id);
-        });
+          // Fetch the members for each group
+          groupsResponse.data.forEach((group) => {
+            fetchMembers(group.id);
+          });
+        }
       } catch (error) {
         console.error(
           `Something went wrong while fetching the groups: \n${handleError(
@@ -107,6 +124,10 @@ const Game = () => {
     }
 
     fetchGroups();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   let content = <Spinner />;
@@ -142,11 +163,10 @@ const Game = () => {
           </Button>
 
           <ul className="game user-list">
-            <h3 className="player container">
+            <ul className="game user-list-title">
               <i className="material-icons">group</i>
               &nbsp; Users &nbsp;
-            </h3>
-
+            </ul>
             {users.sort(sortUsersByStatus).map((user) => (
               <Button
                 className={`player container ${user.status.toLowerCase()}`}
@@ -167,27 +187,27 @@ const Game = () => {
           <div className="game group-container-labels">
             <label className="game label-text">Group</label>
             <label className="game label-text">Host</label>
-            <label className="game label-text">Members</label>
+            <label className="game label-text">Guests</label>
           </div>
 
           <div className="game group">
             {groups ? (
               groups.map((group) => (
-                <ul className="game group-list">
+                <ul className="game group-list" key={group.id}>
                   <li className="game group-text">{group.groupName}</li>
                   <li className="game host-text">{group.hostName}</li>
-                  <li className="game group-members">
+                  <ul className="game group-members">
                     {members[group.id] &&
                       members[group.id].map((member) => (
-                        <li className="game player username">
+                        <li className="game player username" key={member.id}>
                           {member.username}
                         </li>
                       ))}
-                  </li>
+                  </ul>
                 </ul>
               ))
             ) : (
-              <div className="game group list">
+              <div className="game group ">
                 <h3>No Groups Yet</h3>
               </div>
             )}

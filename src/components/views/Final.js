@@ -7,12 +7,12 @@ import AppContainer from "components/ui/AppContainer";
 import "styles/views/Final.scss";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
+import { Spinner } from "components/ui/Spinner";
 
 const InfoField = (props) => {
   return (
     <div className="final field">
       <label className="final label">{props.label}</label>
-      <input className="final input" />
       <span className="final input">{props.value}</span>
     </div>
   );
@@ -58,28 +58,35 @@ const Final = () => {
   }, []);
 
   if (!recipe) {
-    return null;
+    return (
+      <AppContainer>
+        <Spinner />
+      </AppContainer>
+    );
+  } else {
+    return (
+      <AppContainer>
+        <BaseContainer>
+          <div className="final main">
+            <i className="final icon">sentiment_satisfied</i>
+            <div className="final title">Everything is set!</div>
+          </div>
+
+          <div className="final section">
+            <InfoField label="Recipe" value={recipe?.title} />
+            <InfoField
+              label="Approx. time"
+              value={(recipe?.readyInMinutes + " minutes").replace("null", "'")}
+            />
+            {/* <InfoField label="Difficulty" value={recipe?.difficulty} /> */}
+          </div>
+          <div className="final button" onClick={() => history.push("/game")}>
+            Back to main page
+          </div>
+        </BaseContainer>
+      </AppContainer>
+    );
   }
-
-  return (
-    <AppContainer>
-      <BaseContainer>
-        <div className="final main">
-          <i className="final icon">sentiment_satisfied</i>
-          <div className="final title">Everything is set!</div>
-        </div>
-
-        <div className="final section">
-          <InfoField label="Recipe" value={recipe?.title} />
-          <InfoField label="Approx. time" value={recipe?.readyInMinutes} />
-          {/* <InfoField label="Difficulty" value={recipe?.difficulty} /> */}
-        </div>
-        <div className="final button" onClick={() => history.push("/game")}>
-          Back to main page
-        </div>
-      </BaseContainer>
-    </AppContainer>
-  );
 };
 
 export default Final;

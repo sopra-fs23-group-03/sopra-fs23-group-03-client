@@ -7,7 +7,6 @@ import "styles/views/Login.scss";
 import PropTypes from "prop-types";
 import AuthContext from "components/contexts/AuthContext";
 
-
 const FormField = (props) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -72,6 +71,8 @@ const Register = (props) => {
 
       // Store the token from the response headers into the local storage.
       localStorage.setItem("token", response.headers["x-token"]);
+      //put the "isloggedin" in the localstorage i can use it later as const storedValue = localStorage.getItem("isLoggedIn");
+      localStorage.setItem("isLoggedIn", true);
 
       // Store the user ID in local storage.
       localStorage.setItem("userId", user.id);

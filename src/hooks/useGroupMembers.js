@@ -13,7 +13,7 @@ const useGroupMembers = (groupId) => {
     async function fetchData() {
       try {
         const groupResponse = await api.get(`/groups/${groupId}`, { headers });
-        const membersResponse = await api.get(`/groups/${groupId}/members`, {
+        const membersResponse = await api.get(`/groups/${groupId}/guests`, {
           headers,
         });
 

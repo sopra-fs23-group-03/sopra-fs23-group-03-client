@@ -68,6 +68,7 @@ const Login = (props) => {
 
       // Store the user ID in local storage.
       localStorage.setItem("userId", user.id);
+      localStorage.setItem("isLoggedIn", true);
       setIsLoggedIn(true);
 
       // Register successfully worked --> navigate to the route /game in the GameRouter

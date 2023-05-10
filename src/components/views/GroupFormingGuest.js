@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
-import { api, handleError } from "helpers/api";
+import { useState } from "react";
 import { Spinner } from "components/ui/Spinner";
-import { Button } from "components/ui/Button";
+import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
-import Group from "models/Group";
 import useInvitationActions from "hooks/useInvitationActions";
 import useGroupMembers from "hooks/useGroupMembers";
-import { useParams } from "react-router-dom";
 
 const GroupFormingGuest = ({ buttonLabel }) => {
   const history = useHistory();
@@ -47,7 +44,7 @@ const GroupFormingGuest = ({ buttonLabel }) => {
             <div className="groupforming sections">
               <div className="groupforming preferences">
                 <div className="groupforming titles">
-                  Members
+                  Guests
                   <div className="groupforming group-join-requests">
                     {users.map((user) => (
                       <div
@@ -85,11 +82,7 @@ const GroupFormingGuest = ({ buttonLabel }) => {
                       className="groupforming general-button"
                       width="24%"
                       onClick={() => {
-                        handleRejectInvitation(
-                          groupId,
-                          localStorage.getItem("userId")
-                        );
-                        history.push(`/ingredients/:${groupId}`);
+                        handleRejectInvitation(groupId);
                       }}
                     >
                       {buttonLabel}
@@ -99,9 +92,12 @@ const GroupFormingGuest = ({ buttonLabel }) => {
                       className="groupforming general-button"
                       width="24%"
                       onClick={() => {
-                        // join the group
-                        setJoinedGroup(true);
-                        handleAcceptInvitation(groupId);
+                        if (buttonLabel === "Ready") {
+                          history.push(`/ingredients/${groupId}`);
+                        } else {
+                          setJoinedGroup(true);
+                          handleAcceptInvitation(groupId);
+                        }
                       }}
                     >
                       {buttonLabel}
