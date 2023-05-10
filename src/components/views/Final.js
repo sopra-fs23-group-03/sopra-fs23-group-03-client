@@ -5,7 +5,6 @@ import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import AppContainer from "components/ui/AppContainer";
 import "styles/views/Final.scss";
-import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { Spinner } from "components/ui/Spinner";
 

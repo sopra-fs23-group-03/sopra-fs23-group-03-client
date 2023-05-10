@@ -71,7 +71,6 @@
   }
 
   &.input {
-    //text-align: left;
     display: flex;
     width: 66%;
     border: 1px solid #e1e1e1;
@@ -81,7 +80,6 @@
     margin-left: 10px;
     height: fit-content;
     min-height: 60px;
-    // justify-content: center;
     align-items: center;
   }
 }
