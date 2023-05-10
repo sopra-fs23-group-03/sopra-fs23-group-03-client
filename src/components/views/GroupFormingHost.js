@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { api, handleError } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
 import { Button } from "components/ui/Button";
@@ -15,6 +15,18 @@ const GroupFormingHost = () => {
   const history = useHistory();
   const { groupId } = useParams();
   const { group, users } = useGroupMembers(groupId);
+  const headers = useMemo(() => {
+    return { "X-Token": localStorage.getItem("token") };
+  }, []);
+  const handleDelete = async () => {
+    try {
+      await api.delete(`/groups/${groupId}`, { headers });
+
+      history.push("/game");
+    } catch (error) {
+      handleError(error);
+    }
+  };
 
   let content = [];
 
@@ -73,7 +85,7 @@ const GroupFormingHost = () => {
                           "Deleting the group will cancel the event for all guests. Are you sure you want to proceed? This action cannot be undone."
                         )
                       ) {
-                        history.push("/game");
+                        handleDelete();
                       }
                     }}
                   >

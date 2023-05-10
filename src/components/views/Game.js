@@ -26,7 +26,6 @@ const Game = () => {
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
-  const [userId, setId] = useState(localStorage.getItem("userId"));
 
   // define state variables for users and groups
   const [users, setUsers] = useState(null);
@@ -74,7 +73,7 @@ const Game = () => {
           "Something went wrong while fetching the data! See the console for details."
         );
       }
-    }, 5000); // Fetch data every 5 seconds
+    }, 2000); // Fetch data every 5 seconds
 
     return () => clearInterval(interval);
   }, []);
