@@ -122,7 +122,7 @@ const IngredientsVoting = () => {
                             <button
                             className="groupforming general-button"
                             width="24%"
-                            onClick={() => { history.push(`/final/:${groupId}`)}}>
+                            onClick={() => { history.push(`/ingredientsfinal/:${groupId}`)}}>
                                 Submit
 
                             </button>
