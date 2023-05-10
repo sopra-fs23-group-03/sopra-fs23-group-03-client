@@ -167,6 +167,8 @@ const Ingredient = () => {
     }
   };
 
+  const isSubmitDisabled = ingredients.length === 0;
+
   let content = <Spinner />;
 
   if (users) {
@@ -233,6 +235,7 @@ const Ingredient = () => {
                     onClick={() => {
                       handleSubmit(ingredients);
                     }}
+                    disabled={isSubmitDisabled} // add disabled prop
                   >
                     Submit
                   </button>
