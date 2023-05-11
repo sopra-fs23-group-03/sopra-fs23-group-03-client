@@ -73,7 +73,7 @@ const GroupFormingHost = () => {
                           "Deleting the group will cancel the event for all guests. Are you sure you want to proceed? This action cannot be undone."
                         )
                       ) {
-                        history.push("/game");
+                        history.push("/dashboard");
                       }
                     }}
                   >

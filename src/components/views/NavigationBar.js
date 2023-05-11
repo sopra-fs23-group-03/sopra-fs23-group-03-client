@@ -78,7 +78,7 @@ const NavigationBar = () => {
 
           <button
             className="navbar home-icon "
-            onClick={() => history.push(`/game`)}
+            onClick={() => history.push(`/dashboard`)}
           >
             home
           </button>

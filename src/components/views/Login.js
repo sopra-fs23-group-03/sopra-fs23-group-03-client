@@ -71,8 +71,8 @@ const Login = (props) => {
       localStorage.setItem("isLoggedIn", true);
       setIsLoggedIn(true);
 
-      // Register successfully worked --> navigate to the route /game in the GameRouter
-      history.push(`/game`);
+      // Register successfully worked --> navigate to the route /dashboard in the GameRouter
+      history.push(`/dashboard`);
     } catch (error) {
       alert(`Something went wrong during the login: \n${handleError(error)}`);
       history.push(`/login`);

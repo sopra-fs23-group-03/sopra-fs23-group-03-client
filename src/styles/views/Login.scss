@@ -123,12 +123,19 @@
   }
 
   &.text {
-    font-family: "Poppins";
-    font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
     color: rgba(102, 102, 102, 0.8);
     min-width: 300px;
+  }
+
+  &.small-text {
+    font-weight: 200;
+    font-size: 12px;
+    color: rgba(102, 102, 102, 0.8);
+    text-align: end;    
+    margin-right: 8px;
+    width: 65%;
   }
 }

@@ -30,6 +30,16 @@ const GroupCreation = () => {
   const handlePointsButton = () => {
     setVotingType("POINTDISTRIBUTION")
   }
+
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseOver = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseOut = () => {
+    setIsHovering(false);
+  };
   
 
   const createGroup = async () => {
@@ -43,6 +53,8 @@ const GroupCreation = () => {
       alert("Group name cannot include spaces");
       return;
     }
+
+
 
     try {
       const requestBody = {
@@ -61,6 +73,7 @@ const GroupCreation = () => {
       ) {
         throw new Error("invitedUsers must be an array of Long values");
       }
+      
       await api.post(`/groups/${groupId}/invitations`, invitedUsers, { headers });
       setInvitedUsers(invitedUsers);
       localStorage.setItem("groupId", group.id);
@@ -68,13 +81,10 @@ const GroupCreation = () => {
 
       history.push(`/groupforming/${groupId}/host`);
     } catch (error) {
-      console.error(
+      alert(
         `Something went wrong while creating the group: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      alert(
-        "Something went wrong while creating the group! See the console for details."
-      );
     }
   };
 
@@ -144,10 +154,11 @@ const GroupCreation = () => {
                 <i className="group-creation icon">timeline</i>
                 Point Distribution
               </button>
-              <button className="group-creation voting-button majority" onClick={handleMajorityButton} style={{backgroundColor: votingType==="MAJORITYVOTE"? "#333333" : ""}}>
+              <button className="group-creation voting-button majority" onClick={handleMajorityButton} style={{backgroundColor: votingType==="MAJORITYVOTE"? "#333333" : ""}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
                 <i className="group-creation icon">star</i>
                 Majority
               </button>
+              {isHovering && <div className="group-creation info-window">Host and guest rate yes/no/indifferent per ingredient. Only the ingredients which obtained the majority stay in the final overview. "No" and "yes" votes can cancel each other out."</div>}
             </div>
           </div>
           
@@ -179,7 +190,7 @@ const GroupCreation = () => {
             <div className="group-creation buttons">
               <button
                 className="group-creation button"
-                onClick={() => history.push("/game")}
+                onClick={() => history.push("dashboard")}
               >
                 Delete group
               </button>
