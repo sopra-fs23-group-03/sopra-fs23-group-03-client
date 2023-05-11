@@ -73,6 +73,7 @@ const GroupCreation = () => {
       ) {
         throw new Error("invitedUsers must be an array of Long values");
       }
+      
       await api.post(`/groups/${groupId}/invitations`, invitedUsers, { headers });
       setInvitedUsers(invitedUsers);
       localStorage.setItem("groupId", group.id);
