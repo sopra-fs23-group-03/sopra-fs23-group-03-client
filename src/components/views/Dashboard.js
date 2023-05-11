@@ -26,12 +26,13 @@ const Game = () => {
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
-  const [userId, setId] = useState(localStorage.getItem("userId"));
 
   // define state variables for users and groups
   const [users, setUsers] = useState(null);
   const [groups, setGroups] = useState(null);
   const [members, setMembers] = useState({});
+  const [joinRequests, setJoinRequests] = useState({});
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -74,10 +75,51 @@ const Game = () => {
           "Something went wrong while fetching the data! See the console for details."
         );
       }
-    }, 5000); // Fetch data every 5 seconds
+    }, 2000); // Fetch data every 5 seconds
 
     return () => clearInterval(interval);
   }, []);
+
+  // Load joinRequests from localStorage on component mount
+  useEffect(() => {
+    const storedJoinRequests =
+      JSON.parse(localStorage.getItem("joinRequests")) || {};
+    setJoinRequests(storedJoinRequests);
+  }, []);
+
+  // ...
+
+  // Update joinRequests and save it to localStorage
+  const updateJoinRequests = (groupId, value) => {
+    setJoinRequests((prevJoinRequests) => {
+      const updatedJoinRequests = {
+        ...prevJoinRequests,
+        [groupId]: value,
+      };
+      localStorage.setItem("joinRequests", JSON.stringify(updatedJoinRequests));
+      return updatedJoinRequests;
+    });
+  };
+
+  // ...
+
+  const SendJoinRequest = async (groupId) => {
+    try {
+      await api.post(
+        `/groups/${groupId}/requests`,
+        { guestId: userId },
+        { headers }
+      );
+      updateJoinRequests(groupId, true);
+      alert("Join request sent successfully!");
+    } catch (error) {
+      console.error(
+        `Failed to send join request for group with id ${groupId}:`,
+        error
+      );
+      alert("Failed to send join request. Please try again.");
+    }
+  };
 
   let content = <Spinner />;
 
@@ -157,6 +199,19 @@ const Game = () => {
                         <li className="game no-members">No members yet</li>
                       ))}
                   </ul>
+                  <button
+                    className={`game join-group-button ${
+                      joinRequests[group.id] ? "requested" : ""
+                    }`}
+                    onClick={() => SendJoinRequest(group.id)}
+                    disabled={joinRequests[group.id]}
+                  >
+                    {joinRequests[group.id] ? (
+                      <i className="material-icons done-icon">done</i>
+                    ) : (
+                      <span>Join</span>
+                    )}
+                  </button>
                 </ul>
               ))
             ) : (

@@ -143,7 +143,7 @@
 
   &.label-text {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 21px;
     color: #92929d;
     letter-spacing: 0.1px;
@@ -186,7 +186,7 @@
     align-items: center;
     //justify-content: center;
     background: #fefefe;
-    height: 35px;
+    height: 45px;
     //padding: 0.5rem;
     //box-shadow: 0px 4px 2px rgba(0.25, 0.25, 0.25, 0.25);
     border-radius: 10px;
@@ -196,7 +196,7 @@
 
   .group-text {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 21px;
     letter-spacing: 0.1px;
     margin-left: 0em;
@@ -210,7 +210,7 @@
 
   .host-text {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 21px;
     letter-spacing: 0.1px;
     //margin-right: 3em;
@@ -225,7 +225,7 @@
     display: flex;
     flex-direction: row;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 21px;
     margin-right: 0em;
     //padding: none;
@@ -233,5 +233,44 @@
     width: 260px;
     max-width: 260px;
     overflow-x: auto;
+  }
+
+  &.join-group-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-right: 5px;
+    width: 60px;
+    &:hover {
+      transform: translateY(-2px);
+    }
+    &:disabled {
+      cursor: default;
+      opacity: 0.25;
+      &:hover {
+        transform: none;
+      }
+    }
+    padding: 6px;
+    color: #ffffff;
+    text-align: center;
+    height: 33px;
+    border: none;
+    cursor: pointer;
+    background: #333333;
+  }
+
+  &.requested {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: black;
+  }
+
+  &.done-icon {
+    font-size: 24px;
+    color: black;
   }
 }

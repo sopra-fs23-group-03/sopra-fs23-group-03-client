@@ -1,13 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { api, handleError } from "helpers/api";
-import { Spinner } from "components/ui/Spinner";
-import { Button } from "components/ui/Button";
 import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
-import Group from "models/Group";
 import { useParams } from "react-router-dom";
 import useGroupMembers from "hooks/useGroupMembers";
 
@@ -15,6 +12,62 @@ const GroupFormingHost = () => {
   const history = useHistory();
   const { groupId } = useParams();
   const { group, users } = useGroupMembers(groupId);
+  const [joinRequests, setJoinRequests] = useState([]);
+  const headers = useMemo(() => {
+    return { "X-Token": localStorage.getItem("token") };
+  }, []);
+  const handleDelete = async () => {
+    try {
+      await api.delete(`/groups/${groupId}`, { headers });
+
+      history.push("/dashboard");
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  const fetchRequests = async () => {
+    try {
+      const response = await api.get(`/groups/${groupId}/requests`, {
+        headers,
+      });
+      setJoinRequests(response.data);
+      fetchRequests();
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRequests();
+  }, []);
+
+  const handleAcceptRequest = async (guestId) => {
+    try {
+      await api.put(
+        `/groups/${groupId}/requests/accept`,
+        { guestId },
+        { headers }
+      );
+      // Handle success or update the UI accordingly
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  const handleRejectRequest = async (guestId) => {
+    try {
+      await api.put(
+        `/groups/${groupId}/requests/reject`,
+        { guestId },
+        { headers }
+      );
+      fetchRequests();
+      // Handle success or update the UI accordingly
+    } catch (error) {
+      handleError(error);
+    }
+  };
 
   let content = [];
 
@@ -52,10 +105,33 @@ const GroupFormingHost = () => {
                             <span className="groupforming player username">
                               {member.username}
                             </span>
-                            {/* <button className="material-icons reply-button">
-      done
-    </button> */}
-                            <button className="material-icons reply-button">
+                          </div>
+                        ))}
+
+                      {joinRequests &&
+                        joinRequests.map((joinRequest) => (
+                          <div
+                            className="groupforming group-join-request"
+                            key={joinRequest.id} // Assuming the join request has an `id` property
+                          >
+                            <span className="groupforming player username">
+                              {joinRequest.username}{" "}
+                              {/* Assuming the username is available */}
+                            </span>
+                            <button
+                              className="material-icons reply-button"
+                              onClick={() =>
+                                handleAcceptRequest(joinRequest.id)
+                              }
+                            >
+                              done
+                            </button>
+                            <button
+                              className="material-icons reply-button"
+                              onClick={() =>
+                                handleRejectRequest(joinRequest.id)
+                              }
+                            >
                               delete_outline
                             </button>
                           </div>
@@ -73,7 +149,7 @@ const GroupFormingHost = () => {
                           "Deleting the group will cancel the event for all guests. Are you sure you want to proceed? This action cannot be undone."
                         )
                       ) {
-                        history.push("/dashboard");
+                        handleDelete();
                       }
                     }}
                   >
