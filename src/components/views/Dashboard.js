@@ -74,6 +74,8 @@ const Game = () => {
         alert(
           "Something went wrong while fetching the data! See the console for details."
         );
+        localStorage.clear();
+        history.push("/login");
       }
     }, 2000); // Fetch data every 5 seconds
 
@@ -111,7 +113,6 @@ const Game = () => {
         { headers }
       );
       updateJoinRequests(groupId, true);
-      alert("Join request sent successfully!");
     } catch (error) {
       console.error(
         `Failed to send join request for group with id ${groupId}:`,
