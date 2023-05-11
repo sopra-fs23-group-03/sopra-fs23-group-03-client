@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { api, handleError } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -9,14 +10,42 @@ import AppContainer from "components/ui/AppContainer";
 import useInvitationActions from "hooks/useInvitationActions";
 import useGroupMembers from "hooks/useGroupMembers";
 
-const GroupFormingGuest = ({ buttonLabel }) => {
+const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
   const history = useHistory();
+  const headers = useMemo(() => {
+    return { "X-Token": localStorage.getItem("token") };
+  }, []);
   const { groupId } = useParams();
   const [joinedGroup, setJoinedGroup] = useState(false); // add state variable for tracking if user joined group
   const { group, users } = useGroupMembers(groupId);
+  const [confirmExit, setConfirmExit] = useState(false);
 
   const { handleAcceptInvitation, handleRejectInvitation } =
     useInvitationActions();
+
+  useEffect(() => {
+    if (confirmExit) {
+      const confirmExitGroup = async () => {
+        try {
+          // Make a request to the backend to exit the group
+          await api.put(`/groups/${groupId}/leave`, null, {
+            headers: headers,
+          });
+          // Exit successful, redirect to the game page or any other desired destination
+          history.push("/game");
+        } catch (error) {
+          // Handle the case when the exit was not successful
+          // You can show an error message or perform any other desired action
+          console.log("Failed to exit group");
+
+          // Handle any network or server errors
+          console.log("Error:", error);
+        }
+      };
+
+      confirmExitGroup();
+    }
+  }, [confirmExit, groupId, headers, history]);
 
   let content = <Spinner />;
 
@@ -61,33 +90,33 @@ const GroupFormingGuest = ({ buttonLabel }) => {
               </div>
               <div className="game container">
                 {content}
+
                 <div className="groupforming buttons">
-                  <button
-                    className="groupforming cancel-button"
-                    width="24%"
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          "By leaving the group, you'll miss out on the fun! Are you sure you want to exit?"
-                        )
-                      ) {
-                        history.push("/game");
-                      }
-                    }}
-                  >
-                    Exit Group
-                  </button>
-                  {joinedGroup ? (
+                  <>
                     <button
-                      className="groupforming general-button"
+                      className="groupforming cancel-button"
                       width="24%"
                       onClick={() => {
-                        handleRejectInvitation(groupId);
+                        if (exitbuttonLabel === "Cancel") {
+                          if (
+                            window.confirm(
+                              "By leaving, you'll miss out on the fun! Are you sure you don't want to join?"
+                            )
+                          ) {
+                            handleRejectInvitation(groupId);
+                          }
+                        } else {
+                          if (
+                            window.confirm(
+                              "By leaving the group, you'll miss out on the fun! Are you sure you want to exit?"
+                            )
+                          )
+                            setConfirmExit(true);
+                        }
                       }}
                     >
-                      {buttonLabel}
+                      {exitbuttonLabel}
                     </button>
-                  ) : (
                     <button
                       className="groupforming general-button"
                       width="24%"
@@ -102,7 +131,7 @@ const GroupFormingGuest = ({ buttonLabel }) => {
                     >
                       {buttonLabel}
                     </button>
-                  )}
+                  </>
                 </div>
               </div>
             </div>
