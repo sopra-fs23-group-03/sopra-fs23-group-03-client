@@ -86,6 +86,7 @@ const GroupCreation = () => {
   };
 
   useEffect(() => {
+    let fetchDataInterval;
     async function fetchData() {
       // do polling to fetch the users every 2 seconds
       try {
