@@ -9,7 +9,7 @@ import { api, handleError } from "helpers/api";
 import "styles/views/IngredientsVoting.scss";
 import "styles/views/GroupFormingHost.scss";
 
-const IngredientsVoting = () => {
+const IngredientsFinal = () => {
   const history = useHistory();
 
   const headers = useMemo(() => {
@@ -21,16 +21,10 @@ const IngredientsVoting = () => {
     const [group, setGroup] = useState(null);
     const groupId = localStorage.getItem("groupId");
 
-    const [ingredients, setIngredients] = useState([]);
- 
-    const [votes, setVotes] = useState({});
+    //const [finalIngredients, setFinalIngredients] = useState([]);
+    
 
-    const handleVote = (ingredientId, vote) => {
-        setVotes((prevVotes) => ({
-          ...prevVotes,
-          [ingredientId]: vote,
-        }));
-      };
+    const votes = {}
 
 
     useEffect(() => {
@@ -39,47 +33,32 @@ const IngredientsVoting = () => {
           try {
             const groupResponse = await api.get(`/groups/${groupId}`, { headers });
             const guestsResponse = await api.get(`/groups/${groupId}/guests`, {headers});
-            const ingredientsResponse = await api.get (`/groups/${groupId}/ingredients`, {headers})
+            //const finalIngredientsResponse = await api.get (`/groups/${groupId}/ingredients/final`, {headers})
+            
             // Get the returned group and update the state.
             setGroup(new Group(groupResponse.data));
             // Get the returned members and update the state.
             setGuests(guestsResponse.data);
 
-            setIngredients(ingredientsResponse.data);
+            //setFinalIngredients(finalIngredientsResponse.data);
 
 
 
           } catch (error) {
-            alert(
+            console.error(
               `Something went wrong while fetching the group and its members: \n${handleError(
                 error
               )}`
             );
             console.error("Details:", error);
+            alert(
+              "Something went wrong while fetching the group and its members! See the console for details."
+            );
           }
         }
     
         fetchData();
       }, []);
-
-      const sendVotes = async () => {
-        //se non ho votato tutto dai errore
-
-        try{
-            const requestBody = JSON.stringify(votes);
-            await api.put(`/groups/${groupId}/ratings/${userId}`, requestBody, {headers})
-
-        }
-
-        catch(error) {
-            alert(`Something went wrong while sending your preferences: \n${handleError(error)}`);
-            console.error("Details:", error);
-        }
-
-        history.push(`/ingredientsfinal/:${groupId}`)
-        
-      }
-
 
   return (
     <AppContainer>
@@ -121,37 +100,14 @@ const IngredientsVoting = () => {
                                 </div>
                                 <div className="groupforming sections">
                                     <div className="groupforming preferences">
-                                        <div className="groupforming titles"> Overall ingredients </div>
-                                            <div className="ingredientsvoting ingredients">
-
-                                                {ingredients.map((ingredient) => (
-                                                <div className="ingredientsvoting item" key={ingredient.id}>
-                                                  {ingredient.name}
-                                                  <div className="ingredientsvoting reactions">
-                                                    <i
-                                                      className="ingredientsvoting icon reaction"
-                                                      onClick={() => handleVote(ingredient.id, 1)}
-                                                      style={{ color: votes[ingredient.id] === 1 ? '#55a630' : '' }}
-                                                    >
-                                                      sentiment_satisfied
-                                                    </i>
-                                                    <i
-                                                      className="ingredientsvoting icon reaction"
-                                                      onClick={() => handleVote(ingredient.id, 0)}
-                                                      style={{ color: votes[ingredient.id] === 0 ? '#ffdd00	' : '' }}
-                                                    >
-                                                      sentiment_neutral
-                                                    </i>
-                                                    <i
-                                                      className="ingredientsvoting icon reaction"
-                                                      onClick={() => handleVote(ingredient.id, -1)}
-                                                      style={{ color: votes[ingredient.id] === -1 ? '#ff0000' : '' }}
-                                                    >
-                                                      sentiment_dissatisfied
-                                                    </i>
-                                                  </div>
-                                                </div>
-                                                ))}
+                                        <div className="groupforming titles"> Final ingredients </div>
+                                        <div className="ingredientsvoting ingredients">
+                                            
+                                                {/* {finalIngredients && finalIngredients.map((ingredient) => (
+                                                    <div className="ingredientsvoting item">
+                                                        {ingredient.name}
+                                                    </div>
+                                                ))} */}                                            
                                             </div>
                                         
 
@@ -161,8 +117,9 @@ const IngredientsVoting = () => {
                             <button
                             className="groupforming general-button"
                             width="24%"
-                            onClick={() => { sendVotes() }}>
+                            onClick={() => { history.push(`/final/:${groupId}`)}}>
                                 Submit
+
                             </button>
                         </div>
 
@@ -174,4 +131,4 @@ const IngredientsVoting = () => {
     )
 };
 
-export default IngredientsVoting;
+export default IngredientsFinal;

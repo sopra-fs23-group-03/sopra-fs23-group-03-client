@@ -43,10 +43,7 @@ const Profile = () => {
   const [newPassword, setNewPassword] = useState(null);
   const [diet, setDiet] = useState(null);
   const [allergies, setAllergies] = useState([]);
-
-  const allergyArray = [];
-
-  const cuisineArray = [];
+  const [cuisine, setCuisine] = useState([]);
 
   const options = [
     {value:"vegan", label: "vegan"},
@@ -101,12 +98,18 @@ const Profile = () => {
     {value:"spanish", label: "spanish"},
     {value:"thai", label: "thai"},
     {value:"vietnamese", label: "vietnamese"}
-  ]
+  ];
+
+  const handleCuisineChange = (selectedOptions) => {
+    setCuisine(selectedOptions.map((option) => option.value));}
+
+    const handleAllergiesChange = (selectedOptions) => {
+      setAllergies(selectedOptions.map((option) => option.value));}
   
 
   const handleUpdate = async () => {
     try {
-      const requestBody = JSON.stringify({ username : username, specialDiet : diet, password : newPassword, currentPassword : currentPassword, allergies : allergyArray, favoriteCuisine : cuisineArray });
+      const requestBody = JSON.stringify({ username : username, specialDiet : diet, password : newPassword, currentPassword : currentPassword, allergies : allergies, favoriteCuisine : cuisine });
       await api.put(`/users/${userId}`, requestBody, { headers });
       window.location.reload();
       //history.push(`/profile/${userId}`);
@@ -138,7 +141,7 @@ const Profile = () => {
           `Something went wrong while getting this user: \n ${ handleError(error).info }`
         );
         console.error("Details:", error);
-        history.push("/game")
+        history.push("/dashboard")
       }
     }
 
@@ -202,7 +205,7 @@ const Profile = () => {
                   isMulti
                   placeHolder="add allergy"
                   options={allergens}
-                  onChange={(a) => a.map((allergene) => allergyArray.push(allergene.value))}
+                  onChange={handleAllergiesChange}
                   />                
                 </div>
             
@@ -213,8 +216,8 @@ const Profile = () => {
                   isMulti
                   placeHolder="add cuisine"
                   options={cuisines}
-                  onChange={(a) => a.map((cuisine) => cuisineArray.push(cuisine.value))}
-                  />
+                  value = {cuisine}
+                  onChange={handleCuisineChange}/>
                   </div>
                 </div>
               </div>

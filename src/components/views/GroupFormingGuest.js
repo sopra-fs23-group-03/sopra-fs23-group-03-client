@@ -71,7 +71,7 @@ const GroupFormingGuest = ({ buttonLabel }) => {
                           "By leaving the group, you'll miss out on the fun! Are you sure you want to exit?"
                         )
                       ) {
-                        history.push("/game");
+                        history.push("/dashboard");
                       }
                     }}
                   >

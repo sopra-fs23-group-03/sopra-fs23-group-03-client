@@ -20,6 +20,13 @@
     justify-content: center;
   }
 
+  &.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 95%;}
+
   &.main {
     //contains group icon, group title. guests container and buttons
     display: flex;
