@@ -113,7 +113,6 @@ const Game = () => {
         { headers }
       );
       updateJoinRequests(groupId, true);
-      alert("Join request sent successfully!");
     } catch (error) {
       console.error(
         `Failed to send join request for group with id ${groupId}:`,
