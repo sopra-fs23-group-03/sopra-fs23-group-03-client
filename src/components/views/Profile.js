@@ -138,7 +138,7 @@ const Profile = () => {
 
       } catch (error) {
         alert(
-          `Something went wrong while getting this user: \n ${ handleError(error).info }`
+          `Something went wrong while getting this user: \n ${ handleError(error) }`
         );
         console.error("Details:", error);
         history.push("/dashboard")
