@@ -41,13 +41,13 @@ const NavigationBar = () => {
       {!isLoggedIn && (
         <div className="navbar button-container">
           <Link to="/register">
-            <button className="register-button button">
+            <button className="button register">
               <span className="text">Register</span>
             </button>
           </Link>
 
           <Link to="/login">
-            <button className="login-button button">
+            <button className="button login">
               <span className="text">Sign in</span>
             </button>
           </Link>
