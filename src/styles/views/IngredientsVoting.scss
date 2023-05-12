@@ -74,7 +74,7 @@
         cursor: default;
     
         &:hover::after {
-          content: "Make sure you voted every ingredient";
+          content: "Make sure you voted every ingredient.";
           position: absolute;
           transform: translate(-10%, 120%);
           background: #f2f2f2;

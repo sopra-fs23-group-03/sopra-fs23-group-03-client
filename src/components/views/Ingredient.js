@@ -241,8 +241,8 @@ const Ingredient = () => {
                   </button>
                 </div>
                 <div className="groupforming info">
-                <b>Note:</b> to provide a fitting recipe we recommend you to be as specific as possible (e.g. instead of "cheese" type in "goat cheese"). 
-                Additionally, we assume you already have pantry items such as salt, pepper, oil, etc.
+                <b>Note:</b> To provide a fitting recipe we recommend you to be as specific as possible (e.g. instead of "cheese" type in "goat cheese"). 
+                Additionally, we assume you already have pantry items such as salt, pepper, oil, etc. at home.
                 </div>
               {/* </div> */}
             </div>

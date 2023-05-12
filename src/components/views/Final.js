@@ -5,6 +5,9 @@ import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import AppContainer from "components/ui/AppContainer";
 import "styles/views/Final.scss";
+import "styles/views/Final.scss";
+import "styles/views/GroupFormingHost.scss";
+import "styles/views/Dashboard.scss";
 import { useParams } from "react-router-dom";
 import { Spinner } from "components/ui/Spinner";
 
@@ -65,25 +68,46 @@ const Final = () => {
   } else {
     return (
       <AppContainer>
-        <BaseContainer>
-          <div className="final main">
-            <i className="final icon">sentiment_satisfied</i>
-            <div className="final title">Everything is set!</div>
-          </div>
+        <div className="game container">
+          <div className="groupforming main-container">
+            <div className="groupforming sidebar">
+              <div className="groupforming sidebar-buttons">
+                <i className="ingredientsvoting icon"> location_home </i> &nbsp;
+                Host: &nbsp;
+              </div>
+              <div className="groupforming sidebar-buttons">
+                <i className="ingredientsvoting icon majority">bar_chart</i> Voting System: Majority &nbsp;
+              </div>
+              <ul className="groupforming invite-users">
+                <h3 className="player container">
+                  <i className="material-icons">people_outline</i>
+                  &nbsp; Guests &nbsp;
+                </h3>
+              </ul>
+            </div>
+            <BaseContainer>
+              <div className="final main">
+                <i className="final icon">sentiment_satisfied</i>
+                <div className="final title">Everything is set!</div>
+              </div>
 
-          <div className="final section">
-            <InfoField label="Recipe" value={recipe?.title} />
-            <InfoField
-              label="Approx. time"
-              value={(recipe?.readyInMinutes + " minutes").replace("null", "'")}
-            />
-            {/* <InfoField label="Difficulty" value={recipe?.difficulty} /> */}
+              <div className="final section">
+                <InfoField label="Recipe" value={recipe?.title} />
+                <InfoField
+                  label="Approx. time"
+                  value={(recipe?.readyInMinutes + " minutes").replace("null", "'")}
+                  />
+              </div>
+              <div className="final button" onClick={() => history.push("/game")}>
+                Back to main page
+              </div>
+            </BaseContainer>
           </div>
-          <div className="final button" onClick={() => history.push("/game")}>
-            Back to main page
-          </div>
-        </BaseContainer>
+        </div>
       </AppContainer>
+
+      
+      
     );
   }
 };

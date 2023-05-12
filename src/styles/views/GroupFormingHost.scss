@@ -193,7 +193,7 @@
     cursor: default;
 
     &:hover::after {
-      content: "Please contribute with at least one ingredient";
+      content: "Please contribute with at least one ingredient.";
       position: absolute;
       transform: translate(-30%, 85%);
       background: #f2f2f2;
