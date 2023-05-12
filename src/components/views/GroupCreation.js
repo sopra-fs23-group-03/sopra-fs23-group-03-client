@@ -202,7 +202,7 @@ const GroupCreation = () => {
                 className="group-creation button"
                 onClick={() => history.push("dashboard")}
               >
-                Delete group
+                Cancel
               </button>
               <button
                 className="group-creation button continue"
