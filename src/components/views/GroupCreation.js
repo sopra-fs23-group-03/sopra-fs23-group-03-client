@@ -32,14 +32,6 @@ const GroupCreation = () => {
 
   const [isHovering, setIsHovering] = useState(false);
 
-  const handleMouseOver = () => {
-    setIsHovering(true);
-  };
-
-  const handleMouseOut = () => {
-    setIsHovering(false);
-  };
-
   const createGroup = async () => {
     if (groupName.length < 3 || groupName.length > 9) {
       alert("Group name has to be between 3 and 9 characters");
@@ -173,19 +165,10 @@ const GroupCreation = () => {
                   backgroundColor:
                     votingType === "MAJORITYVOTE" ? "#333333" : "",
                 }}
-                onMouseOver={handleMouseOver}
-                onMouseOut={handleMouseOut}
               >
                 <i className="group-creation icon">star</i>
                 Majority
               </button>
-              {isHovering && (
-                <div className="group-creation info-window">
-                  Host and guest rate yes/no/indifferent per ingredient. Only
-                  the ingredients which obtained the majority stay in the final
-                  overview. "No" and "yes" votes can cancel each other out."
-                </div>
-              )}
             </div>
           </div>
 

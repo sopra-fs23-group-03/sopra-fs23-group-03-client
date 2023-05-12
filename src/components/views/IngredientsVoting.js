@@ -159,8 +159,9 @@ const IngredientsVoting = () => {
                                 </div>                                
                             </div>
                             <button
-                            className="groupforming general-button"
+                            className="ingredientsvoting general-button"
                             width="24%"
+                            disabled= {Object.keys(votes).length != ingredients.length}
                             onClick={() => { sendVotes() }}>
                                 Submit
                             </button>
