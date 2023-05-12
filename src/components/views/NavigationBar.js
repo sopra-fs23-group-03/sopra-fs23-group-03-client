@@ -83,7 +83,7 @@ const NavigationBar = () => {
             home
           </button>
 
-          <button className="login-button button" onClick={() => logout()}>
+          <button className="button login" onClick={() => logout()}>
             <span className="text">Logout</span>
           </button>
         </div>
