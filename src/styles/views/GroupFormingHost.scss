@@ -86,6 +86,16 @@
     //if title is too long, make it smaller
   }
 
+  &.info {
+    font-size: 11px;
+    font-weight: 100;
+    width: 70%;
+    margin-top: 20px;
+    text-align: justify;
+    color: #666666;
+  }
+    
+
   &.group-join-requests {
     //this is the container for the guest container : guest names and delete button
     margin-top: 10px;
@@ -159,12 +169,11 @@
     width: 100%;
     margin-top: 8%;
     gap: 25px;
-    white-space: nowrap; //makes the text be in 1 line
   }
 
   &.general-button {
     background: #333333;
-    box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
     border-radius: 32px;
     border: 0px;
     width: 40%;
@@ -172,7 +181,7 @@
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
-    line-height: 50px;
+    padding: 10px;
     text-align: center;
     color: #ffffff;
     cursor: pointer;
@@ -182,21 +191,25 @@
     background: #bab9b9;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
     cursor: default;
+
+    &:hover::after {
+      content: "Please contribute with at least one ingredient.";
+      position: absolute;
+      transform: translate(-30%, 85%);
+      background: #f2f2f2;
+      color: #666666;
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 12px;
+      z-index: 1;
+      text-align: left;
+      font-weight: 100;
+      width: 200px;
+      height: 40px;
+      word-wrap: break-word;
+    }
   }
 
-  &.general-button[disabled]:hover:after {
-    content: "Please add at least one ingredient.";
-    position: absolute;
-
-    left: 50%;
-    transform: translateX(-50%);
-    background: #333333;
-    color: #ffffff;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 14px;
-    z-index: 1;
-  }
 
   &.cancel-button {
     background: #bab9b9;
