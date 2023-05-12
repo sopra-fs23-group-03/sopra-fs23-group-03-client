@@ -40,6 +40,14 @@ const GroupFormingHost = () => {
 
   useEffect(() => {
     fetchRequests();
+
+    // Poll for requests every 5 seconds
+    const interval = setInterval(fetchRequests, 5000);
+
+    // Cleanup the interval on component unmount
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   const handleAcceptRequest = async (guestId) => {
