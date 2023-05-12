@@ -32,6 +32,7 @@ const NavigationBar = () => {
     }
   };
 
+  
   return (
     <div className="navbar container">
       <div className="logo-container">
