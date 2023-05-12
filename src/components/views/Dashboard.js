@@ -7,7 +7,8 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Dashboard.scss";
 import AppContainer from "components/ui/AppContainer";
-import useGroupMembers from "hooks/useGroupMembers";
+import AuthContext from "components/contexts/AuthContext";
+import { useContext } from "react";
 
 const Player = ({ user }) => (
   <div className="player container">
@@ -20,9 +21,10 @@ Player.propTypes = {
   user: PropTypes.object,
 };
 
-const Game = () => {
+const Dashboard = () => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
+
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
@@ -33,6 +35,7 @@ const Game = () => {
   const [members, setMembers] = useState({});
   const [joinRequests, setJoinRequests] = useState({});
   const userId = localStorage.getItem("userId");
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -70,12 +73,19 @@ const Game = () => {
             error
           )}`
         );
+
         console.error("Details:", error);
+        try {
+          await api.get(`/users/${userId}`, {
+            headers,
+          });
+        } catch (error) {
+          setIsLoggedIn(false);
+          localStorage.clear(); // Clear local storage
+        }
         alert(
           "Something went wrong while fetching the data! See the console for details."
         );
-        localStorage.clear();
-        history.push("/login");
       }
     }, 2000); // Fetch data every 5 seconds
 
@@ -234,4 +244,4 @@ const Game = () => {
   );
 };
 
-export default Game;
+export default Dashboard;
