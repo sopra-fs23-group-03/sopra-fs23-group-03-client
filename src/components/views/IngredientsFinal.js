@@ -21,7 +21,7 @@ const IngredientsFinal = () => {
     const [group, setGroup] = useState(null);
     const groupId = localStorage.getItem("groupId");
 
-    //const [finalIngredients, setFinalIngredients] = useState([]);
+    const [finalIngredients, setFinalIngredients] = useState([]);
     
 
     const votes = {}
@@ -33,14 +33,14 @@ const IngredientsFinal = () => {
           try {
             const groupResponse = await api.get(`/groups/${groupId}`, { headers });
             const guestsResponse = await api.get(`/groups/${groupId}/guests`, {headers});
-            //const finalIngredientsResponse = await api.get (`/groups/${groupId}/ingredients/final`, {headers})
+            const finalIngredientsResponse = await api.get (`/groups/${groupId}/ingredients/final`, {headers})
             
             // Get the returned group and update the state.
             setGroup(new Group(groupResponse.data));
             // Get the returned members and update the state.
             setGuests(guestsResponse.data);
 
-            //setFinalIngredients(finalIngredientsResponse.data);
+            setFinalIngredients(finalIngredientsResponse.data);
 
 
 
@@ -103,11 +103,11 @@ const IngredientsFinal = () => {
                                         <div className="groupforming titles"> Final ingredients </div>
                                         <div className="ingredientsvoting ingredients">
                                             
-                                                {/* {finalIngredients && finalIngredients.map((ingredient) => (
+                                                {finalIngredients && finalIngredients.map((ingredient) => (
                                                     <div className="ingredientsvoting item">
                                                         {ingredient.name}
                                                     </div>
-                                                ))} */}                                            
+                                                ))}                                           
                                             </div>
                                         
 
