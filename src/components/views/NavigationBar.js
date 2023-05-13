@@ -7,6 +7,7 @@ import AuthContext from "components/contexts/AuthContext";
 import NotificationBar from "components/views/NotificationBar";
 import { api } from "helpers/api";
 import { NotificationContext } from "components/contexts/NotificationContext";
+import logo from "assets/logo.jpg";
 
 const NavigationBar = () => {
   const history = useHistory();
@@ -32,10 +33,11 @@ const NavigationBar = () => {
     }
   };
 
+
   return (
     <div className="navbar container">
       <div className="logo-container">
-        <img className="navbar logo" src="/logo.jpg" alt="logo" />
+        <img className="navbar logo" src={logo} alt="logo"/>
       </div>
 
       {!isLoggedIn && (

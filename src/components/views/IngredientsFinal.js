@@ -33,6 +33,7 @@ const IngredientsFinal = () => {
           try {
             const groupResponse = await api.get(`/groups/${groupId}`, { headers });
             const guestsResponse = await api.get(`/groups/${groupId}/guests`, {headers});
+
             const finalIngredientsResponse = await api.get (`/groups/${groupId}/ingredients/final`, {headers})
             
             // Get the returned group and update the state.
@@ -114,13 +115,21 @@ const IngredientsFinal = () => {
                                     </div>
                                 </div>                                
                             </div>
+                            <div className="groupforming buttons">
+                            <button
+                            className="groupforming cancel-button"
+                            width="24%"
+                            onClick={() => { history.push(`/final/:${groupId}`)}}>
+                                Leave
+                            </button>
+
                             <button
                             className="groupforming general-button"
                             width="24%"
                             onClick={() => { history.push(`/final/:${groupId}`)}}>
                                 Submit
-
                             </button>
+                            </div>
                         </div>
 
                     </BaseContainer>
