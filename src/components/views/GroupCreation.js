@@ -142,6 +142,7 @@ const GroupCreation = () => {
               value={groupName}
               onChange={(e) => setGroupName(e.target.value)}
             />
+            <div className="group-creation small-text">only alphabetic characters allowed</div>
           </div>
 
           <div className="group-creation field">
