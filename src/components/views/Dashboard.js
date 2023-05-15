@@ -34,7 +34,7 @@ const Dashboard = () => {
   const userId = localStorage.getItem("userId");
   const { setIsLoggedIn } = useContext(AuthContext);
 
-  const fetchUserData = async () => {
+  const fetchUsers = async () => {
     try {
       const usersResponse = await api.get("/users", { headers });
       setUsers(usersResponse.data);
@@ -44,7 +44,7 @@ const Dashboard = () => {
     }
   };
 
-  const fetchGroupData = async () => {
+  const fetchGroups = async () => {
     try {
       const groupsResponse = await api.get("/groups", { headers });
       setGroups(groupsResponse.data);
@@ -76,31 +76,29 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetchUserData();
-    fetchGroupData();
-    fetchGroupMembers();
+    fetchUsers();
+    const usersInterval = setInterval(fetchUsers, 5000);
+    return () => clearInterval(usersInterval);
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(fetchUserData, 5000); // Fetch users data every 5 seconds
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(fetchGroupData, 10000); // Fetch groups data every 10 seconds
-    return () => clearInterval(interval);
+    fetchGroups();
+    const groupsInterval = setInterval(fetchGroups, 10000);
+    return () => clearInterval(groupsInterval);
   }, []);
 
   useEffect(() => {
     if (groups) {
-      const interval = setInterval(() => {
-        groups.forEach((group) => {
-          fetchGroupMembers(group.id);
-        });
-      }, 10000); // Fetch group members every 15 seconds
-      return () => clearInterval(interval);
+      groups.forEach((group) => {
+        fetchGroupMembers(group.id);
+        const membersInterval = setInterval(
+          () => fetchGroupMembers(group.id),
+          10000
+        );
+        return () => clearInterval(membersInterval);
+      });
     }
-  }, []);
+  }, [groups]);
 
   // Load joinRequests from localStorage on component mount
   useEffect(() => {
