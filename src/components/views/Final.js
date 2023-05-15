@@ -98,7 +98,7 @@ const Final = () => {
                   value={(recipe?.readyInMinutes + " minutes").replace("null", "'")}
                   />
               </div>
-              <div className="final button" onClick={() => history.push("/game")}>
+              <div className="final button" onClick={() => history.push("/dashboard")}>
                 Back to main page
               </div>
             </BaseContainer>
