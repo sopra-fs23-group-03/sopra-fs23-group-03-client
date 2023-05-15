@@ -193,9 +193,9 @@
     cursor: default;
 
     &:hover::after {
-      content: "Please contribute with at least one ingredient.";
+      content: "Wait for at least one guest to join.";
       position: absolute;
-      transform: translate(-30%, 85%);
+      transform: translate(5%, 60%);
       background: #f2f2f2;
       color: #666666;
       padding: 5px;
@@ -205,8 +205,9 @@
       text-align: left;
       font-weight: 100;
       width: 200px;
-      height: 40px;
+      height: 20px;
       word-wrap: break-word;
+      border: 1px solid #e1e1e1;
     }
   }
 
