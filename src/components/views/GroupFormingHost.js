@@ -166,9 +166,8 @@ const GroupFormingHost = () => {
                   <button
                     className="groupforming general-button"
                     width="24%"
-                    onClick={() => {
-                      history.push(`/ingredients/${groupId}`);
-                    }}
+                    onClick={ () => { history.push(`/ingredients/${groupId}`); } }
+                    disabled = {joinRequests === []}
                   >
                     Continue
                   </button>

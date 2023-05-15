@@ -10,7 +10,7 @@ const Icon = () => {
   );
 };
 
-const Dropdown = ({ placeHolder, options, onChange }) => {
+const Dropdown = ({ placeHolder, options, onChange, value }) => {
     const [showMenu, setShowMenu] = useState(false);
     const [selectedValue, setSelectedValue] = useState(null);
 
@@ -34,7 +34,11 @@ const Dropdown = ({ placeHolder, options, onChange }) => {
         if (selectedValue) {
             return selectedValue.label;
         }
-        return placeHolder;
+        else if (value){
+            return value;
+        }
+        
+        else return placeHolder;
     };
 
     const onItemClick = (option) => {

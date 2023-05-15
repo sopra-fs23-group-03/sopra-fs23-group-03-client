@@ -1,6 +1,16 @@
 @import "styles/theme";
 
 .final {
+
+  &.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+  }
+
   &.icon {
     font-family: "Material Symbols Outlined";
     font-style: normal;
@@ -29,7 +39,7 @@
     cursor: pointer;
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
     color: #ffffff;
     padding: 15px;
@@ -38,7 +48,6 @@
   &.main {
     display: flex;
     flex-direction: column;
-    gap: 0px;
   }
 
   &.section {
@@ -47,10 +56,15 @@
     align-items: center;
     justify-content: space-evenly;
     background: #f2f2f2;
-    filter: drop-shadow(0px 4px 2px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
     border-radius: 8px;
     width: 70%;
-    height: 40%;
+    height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+    gap: 10px;
   }
 
   &.field {
@@ -70,16 +84,105 @@
     color: #333333;
   }
 
+  &.img {
+    border-radius: 8px;
+    width: 28%;
+    height: 70%;
+  }
+
   &.input {
     display: flex;
-    width: 66%;
+    width: 60%;
     border: 1px solid #e1e1e1;
     border-radius: 8px;
     background: #ededed;
     padding-left: 10px;
     margin-left: 10px;
-    height: fit-content;
-    min-height: 60px;
+    min-height: 30px;
+    max-height: 40px;
+    align-items: center;
+  }
+
+  &.ingredients{
+    display: flex;
+    flex-direction: column;
+    justify-content:start;
+    width: 48%;
+    background: #f2f2f2;
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
+    border-radius: 8px;
+    padding: 0px 20px 5px 20px;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  &.bottom{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 85%;
+    height: 50%;
+    align-items: center;
+  }
+
+  &.icon{
+    font-size: 30px;
+
+    &.clickable {
+      cursor: pointer;
+      align-self: flex-end;
+    }
+  }
+
+  &.ingredients-title{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
     align-items: center;
   }
 }
+
+ul.final {
+  list-style-type: circle;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+li.final {
+  margin-top: 0px;
+  margin-right: 0px;
+}
+
+#modal-root {
+  position: relative;
+  z-index: 999;
+}
+.modal {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  z-index: 99999;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-form {
+  height: 50%;
+  width: 35%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 2%;
+  font-size: 18px;
+  color: #333333;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+

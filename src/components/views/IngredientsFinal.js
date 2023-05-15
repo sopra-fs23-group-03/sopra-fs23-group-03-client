@@ -105,7 +105,7 @@ const IngredientsFinal = () => {
                                         <div className="ingredientsvoting ingredients">
                                             
                                                 {finalIngredients && finalIngredients.map((ingredient) => (
-                                                    <div className="ingredientsvoting item">
+                                                    <div className="ingredientsvoting item" key={ingredient.id}>
                                                         {ingredient.name}
                                                     </div>
                                                 ))}                                           

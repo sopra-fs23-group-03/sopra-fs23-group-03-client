@@ -270,7 +270,7 @@ const Ingredient = () => {
 
                 <div className="groupforming buttons" width="80%">
                   <button
-                    className="groupforming general-button"
+                    className="groupforming general-button ingredients"
                     width="24%"
                     onClick={() => {
                       handleSubmit(ingredients);
