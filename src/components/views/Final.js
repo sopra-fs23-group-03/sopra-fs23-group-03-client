@@ -10,6 +10,7 @@ import "styles/views/GroupFormingHost.scss";
 import "styles/views/Dashboard.scss";
 import { useParams } from "react-router-dom";
 import { Spinner } from "components/ui/Spinner";
+import useGroupMembers from "hooks/useGroupMembers";
 
 const InfoField = (props) => {
   return (
@@ -22,44 +23,45 @@ const InfoField = (props) => {
 
 const Final = () => {
   const history = useHistory();
-  const [recipe, setRecipe] = useState(null);
-  const { groupId } = useParams();
-  const numericGroupId = groupId.substring(1);
-  console.log("groupId,", groupId);
+  const [recipes, setRecipes] = useState(null);
+  const  groupId  = localStorage.getItem("groupId");
+  const [seeInstructions, setSeeIstructions] = useState(false);
+
+  const showInstructions = () => {
+    setSeeIstructions(true)
+  };
+
+  const hideInstructions = () => {
+    setSeeIstructions(false)
+  };
 
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
 
+  const { group, users } = useGroupMembers(groupId);
+
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await api.get(`/groups/${numericGroupId}/result`, {
-          headers,
-        });
+
+        const recipesResponse = await api.get(`/groups/${groupId}/result`, {headers});
 
         // Get the returned users and update the state.
-        setRecipe(response.data);
+        setRecipes(recipesResponse.data);
 
-        console.log(response.data); // log the response data to the console
-        setRecipe(response.data);
       } catch (error) {
-        console.error(
-          `Something went wrong while fetching the users: \n${
-            handleError(error).info
-          }`
+        alert(
+          `Something went wrong while fetching the recipe: \n${ handleError(error).info }`
         );
         console.error("Details:", error);
-        alert(
-          "Something went wrong while fetching the users! See the console for details."
-        );
       }
     }
 
     fetchData();
   }, []);
 
-  if (!recipe) {
+  if (!recipes) {
     return (
       <AppContainer>
         <Spinner />
@@ -73,7 +75,7 @@ const Final = () => {
             <div className="groupforming sidebar">
               <div className="groupforming sidebar-buttons">
                 <i className="ingredientsvoting icon"> location_home </i> &nbsp;
-                Host: &nbsp;
+                Host:{" "} {group.hostName} &nbsp;
               </div>
               <div className="groupforming sidebar-buttons">
                 <i className="ingredientsvoting icon majority">bar_chart</i> Voting System: Majority &nbsp;
@@ -83,28 +85,93 @@ const Final = () => {
                   <i className="material-icons">people_outline</i>
                   &nbsp; Guests &nbsp;
                 </h3>
+                {users.map((user) => (
+                <div
+                className={`player container ${user.status.toLowerCase()}`}
+                key={user.id}
+                >
+                  {user.username}
+                </div>
+                ))}
               </ul>
             </div>
             <BaseContainer>
-              <div className="final main">
-                <i className="final icon">sentiment_satisfied</i>
-                <div className="final title">Everything is set!</div>
-              </div>
+              <div className="final form">
+                <div className="final main">
+                  <i className="final icon">sentiment_satisfied</i>
+                  <div className="final title">Everything is set!</div>
+                </div>
+                <div className="final bottom">
+                  <img className="final img" alt="recipe" src={recipes[0].image}/>
+                  <div className="final section">
+                    <InfoField 
+                    label="Recipe" 
+                    value={recipes[0].title}/>
 
-              <div className="final section">
-                <InfoField label="Recipe" value={recipe?.title} />
-                <InfoField
-                  label="Approx. time"
-                  value={(recipe?.readyInMinutes + " minutes").replace("null", "'")}
-                  />
-              </div>
-              <div className="final button" onClick={() => history.push("/game")}>
-                Back to main page
+                    <InfoField
+                      label="Approx. time"
+                      value={(recipes[0].readyInMinutes + " minutes").replace("null", "'")}/>
+
+                    <InfoField 
+                    label="Instructions" 
+                    value={<i className="final icon clickable" onClick={showInstructions}>read_more</i>}></InfoField>
+
+                  </div>
+                </div>
+
+                <div className="final bottom">
+
+                  <div className="final ingredients">
+                    <div className="final ingredients-title">
+                    <i className="final icon">kitchen</i>
+                      <h3 className="final label"> Bring from home </h3>
+                    </div>
+                    <ul class="final">
+                      {recipes[0].usedIngredients.map((ingredient) => 
+
+                        <li class="final">{ingredient}</li>  
+                      )}
+                    </ul>
+                  </div>
+
+                  <div className="final ingredients">
+                    <div className="final ingredients-title">
+                    <i className="final icon">shopping_cart</i>
+                      <h3 className="final label"> Shopping list </h3>
+                    </div>
+                    <ul class="final">
+                      {recipes[0].missedIngredients.map((ingredient) => 
+
+                        <li class="final">{ingredient}</li>  
+                      )}
+                    </ul>
+                  </div>
+
+                </div>
+
+                <button className="final button" onClick={() => history.push("/game")}>
+                  Back to home page
+                </button>
               </div>
             </BaseContainer>
           </div>
         </div>
+
+
+        {seeInstructions && 
+        <div id="modal-root">
+          <div className="modal">
+            <div className="modal-form">
+              <i className="final icon clickable" onClick={hideInstructions}>close</i>
+              {recipes[0].instructions}
+            </div>
+          </div>
+        </div>}
+
+
       </AppContainer>
+      
+      
 
       
       
