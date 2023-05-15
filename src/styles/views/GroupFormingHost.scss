@@ -43,7 +43,7 @@
 
     flex-direction: column;
     background: #f2f2f2;
-    filter: drop-shadow(0px 4px 2px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
     border-radius: 8px;
     width: 400px;
     height: 100%;
@@ -180,9 +180,9 @@
     cursor: default;
 
     &:hover::after {
-      content: "Please contribute with at least one ingredient.";
+      content: "Wait for at least one guest to join.";
       position: absolute;
-      transform: translate(-30%, 85%);
+      transform: translate(5%, 60%);
       background: #f2f2f2;
       color: #666666;
       padding: 5px;
@@ -192,8 +192,27 @@
       text-align: left;
       font-weight: 100;
       width: 200px;
-      height: 40px;
+      height: 20px;
       word-wrap: break-word;
+      border: 1px solid #e1e1e1;
+    }
+
+    &.ingredients:hover::after {
+      content: "Please contribute with at least one ingredient.";
+      position: absolute;
+      transform: translate(30%, 10%);
+      background: #f2f2f2;
+      color: #666666;
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 12px;
+      z-index: 1;
+      text-align: left;
+      font-weight: 100;
+      width: 200px;
+      height: 35px;
+      word-wrap: break-word;
+      border: 1px solid #e1e1e1;
     }
   }
 
@@ -221,7 +240,7 @@
     border-bottom-left-radius: 12px;
     align-items: center;
     padding: 1rem;
-    padding-top: 3rem;
+    padding-top: 1.5rem;
     min-width: fit-content;
   }
 
@@ -232,7 +251,7 @@
     width: 217.17px;
     height: 48.62px;
     background: rgba(151, 151, 151, 0.1);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
     margin: 0.5em 0;
     text-transform: none;
@@ -255,7 +274,7 @@
     flex-direction: column;
     // width: 282px;
     min-width: 217.17px;
-    height: 358px;
+    height: 200px;
     //max-width: 10em;
     list-style: none;
     //align-items: center;
@@ -266,7 +285,8 @@
     border-radius: 12px;
     max-height: 70%;
     overflow-x: auto;
-    margin: 40px 0;
+    margin-top: 30px;
+    margin-bottom: 0px;
     //max-height: 280px;
     overflow-y: auto;
   }

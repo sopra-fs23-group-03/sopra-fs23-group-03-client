@@ -97,7 +97,7 @@ const Register = (props) => {
           <h1 className="login title"> Register </h1>
           <p className="login text">
             Register now to join our community and start planning dinners with
-            friends
+            friends.
           </p>
         </div>
         <FormField
@@ -105,7 +105,7 @@ const Register = (props) => {
           value={username}
           onChange={(un) => setUsername(un)}
         />
-        <div className="login small-text">only alpha letters allowed</div>
+        <div className="login small-text">only alphabetic characters allowed</div>
         <FormField
           label="Password"
           name="Password"

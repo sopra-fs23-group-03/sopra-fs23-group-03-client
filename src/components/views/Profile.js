@@ -103,8 +103,15 @@ const Profile = () => {
   const handleCuisineChange = (selectedOptions) => {
     setCuisine(selectedOptions.map((option) => option.value));}
 
-    const handleAllergiesChange = (selectedOptions) => {
-      setAllergies(selectedOptions.map((option) => option.value));}
+  const handleAllergiesChange = (selectedOptions) => {
+    setAllergies(selectedOptions.map((option) => option.value));}
+
+  const handleDietChange = (d) => {
+    setDiet(d.value)
+  }
+
+  console.log(user)
+  console.log(user?.allergiesSet)
   
 
   const handleUpdate = async () => {
@@ -189,9 +196,9 @@ const Profile = () => {
               <label className="profile titles"> Diet preference </label>
               <Dropdown 
               placeHolder="select diet"
-              value = {diet} 
+              value = {user?.specialDiet?.toString()} 
               options={options} 
-              onChange={(d) => setDiet(d.value)}/>
+              onChange={handleDietChange}/>
               </div>
 
               <InfoField label="New Password" onChange={(np)=>setNewPassword(np)}/>
@@ -206,6 +213,7 @@ const Profile = () => {
                   placeHolder="add allergy"
                   options={allergens}
                   onChange={handleAllergiesChange}
+                  value={user?.allergiesSet}
                   />                
                 </div>
             
@@ -216,7 +224,6 @@ const Profile = () => {
                   isMulti
                   placeHolder="add cuisine"
                   options={cuisines}
-                  value = {cuisine}
                   onChange={handleCuisineChange}/>
                   </div>
                 </div>

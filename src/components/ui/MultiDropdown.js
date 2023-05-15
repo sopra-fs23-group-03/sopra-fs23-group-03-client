@@ -23,7 +23,8 @@ const MultiDropdown = ({
   options,
   isMulti,
   isSearchable,
-  onChange
+  onChange,
+  value
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState(isMulti ? [] : null);
@@ -57,6 +58,23 @@ const MultiDropdown = ({
   const getDisplay = () => {
     if (!selectedValue || selectedValue.length === 0) {
       return placeHolder;
+    }
+    if (value) {
+      return (
+        <div className="multidropdown-tags">
+          {value?.map((option) => (
+            <div key={option} className="multidropdown-tag-item">
+              {option.toString()}
+              <span
+                onClick={(e) => onTagRemove(e, option)}
+                className="multidropdown-tag-close"
+              >
+                <CloseIcon />
+              </span>
+            </div>
+          ))}
+        </div>
+      );
     }
     if (isMulti) {
       return (

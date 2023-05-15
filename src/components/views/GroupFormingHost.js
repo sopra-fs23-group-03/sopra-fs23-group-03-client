@@ -182,6 +182,7 @@ const GroupFormingHost = () => {
                     onClick={() => {
                       handleContinue();
                     }}
+                    disabled={joinRequests === []}
                   >
                     Continue
                   </button>

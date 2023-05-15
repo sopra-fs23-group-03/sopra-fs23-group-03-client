@@ -1,7 +1,7 @@
-import { useState, useMemo } from "react";
-import { api } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
 import { useHistory } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { api, handleError } from "helpers/api";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/GroupFormingHost.scss";
@@ -142,6 +142,30 @@ const Ingredient = () => {
   const { group, users } = useGroupMembers(groupId);
   const [ingredients, setIngredients] = useState([]);
 
+  const [allergies, setAllergies] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const allergiesResponse = await api.get(
+          `/groups/${groupId}/members/allergies `,
+          { headers }
+        );
+
+        setAllergies(allergiesResponse.data);
+      } catch (error) {
+        alert(
+          `Something went wrong while fetching the group allergies: \n${handleError(
+            error
+          )}`
+        );
+        console.error("Details:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   const handleIngredientSelect = (ingredient) => {
     const newIngredients = [...ingredients, { name: ingredient }];
     setIngredients(newIngredients);
@@ -207,6 +231,21 @@ const Ingredient = () => {
               </div>
             ))}
           </ul>
+
+          {allergies.length > 0 && (
+            <ul className="groupforming invite-users">
+              <h3 className="player container">
+                <i className="material-icons">no_food</i>
+                &nbsp; Allergies &nbsp;
+              </h3>
+
+              {allergies.map((allergy) => (
+                <div className={`player container`} key={allergy.id}>
+                  {allergy}
+                </div>
+              ))}
+            </ul>
+          )}
         </div>
 
         <BaseContainer>
@@ -231,7 +270,7 @@ const Ingredient = () => {
 
               <div className="groupforming buttons" width="80%">
                 <button
-                  className="groupforming general-button"
+                  className="groupforming general-button ingredients"
                   width="24%"
                   onClick={() => {
                     handleSubmit(ingredients);

@@ -33,7 +33,8 @@ const IngredientsFinal = () => {
           try {
             const groupResponse = await api.get(`/groups/${groupId}`, { headers });
             const guestsResponse = await api.get(`/groups/${groupId}/guests`, {headers});
-            const finalIngredientsResponse = await api.get(`/groups/${groupId}/ingredients/final`, {headers})
+
+            const finalIngredientsResponse = await api.get (`/groups/${groupId}/ingredients/final`, {headers})
             
             // Get the returned group and update the state.
             setGroup(new Group(groupResponse.data));
@@ -104,7 +105,7 @@ const IngredientsFinal = () => {
                                         <div className="ingredientsvoting ingredients">
                                             
                                                 {finalIngredients && finalIngredients.map((ingredient) => (
-                                                    <div className="ingredientsvoting item">
+                                                    <div className="ingredientsvoting item" key={ingredient.id}>
                                                         {ingredient.name}
                                                     </div>
                                                 ))}                                           
