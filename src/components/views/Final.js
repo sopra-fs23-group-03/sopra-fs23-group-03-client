@@ -149,7 +149,7 @@ const Final = () => {
 
                 </div>
 
-                <button className="final button" onClick={() => history.push("/game")}>
+                <button className="final button" onClick={() => history.push("/dashboard")}>
                   Back to home page
                 </button>
               </div>
