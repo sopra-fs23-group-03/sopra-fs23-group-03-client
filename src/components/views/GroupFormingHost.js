@@ -14,7 +14,7 @@ const GroupFormingHost = () => {
   const { groupId } = useParams();
   const { group, users } = useGroupMembers(groupId);
   const { user, setUser } = useContext(UserContext);
-  console.log("user state:", user.state);
+  console.log("user state:", user.groupState);
 
   const [joinRequests, setJoinRequests] = useState([]);
   const headers = useMemo(() => {
@@ -25,7 +25,7 @@ const GroupFormingHost = () => {
     try {
       await api.delete(`/groups/${groupId}`, { headers });
       // make the groupstate=="NOGROUP" in the user context:
-      setUser({ ...user, state: "NOGROUP" });
+      setUser({ ...user, groupState: "NOGROUP" });
       history.push("/dashboard");
     } catch (error) {
       handleError(error);
