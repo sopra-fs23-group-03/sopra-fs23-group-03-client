@@ -174,6 +174,7 @@ const Final = () => {
                     localStorage.removeItem("groupId");
                   }}
                 >
+
                   Back to home page
                 </button>
               </div>
