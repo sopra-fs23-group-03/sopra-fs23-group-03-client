@@ -163,7 +163,7 @@ const Final = () => {
           <div className="modal">
             <div className="modal-form">
               <i className="final icon clickable" onClick={hideInstructions}>close</i>
-              {recipes[0].instructions}
+              <div  className="modal-text" dangerouslySetInnerHTML={{__html: `${recipes[0].instructions}`}} />
             </div>
           </div>
         </div>}
