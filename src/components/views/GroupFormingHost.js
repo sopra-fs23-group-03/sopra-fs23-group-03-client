@@ -2,16 +2,23 @@ import { useState, useEffect, useMemo } from "react";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
 import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
 import { useParams } from "react-router-dom";
 import useGroupMembers from "hooks/useGroupMembers";
+import UserContext from "components/contexts/UserContext";
+import { useContext } from "react";
 
 const GroupFormingHost = () => {
   const history = useHistory();
   const { groupId } = useParams();
   const { group, users } = useGroupMembers(groupId);
+  const { user, setUser } = useContext(UserContext);
+  //make the user.state = "GROUPFORMING" in the user context:
+  // useEffect(() => {
+  //   setUser({ ...user, state: "GROUPFORMING_HOST" });
+  // }, []);
+  console.log("user state:", user.state);
 
   const [joinRequests, setJoinRequests] = useState([]);
   const headers = useMemo(() => {
@@ -21,6 +28,8 @@ const GroupFormingHost = () => {
   const handleDelete = async () => {
     try {
       await api.delete(`/groups/${groupId}`, { headers });
+      // make the groupstate=="NOGROUP" in the user context:
+      setUser({ ...user, state: "NOGROUP" });
       history.push("/dashboard");
     } catch (error) {
       handleError(error);
@@ -83,7 +92,8 @@ const GroupFormingHost = () => {
       await api.put(`/groups/${groupId}/state`, newState, { headers });
       const response = await api.get(`/groups/${groupId}/state`, { headers });
       console.log("API response:", response);
-      history.push("/groupforming/lobby/host");
+      setUser({ ...user, groupState: "GROUPFORMING_HOST_LOBBY" });
+      history.push("/groupforming/host/lobby");
       //history.push(`/ingredients/${groupId}`);
     } catch (error) {
       handleError(error);
@@ -140,7 +150,7 @@ const GroupFormingHost = () => {
                               {/* Assuming the username is available */}
                             </span>
                             <button
-                              className="material-icons reply-button"
+                              className="material-icons groupforming reply-button"
                               onClick={() =>
                                 handleAcceptRequest(joinRequest.id)
                               }
@@ -148,7 +158,7 @@ const GroupFormingHost = () => {
                               done
                             </button>
                             <button
-                              className="material-icons reply-button"
+                              className="material-icons groupforming reply-button"
                               onClick={() =>
                                 handleRejectRequest(joinRequest.id)
                               }
@@ -182,7 +192,7 @@ const GroupFormingHost = () => {
                     onClick={() => {
                       handleContinue();
                     }}
-                    disabled={joinRequests === []}
+                    // disabled={joinRequests === []}
                   >
                     Continue
                   </button>

@@ -1,5 +1,7 @@
 import { useHistory } from "react-router-dom";
 import { api } from "helpers/api";
+import UserContext from "components/contexts/UserContext";
+import { useContext } from "react";
 
 const useInvitationActions = () => {
   const history = useHistory();
@@ -7,6 +9,7 @@ const useInvitationActions = () => {
     "X-Token": localStorage.getItem("token"),
   };
   const guestId = localStorage.getItem("userId");
+  const { user, setUser } = useContext(UserContext);
 
   const handleAcceptInvitation = async (groupId) => {
     console.log("groupId", groupId);
@@ -19,6 +22,7 @@ const useInvitationActions = () => {
         }
       );
       localStorage.setItem("groupId", groupId);
+      setUser({ ...user, groupState: "GROUPFORMING_GUEST" });
       history.push(`/groupforming/${groupId}/guest`);
       window.location.reload();
     } catch (error) {

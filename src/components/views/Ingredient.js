@@ -9,6 +9,8 @@ import AppContainer from "components/ui/AppContainer";
 import useGroupMembers from "hooks/useGroupMembers";
 import "styles/ui/List.scss";
 import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import UserContext from "components/contexts/UserContext";
 
 const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
   const headers = useMemo(() => {
@@ -138,6 +140,7 @@ const Ingredient = () => {
   }, []);
 
   const userId = localStorage.getItem("userId");
+  const { user, setUser } = useContext(UserContext);
 
   const { group, users } = useGroupMembers(groupId);
   const [ingredients, setIngredients] = useState([]);
@@ -179,8 +182,7 @@ const Ingredient = () => {
       await api.put(`/user/${userId}/ingredients`, formattedIngredients, {
         headers,
       });
-      //history.push(`/final/${userId}`);
-      // history.push(`/ingredientsvoting/:${groupId}`);
+      setUser({ ...user, groupState: "INGREDIENTENTERING_LOBBY" });
       history.push(`/ingredients/lobby`);
     } catch (error) {
       console.error(

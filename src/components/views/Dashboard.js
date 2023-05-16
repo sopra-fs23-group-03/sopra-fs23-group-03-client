@@ -8,6 +8,7 @@ import "styles/views/Dashboard.scss";
 import AppContainer from "components/ui/AppContainer";
 import AuthContext from "components/contexts/AuthContext";
 import { useContext } from "react";
+import UserContext from "components/contexts/UserContext";
 
 const Player = ({ user }) => (
   <div className="player container">
@@ -33,6 +34,8 @@ const Dashboard = () => {
   const [joinRequests, setJoinRequests] = useState({});
   const userId = localStorage.getItem("userId");
   const { setIsLoggedIn } = useContext(AuthContext);
+  const { user, setUser } = useContext(UserContext);
+  // console.log("usercontext: ", user);
 
   const fetchUsers = async () => {
     try {
@@ -148,8 +151,14 @@ const Dashboard = () => {
           console.log("userGroupId", userGroupId);
 
           if (Number.isInteger(userGroupId)) {
-            localStorage.setItem("groupId", userGroupId);
-            history.push(`/groupforming/${userGroupId}/guest`);
+            const confirmRedirect = window.confirm(
+              "Your join request got accepted. You will be directed to the event."
+            );
+            if (confirmRedirect) {
+              localStorage.setItem("groupId", userGroupId);
+              setUser({ ...user, groupState: "GROUPFORMING_GUEST" });
+              history.push(`/groupforming/${userGroupId}/guest`);
+            }
           }
         } catch (error) {
           console.error(`Failed to check groupId for user:`, error);

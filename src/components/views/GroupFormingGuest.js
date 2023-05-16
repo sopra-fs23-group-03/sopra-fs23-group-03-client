@@ -9,6 +9,8 @@ import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
 import useInvitationActions from "hooks/useInvitationActions";
 import useGroupMembers from "hooks/useGroupMembers";
+import { useContext } from "react";
+import UserContext from "components/contexts/UserContext";
 
 const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
   const history = useHistory();
@@ -19,6 +21,15 @@ const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
   const [joinedGroup, setJoinedGroup] = useState(false); // add state variable for tracking if user joined group
   const { group, users } = useGroupMembers(groupId);
   const [confirmExit, setConfirmExit] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    if (joinedGroup === true) {
+      // if user joined group, make the user.state = "GROUPFORMING" in the user context:
+      setUser({ ...user, groupState: "GROUPFORMING_GUEST" });
+      console.log("user state:", user.groupState);
+    }
+  }, [joinedGroup]);
 
   const { handleAcceptInvitation, handleRejectInvitation } =
     useInvitationActions();
@@ -33,6 +44,7 @@ const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
           });
           localStorage.removeItem("groupId");
           // Exit successful, redirect to the game page or any other desired destination
+          setUser({ ...user, state: "NOGROUP" });
           history.push("/dashboard");
         } catch (error) {
           // Handle the case when the exit was not successful
@@ -123,12 +135,14 @@ const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
                       width="24%"
                       onClick={() => {
                         if (buttonLabel === "Ready") {
-                          //history.push(`/ingredients/${groupId}`);
-                          // history.push(`/lobby`);
-
+                          setUser({
+                            ...user,
+                            groupState: "GROUPFORMING_LOBBY",
+                          });
                           history.push("/groupforming/lobby");
                         } else {
                           setJoinedGroup(true);
+                          setUser({ ...user, state: "GROUPFORMING" });
                           handleAcceptInvitation(groupId);
                         }
                       }}

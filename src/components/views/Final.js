@@ -11,6 +11,8 @@ import "styles/views/Dashboard.scss";
 import { useParams } from "react-router-dom";
 import { Spinner } from "components/ui/Spinner";
 import useGroupMembers from "hooks/useGroupMembers";
+import { useContext } from "react";
+import UserContext from "components/contexts/UserContext";
 
 const InfoField = (props) => {
   return (
@@ -26,6 +28,8 @@ const Final = () => {
   const [recipes, setRecipes] = useState(null);
   const groupId = localStorage.getItem("groupId");
   const [seeInstructions, setSeeIstructions] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+  console.log("user state: " + user.groupState);
 
   const showInstructions = () => {
     setSeeIstructions(true);
@@ -164,6 +168,8 @@ const Final = () => {
                 <button
                   className="final button"
                   onClick={() => {
+                    // make the user groupState in the user context "NOGROUP"
+                    setUser({ ...user, groupState: "NOGROUP" });
                     history.push(`/dashboard`);
                     localStorage.removeItem("groupId");
                   }}
