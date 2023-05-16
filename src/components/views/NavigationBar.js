@@ -15,6 +15,7 @@ const NavigationBar = () => {
   const { notifications, hasNewNotifications } =
     useContext(NotificationContext);
   const [showNotificationBar, setShowNotificationBar] = useState(false); // For displaying the notification bar
+  const groupId = localStorage.getItem("groupId");
 
   const logout = async () => {
     try {
@@ -33,11 +34,10 @@ const NavigationBar = () => {
     }
   };
 
-
   return (
     <div className="navbar container">
       <div className="logo-container">
-        <img className="navbar logo" src={logo} alt="logo"/>
+        <img className="navbar logo" src={logo} alt="logo" />
       </div>
 
       {!isLoggedIn && (
@@ -56,7 +56,8 @@ const NavigationBar = () => {
         </div>
       )}
 
-      {isLoggedIn && (
+      {/* {isLoggedIn && ( */}
+      {isLoggedIn && !groupId && (
         <div className="navbar button-container">
           <Link to={`/profile/${localStorage.getItem("userId")}`}>
             <button className="navbar profile-icon">person</button>

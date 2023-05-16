@@ -3,7 +3,6 @@ import { api, handleError } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
 import { Button } from "components/ui/Button";
 import { useHistory } from "react-router-dom";
-import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Dashboard.scss";
 import AppContainer from "components/ui/AppContainer";
@@ -22,75 +21,84 @@ Player.propTypes = {
 };
 
 const Dashboard = () => {
-  // use react-router-dom's hook to access the history
   const history = useHistory();
-
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
 
   // define state variables for users and groups
-  const [users, setUsers] = useState(null);
-  const [groups, setGroups] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [groups, setGroups] = useState([]);
   const [members, setMembers] = useState({});
   const [joinRequests, setJoinRequests] = useState({});
   const userId = localStorage.getItem("userId");
   const { setIsLoggedIn } = useContext(AuthContext);
 
+  const fetchUsers = async () => {
+    try {
+      const usersResponse = await api.get("/users", { headers });
+      setUsers(usersResponse.data);
+    } catch (error) {
+      localStorage.clear();
+      console.error(`Failed to fetch users data: \n${handleError(error)}`);
+    }
+  };
+
+  const fetchGroups = async () => {
+    try {
+      const groupsResponse = await api.get("/groups", { headers });
+      setGroups(groupsResponse.data);
+    } catch (error) {
+      console.error(`Failed to fetch groups data: \n${handleError(error)}`);
+    }
+  };
+
+  const fetchGroupMembers = async (groupId) => {
+    try {
+      const membersResponse = await api.get(`/groups/${groupId}/guests`, {
+        headers,
+      });
+      const membersData = membersResponse.data;
+      setMembers((prevMembers) => ({
+        ...prevMembers,
+        [groupId]: membersData.length
+          ? membersData.map((member) => ({
+              id: member.id,
+              username: member.username,
+            }))
+          : [],
+      }));
+    } catch (error) {
+      console.error(
+        `Failed to fetch group members data: \n${handleError(error)}`
+      );
+    }
+  };
+
   useEffect(() => {
-    const interval = setInterval(async () => {
-      try {
-        // Fetch updated data for users
-        const usersResponse = await api.get("/users", { headers });
-        setUsers(usersResponse.data);
-
-        // Fetch updated data for groups
-        const groupsResponse = await api.get("/groups", { headers });
-        setGroups(groupsResponse.data);
-
-        // Fetch updated data for group members
-        groupsResponse.data.forEach(async (group) => {
-          const membersResponse = await api.get(`/groups/${group.id}/guests`, {
-            headers,
-          });
-
-          const membersData = membersResponse.data;
-          setMembers((prevMembers) => {
-            return {
-              ...prevMembers,
-              [group.id]: membersData.length
-                ? membersData.map((member) => ({
-                    id: member.id,
-                    username: member.username,
-                  }))
-                : [],
-            };
-          });
-        });
-      } catch (error) {
-        console.error(
-          `Something went wrong while fetching the data: \n${handleError(
-            error
-          )}`
-        );
-
-        console.error("Details:", error);
-        try {
-          await api.get(`/users/${userId}`, {
-            headers,
-          });
-        } catch (error) {
-          setIsLoggedIn(false);
-          localStorage.clear(); // Clear local storage
-        }
-        alert(
-          "Something went wrong while fetching the data! See the console for details."
-        );
-      }
-    }, 2000); // Fetch data every 5 seconds
-
-    return () => clearInterval(interval);
+    fetchUsers();
+    const usersInterval = setInterval(fetchUsers, 5000);
+    return () => clearInterval(usersInterval);
   }, []);
+
+  useEffect(() => {
+    fetchGroups();
+    const groupsInterval = setInterval(fetchGroups, 10000);
+    return () => clearInterval(groupsInterval);
+  }, []);
+
+  useEffect(() => {
+    if (groups) {
+      groups.forEach((group) => {
+        fetchGroupMembers(group.id);
+        const membersInterval = setInterval(
+          () => fetchGroupMembers(group.id),
+          10000
+        );
+        return () => clearInterval(membersInterval);
+      });
+    }
+  }, [groups]);
 
   // Load joinRequests from localStorage on component mount
   useEffect(() => {
@@ -98,8 +106,6 @@ const Dashboard = () => {
       JSON.parse(localStorage.getItem("joinRequests")) || {};
     setJoinRequests(storedJoinRequests);
   }, []);
-
-  // ...
 
   // Update joinRequests and save it to localStorage
   const updateJoinRequests = (groupId, value) => {
@@ -112,8 +118,6 @@ const Dashboard = () => {
       return updatedJoinRequests;
     });
   };
-
-  // ...
 
   const SendJoinRequest = async (groupId) => {
     try {
@@ -132,10 +136,41 @@ const Dashboard = () => {
     }
   };
 
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const checkGroupId = async (groupId) => {
+        try {
+          const response = await api.get(`/users/${userId}/groups`, {
+            headers,
+          });
+
+          const userGroupId = response.data;
+          console.log("userGroupId", userGroupId);
+
+          if (Number.isInteger(userGroupId)) {
+            localStorage.setItem("groupId", userGroupId);
+            history.push(`/groupforming/${userGroupId}/guest`);
+          }
+        } catch (error) {
+          console.error(`Failed to check groupId for user:`, error);
+        }
+      };
+
+      for (const groupId in joinRequests) {
+        if (joinRequests[groupId]) {
+          checkGroupId(groupId);
+        }
+      }
+    }, 5000); // Check every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [joinRequests]);
+
   let content = <Spinner />;
 
+  //set interval 2'' to display the spinner
+
   if (users) {
-    //const otherUsers = users.filter((user) => user.id !== userId);
     const sortUsersByStatus = (userA, userB) => {
       if (userA.status === "ONLINE" && userB.status !== "ONLINE") {
         return -1;
@@ -215,7 +250,10 @@ const Dashboard = () => {
                       joinRequests[group.id] ? "requested" : ""
                     }`}
                     onClick={() => SendJoinRequest(group.id)}
-                    disabled={joinRequests[group.id]}
+                    disabled={
+                      group.groupState !== "GROUPFORMING" ||
+                      joinRequests[group.id]
+                    }
                   >
                     {joinRequests[group.id] ? (
                       <i className="material-icons done-icon">done</i>
@@ -235,11 +273,9 @@ const Dashboard = () => {
       </div>
     );
   }
-
   return (
     <AppContainer>
-      {/* <BaseContainer> */}
-      <div className="game container">{content}</div>;{/* </BaseContainer> */}
+      <div className="game container">{content}</div>
     </AppContainer>
   );
 };

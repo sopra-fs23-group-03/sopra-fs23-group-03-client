@@ -12,14 +12,15 @@ const GroupFormingHost = () => {
   const history = useHistory();
   const { groupId } = useParams();
   const { group, users } = useGroupMembers(groupId);
+
   const [joinRequests, setJoinRequests] = useState([]);
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
+
   const handleDelete = async () => {
     try {
       await api.delete(`/groups/${groupId}`, { headers });
-
       history.push("/dashboard");
     } catch (error) {
       handleError(error);
@@ -32,7 +33,6 @@ const GroupFormingHost = () => {
         headers,
       });
       setJoinRequests(response.data);
-      fetchRequests();
     } catch (error) {
       handleError(error);
     }
@@ -72,6 +72,19 @@ const GroupFormingHost = () => {
       );
       fetchRequests();
       // Handle success or update the UI accordingly
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  const handleContinue = async () => {
+    try {
+      const newState = "INGREDIENTENTERING";
+      await api.put(`/groups/${groupId}/state`, newState, { headers });
+      const response = await api.get(`/groups/${groupId}/state`, { headers });
+      console.log("API response:", response);
+      history.push("/groupforming/lobby/host");
+      //history.push(`/ingredients/${groupId}`);
     } catch (error) {
       handleError(error);
     }
@@ -166,8 +179,10 @@ const GroupFormingHost = () => {
                   <button
                     className="groupforming general-button"
                     width="24%"
-                    onClick={ () => { history.push(`/ingredients/${groupId}`); } }
-                    disabled = {joinRequests === []}
+                    onClick={() => {
+                      handleContinue();
+                    }}
+                    disabled={joinRequests === []}
                   >
                     Continue
                   </button>

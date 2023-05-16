@@ -31,6 +31,7 @@ const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
           await api.put(`/groups/${groupId}/leave`, null, {
             headers: headers,
           });
+          localStorage.removeItem("groupId");
           // Exit successful, redirect to the game page or any other desired destination
           history.push("/dashboard");
         } catch (error) {
@@ -122,7 +123,10 @@ const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
                       width="24%"
                       onClick={() => {
                         if (buttonLabel === "Ready") {
-                          history.push(`/ingredients/${groupId}`);
+                          //history.push(`/ingredients/${groupId}`);
+                          // history.push(`/lobby`);
+
+                          history.push("/groupforming/lobby");
                         } else {
                           setJoinedGroup(true);
                           handleAcceptInvitation(groupId);

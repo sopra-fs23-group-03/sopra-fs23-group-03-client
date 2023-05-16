@@ -1,0 +1,14 @@
+.lobby {
+  &.main-container {
+    display: flex;
+    flex-direction: column;
+    //margin-top: 60px;
+    height: fit-content;
+    border-radius: 12px;
+    position: relative;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    padding: 15em 0 15em 0;
+  }
+}

@@ -145,15 +145,20 @@ const Ingredient = () => {
   const [allergies, setAllergies] = useState([]);
 
   useEffect(() => {
-
     async function fetchData() {
       try {
-        const allergiesResponse = await api.get(`/groups/${groupId}/members/allergies `, { headers });
+        const allergiesResponse = await api.get(
+          `/groups/${groupId}/members/allergies `,
+          { headers }
+        );
 
         setAllergies(allergiesResponse.data);
-
       } catch (error) {
-        alert(`Something went wrong while fetching the group allergies: \n${handleError(error)}`);
+        alert(
+          `Something went wrong while fetching the group allergies: \n${handleError(
+            error
+          )}`
+        );
         console.error("Details:", error);
       }
     }
@@ -175,7 +180,8 @@ const Ingredient = () => {
         headers,
       });
       //history.push(`/final/${userId}`);
-      history.push(`/ingredientsvoting/:${groupId}`);
+      // history.push(`/ingredientsvoting/:${groupId}`);
+      history.push(`/ingredients/lobby`);
     } catch (error) {
       console.error(
         `Something went wrong while updating user ingredients: \n${error}`
@@ -225,7 +231,7 @@ const Ingredient = () => {
               </div>
             ))}
           </ul>
-          
+
           {allergies.length > 0 && (
             <ul className="groupforming invite-users">
               <h3 className="player container">
@@ -234,18 +240,12 @@ const Ingredient = () => {
               </h3>
 
               {allergies.map((allergy) => (
-                <div
-                  className={`player container`}
-                  key={allergy.id}
-                >
+                <div className={`player container`} key={allergy.id}>
                   {allergy}
                 </div>
               ))}
             </ul>
           )}
-            
-
-
         </div>
 
         <BaseContainer>
@@ -255,35 +255,37 @@ const Ingredient = () => {
               <div className="groupforming text"> Let's get cooking! </div>
 
               {/* <div className="groupforming sections"> */}
-                <div className="groupforming preferences">
-                  <div className="groupforming titles">
-                    Which ingredients would you like to add?
-                    <div className="groupforming group-join-requests">
-                      <DrodownList
-                        ingredients={ingredients}
-                        setIngredients={setIngredients}
-                        onIngredientSelect={handleIngredientSelect}
-                      />
-                    </div>
+              <div className="groupforming preferences">
+                <div className="groupforming titles">
+                  Which ingredients would you like to add?
+                  <div className="groupforming group-join-requests">
+                    <DrodownList
+                      ingredients={ingredients}
+                      setIngredients={setIngredients}
+                      onIngredientSelect={handleIngredientSelect}
+                    />
                   </div>
                 </div>
+              </div>
 
-                <div className="groupforming buttons" width="80%">
-                  <button
-                    className="groupforming general-button ingredients"
-                    width="24%"
-                    onClick={() => {
-                      handleSubmit(ingredients);
-                    }}
-                    disabled={isSubmitDisabled} // add disabled prop
-                  >
-                    Submit
-                  </button>
-                </div>
-                <div className="groupforming info">
-                <b>Note:</b> To provide a fitting recipe we recommend you to be as specific as possible (e.g. instead of "cheese" type in "goat cheese"). 
-                Additionally, we assume you already have pantry items such as salt, pepper, oil, etc. at home.
-                </div>
+              <div className="groupforming buttons" width="80%">
+                <button
+                  className="groupforming general-button ingredients"
+                  width="24%"
+                  onClick={() => {
+                    handleSubmit(ingredients);
+                  }}
+                  disabled={isSubmitDisabled} // add disabled prop
+                >
+                  Submit
+                </button>
+              </div>
+              <div className="groupforming info">
+                <b>Note:</b> To provide a fitting recipe we recommend you to be
+                as specific as possible (e.g. instead of "cheese" type in "goat
+                cheese"). Additionally, we assume you already have pantry items
+                such as salt, pepper, oil, etc. at home.
+              </div>
               {/* </div> */}
             </div>
           </div>
