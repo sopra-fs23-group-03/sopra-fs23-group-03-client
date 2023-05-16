@@ -109,11 +109,7 @@
     font-size: 20px;
     height: 40px;
   }
-  &.accepted {
-    background-color: green;
-  }
-
-  .reply-button {
+  &.reply-button {
     &:hover {
       transform: translateY(-2px);
     }
@@ -124,13 +120,11 @@
         transform: none;
       }
     }
-
     cursor: pointer;
     color: #92929d;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 0px;
     width: 30px;
     height: 30px;
     //border-radius: 50%;

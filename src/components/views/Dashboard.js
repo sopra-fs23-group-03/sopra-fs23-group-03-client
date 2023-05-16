@@ -8,6 +8,8 @@ import "styles/views/Dashboard.scss";
 import AppContainer from "components/ui/AppContainer";
 import AuthContext from "components/contexts/AuthContext";
 import { useContext } from "react";
+import UserContext from "components/contexts/UserContext";
+import ConfirmationModal from "components/ui/ConfirmationModal";
 
 const Player = ({ user }) => (
   <div className="player container">
@@ -31,8 +33,20 @@ const Dashboard = () => {
   const [groups, setGroups] = useState([]);
   const [members, setMembers] = useState({});
   const [joinRequests, setJoinRequests] = useState({});
+  const { user, setUser } = useContext(UserContext);
   const userId = localStorage.getItem("userId");
-  const { setIsLoggedIn } = useContext(AuthContext);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [userGroupId, setGroupId] = useState(null);
+
+  const handleConfirmation = (userGroupId) => {
+    // Perform any necessary actions
+    localStorage.setItem("groupId", userGroupId);
+    setUser({ ...user, groupState: "GROUPFORMING_GUEST" });
+    history.push(`/groupforming/${userGroupId}/guest`);
+
+    // Close the confirmation modal
+    setShowConfirmationModal(false);
+  };
 
   const fetchUsers = async () => {
     try {
@@ -138,7 +152,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const interval = setInterval(async () => {
-      const checkGroupId = async (groupId) => {
+      const checkGroupId = async () => {
         try {
           const response = await api.get(`/users/${userId}/groups`, {
             headers,
@@ -148,8 +162,8 @@ const Dashboard = () => {
           console.log("userGroupId", userGroupId);
 
           if (Number.isInteger(userGroupId)) {
-            localStorage.setItem("groupId", userGroupId);
-            history.push(`/groupforming/${userGroupId}/guest`);
+            setShowConfirmationModal(true);
+            setGroupId(userGroupId);
           }
         } catch (error) {
           console.error(`Failed to check groupId for user:`, error);
@@ -275,7 +289,16 @@ const Dashboard = () => {
   }
   return (
     <AppContainer>
-      <div className="game container">{content}</div>
+      <div className="game container">
+        {content}
+
+        {showConfirmationModal && (
+          <ConfirmationModal
+            message="Your join request got accepted. You will be directed to the event."
+            onConfirm={() => handleConfirmation(userGroupId)}
+          />
+        )}
+      </div>
     </AppContainer>
   );
 };

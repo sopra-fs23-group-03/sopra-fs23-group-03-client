@@ -6,6 +6,7 @@ import { Button } from "components/ui/Button";
 import "styles/views/Login.scss";
 import PropTypes from "prop-types";
 import AuthContext from "components/contexts/AuthContext";
+import UserContext from "components/contexts/UserContext";
 
 const FormField = (props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -53,6 +54,7 @@ const Register = (props) => {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [username, setUsername] = useState("");
   const { setIsLoggedIn } = useContext(AuthContext);
+  const { setUser } = useContext(UserContext);
 
   const handleRegister = () => {
     if (password !== repeatPassword) {
@@ -67,7 +69,14 @@ const Register = (props) => {
       const requestBody = JSON.stringify({ username, password });
       const response = await api.post("/users", requestBody);
       // Get the returned user and update a new object.
-      const user = new User(response.data);
+      const user = new User({
+        id: response.data.id,
+        username: response.data.username,
+        token: response.headers["x-token"],
+        status: response.data.status,
+        groupState: "NOGROUP",
+        // Add other properties from the response as needed
+      });
 
       // Store the token from the response headers into the local storage.
       localStorage.setItem("token", response.headers["x-token"]);
@@ -77,6 +86,7 @@ const Register = (props) => {
       // Store the user ID in local storage.
       localStorage.setItem("userId", user.id);
       setIsLoggedIn(true);
+      setUser(user);
 
       // Register successfully worked --> navigate to the route /dashboard in the GameRouter
       history.push(`/dashboard`);
@@ -105,14 +115,18 @@ const Register = (props) => {
           value={username}
           onChange={(un) => setUsername(un)}
         />
-        <div className="login small-text">only alphabetic characters allowed</div>
+        <div className="login small-text">
+          only alphabetic characters allowed
+        </div>
         <FormField
           label="Password"
           name="Password"
           value={password}
           onChange={(n) => setPassword(n)}
         />
-          <div className="login small-text">username and password must differ</div>
+        <div className="login small-text">
+          username and password must differ
+        </div>
         <FormField
           label="Repeat password"
           name="Password"

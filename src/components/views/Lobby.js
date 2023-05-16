@@ -4,12 +4,15 @@ import AppContainer from "components/ui/AppContainer";
 import { Spinner } from "components/ui/Spinner";
 import { api, handleError } from "helpers/api";
 import BaseContainer from "components/ui/BaseContainer";
+import { useContext } from "react";
+import UserContext from "components/contexts/UserContext";
 import "styles/views/Lobby.scss";
 
 const Lobby = ({ groupState, message, nextRoute }) => {
   const history = useHistory();
   const [state, setState] = useState(null);
   const [error, setError] = useState(null);
+  const { user, setUser } = useContext(UserContext);
 
   const groupId = localStorage.getItem("groupId");
   const headers = useMemo(() => {
@@ -22,8 +25,18 @@ const Lobby = ({ groupState, message, nextRoute }) => {
         const response = await api.get(`/groups/${groupId}/state`, { headers });
         const state = response.data;
         setState(state); // Update the groupState
+        console.log("state: ", state);
+        console.log(
+          "lobby message ",
+          "state: ",
+          state,
+          "groupState: ",
+          groupState
+        );
         if (groupState === state) {
+          setUser({ ...user, groupState: state });
           history.push(nextRoute.replace(":groupId", groupId));
+          // make the user.state = "state" in the user context:
         }
       } catch (error) {
         setError(handleError(error));
@@ -36,7 +49,6 @@ const Lobby = ({ groupState, message, nextRoute }) => {
     return () => {
       clearInterval(interval);
     };
-    // }, [groupId, headers, history, nextRoute, state]);
   }, []);
 
   let content = <Spinner />;

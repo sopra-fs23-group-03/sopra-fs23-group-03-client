@@ -8,6 +8,8 @@ import Group from "models/Group";
 import { api, handleError } from "helpers/api";
 import "styles/views/IngredientsVoting.scss";
 import "styles/views/GroupFormingHost.scss";
+import { useContext } from "react";
+import UserContext from "components/contexts/UserContext";
 
 const IngredientsVoting = () => {
   const history = useHistory();
@@ -20,7 +22,7 @@ const IngredientsVoting = () => {
   const [guests, setGuests] = useState([]);
   const [group, setGroup] = useState(null);
   const groupId = localStorage.getItem("groupId");
-
+  const { user, setUser } = useContext(UserContext);
   const [ingredients, setIngredients] = useState([]);
 
   const [votes, setVotes] = useState({});
@@ -78,10 +80,9 @@ const IngredientsVoting = () => {
       );
       console.error("Details:", error);
     }
-
-    // history.push(`/ingredientsfinal/:${groupId}`)
-
-    history.push("/ingredientsvoting/lobby");
+    setUser({ ...user, groupState: "INGREDIENTVOTING_LOBBY" });
+    console.log("user state:", user.groupState);
+    history.push("/ingredientvoting/lobby");
   };
 
   return (
