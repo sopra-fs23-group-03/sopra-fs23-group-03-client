@@ -25,7 +25,7 @@ const GroupFormingHost = () => {
     try {
       await api.delete(`/groups/${groupId}`, { headers });
       // make the groupstate=="NOGROUP" in the user context:
-      setUser({ ...user, groupState: "NOGROUP" });
+      setUser({ ...user, groupState: "NOGROUP", groupId: null });
       history.push("/dashboard");
     } catch (error) {
       handleError(error);
