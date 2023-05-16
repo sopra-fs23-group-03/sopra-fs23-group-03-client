@@ -14,10 +14,6 @@ const GroupFormingHost = () => {
   const { groupId } = useParams();
   const { group, users } = useGroupMembers(groupId);
   const { user, setUser } = useContext(UserContext);
-  //make the user.state = "GROUPFORMING" in the user context:
-  // useEffect(() => {
-  //   setUser({ ...user, state: "GROUPFORMING_HOST" });
-  // }, []);
   console.log("user state:", user.state);
 
   const [joinRequests, setJoinRequests] = useState([]);
@@ -102,7 +98,7 @@ const GroupFormingHost = () => {
 
   let content = [];
 
-  if (group) {
+  if (group && users) {
     content = (
       <div className="groupforming main-container">
         <div className=" groupforming sidebar">
@@ -189,10 +185,11 @@ const GroupFormingHost = () => {
                   <button
                     className="groupforming general-button"
                     width="24%"
+                    // disable the button continue if there are no guests in the group
                     onClick={() => {
                       handleContinue();
                     }}
-                    // disabled={joinRequests === []}
+                    disabled={users.length == 0}
                   >
                     Continue
                   </button>
