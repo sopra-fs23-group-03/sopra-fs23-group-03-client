@@ -179,10 +179,10 @@ const GroupCreation = () => {
               Who do you want to invite?
             </div>
             <div className="group-creation people">
-              {guests.length === 0 && 
+              {guests?.length === 0 && 
               <div className="group-creation no-users"> No users available </div>}
                 
-              {guests.length !== 0 && guests?.map((user) => (
+              {guests?.length !== 0 && guests?.map((user) => (
                 <div className="person container" key={user.id}>
                   <div className="person username">{user.username}</div>
                   <button

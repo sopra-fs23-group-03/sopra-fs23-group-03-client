@@ -5,9 +5,7 @@ import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import AppContainer from "components/ui/AppContainer";
 import "styles/views/Final.scss";
-import "styles/views/Final.scss";
 import "styles/views/GroupFormingHost.scss";
-import "styles/views/Dashboard.scss";
 import { useParams } from "react-router-dom";
 import { Spinner } from "components/ui/Spinner";
 import useGroupMembers from "hooks/useGroupMembers";
@@ -72,8 +70,10 @@ const Final = () => {
       <AppContainer>
         <Spinner />
       </AppContainer>
-    );
-  } else {
+    );}
+   
+  
+  else {
     return (
       <AppContainer>
         <div className="game container">
@@ -145,9 +145,9 @@ const Final = () => {
                       <i className="final icon">kitchen</i>
                       <h3 className="final label"> Bring from home </h3>
                     </div>
-                    <ul class="final">
+                    <ul class="list">
                       {recipes[0].usedIngredients.map((ingredient) => (
-                        <li class="final">{ingredient}</li>
+                        <li>{ingredient}</li>
                       ))}
                     </ul>
                   </div>
@@ -157,9 +157,9 @@ const Final = () => {
                       <i className="final icon">shopping_cart</i>
                       <h3 className="final label"> Shopping list </h3>
                     </div>
-                    <ul class="final">
+                    <ul class="list">
                       {recipes[0].missedIngredients.map((ingredient) => (
-                        <li class="final">{ingredient}</li>
+                        <li>{ingredient}</li>
                       ))}
                     </ul>
                   </div>
@@ -189,15 +189,17 @@ const Final = () => {
               <i className="final icon clickable" onClick={hideInstructions}>close</i>
               <div  className="modal-text" dangerouslySetInnerHTML={{__html: `${recipes[0].instructions}`}} />
 
+              <div  className="modal-text" dangerouslySetInnerHTML={{__html: `${recipes[0].instructions}`}} />
             </div>
           </div>
-             </div>
-        }
-        )
-   
+
+        </div>}
+
       </AppContainer>
     );
+    
   }
+      
 };
 
 export default Final;
