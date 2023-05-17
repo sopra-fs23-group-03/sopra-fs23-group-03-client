@@ -256,17 +256,16 @@ const Ingredient = () => {
               <i className="group-icon">food_bank_outlined</i>
               <div className="groupforming text"> Let's get cooking! </div>
 
-              {/* <div className="groupforming sections"> */}
               <div className="groupforming preferences">
                 <div className="groupforming titles">
                   Which ingredients would you like to add?
-                  <div className="groupforming group-join-requests">
-                    <DrodownList
-                      ingredients={ingredients}
-                      setIngredients={setIngredients}
-                      onIngredientSelect={handleIngredientSelect}
-                    />
-                  </div>
+                </div>
+                <div className="groupforming group-join-requests">
+                  <DrodownList
+                    ingredients={ingredients}
+                    setIngredients={setIngredients}
+                    onIngredientSelect={handleIngredientSelect}
+                  />
                 </div>
               </div>
 
@@ -288,7 +287,7 @@ const Ingredient = () => {
                 cheese"). Additionally, we assume you already have pantry items
                 such as salt, pepper, oil, etc. at home.
               </div>
-              {/* </div> */}
+
             </div>
           </div>
         </BaseContainer>
