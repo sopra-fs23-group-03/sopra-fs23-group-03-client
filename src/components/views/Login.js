@@ -65,7 +65,7 @@ const Login = (props) => {
       const user = new User({
         id: response.data.id,
         username: response.data.username,
-        token: response.headers["X-token"],
+        token: response.headers["x-token"],
         status: response.data.status,
         groupState: "NOGROUP",
         // Add other properties from the response as needed
@@ -74,7 +74,7 @@ const Login = (props) => {
 
       // Store the token from the response headers into the local storage.
       const token = response.headers.authorization; //response.headers.authorization;
-      localStorage.setItem("token", response.headers["X-token"]);
+      localStorage.setItem("token", response.headers["x-token"]);
 
       // Store the user ID in local storage.
       localStorage.setItem("userId", user.id);
@@ -83,7 +83,7 @@ const Login = (props) => {
       // initialize the user context with the user object from the response
       setUser(user);
       // Store the user object in local storage.
-      localStorage.setItem("user", JSON.stringify(user));
+      //localStorage.setItem("user", JSON.stringify(user));
 
       // Register successfully worked --> navigate to the route /dashboard in the GameRouter
       history.push(`/dashboard`);
