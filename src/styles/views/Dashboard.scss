@@ -87,7 +87,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin: 0.6em 0;
+      margin: 3px; // modified because some names were cut off above and below
       border-radius: $borderRadius;
       align-items: center;
       background: #ffffff;
