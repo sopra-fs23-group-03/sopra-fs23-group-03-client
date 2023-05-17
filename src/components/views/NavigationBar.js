@@ -9,6 +9,7 @@ import { api } from "helpers/api";
 import { NotificationContext } from "components/contexts/NotificationContext";
 import logo from "assets/logo.jpg";
 import UserContext from "components/contexts/UserContext";
+import User from "models/User";
 
 const NavigationBar = () => {
   const history = useHistory();
@@ -28,8 +29,7 @@ const NavigationBar = () => {
       });
       localStorage.clear();
       setIsLoggedIn(false);
-      // delete the user from the context without using the setuser => setuser(null)
-      setUser(null);
+      setUser(new User());
 
       history.push("/login");
     } catch (error) {
