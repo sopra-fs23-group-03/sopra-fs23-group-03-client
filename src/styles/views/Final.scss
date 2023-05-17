@@ -35,6 +35,7 @@
     background: #333333;
     box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
     border-radius: 32px;
+    border: 0px;
     width: auto;
     cursor: pointer;
     font-style: normal;
@@ -86,8 +87,8 @@
 
   &.img {
     border-radius: 8px;
-    width: 28%;
-    height: 70%;
+    max-width: 28%;
+    max-height: 70%;
   }
 
   &.input {
@@ -99,7 +100,7 @@
     padding-left: 10px;
     margin-left: 10px;
     min-height: 30px;
-    max-height: 40px;
+    max-height: fit-content;
     align-items: center;
   }
 
@@ -113,7 +114,6 @@
     border-radius: 8px;
     padding: 0px 20px 5px 20px;
     height: 100%;
-    overflow-y: auto;
   }
 
   &.bottom{
@@ -140,19 +140,20 @@
     gap: 10px;
     align-items: center;
   }
+
+  .list {
+    list-style-type: circle;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+  }
+
 }
 
-ul.final {
-  list-style-type: circle;
-  margin: 0px;
-  display: flex;
-  flex-direction: column;
-}
 
-li.final {
-  margin-top: 0px;
-  margin-right: 0px;
-}
+
+
+
 
 #modal-root {
   position: relative;
