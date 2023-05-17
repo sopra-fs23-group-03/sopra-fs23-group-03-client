@@ -11,6 +11,8 @@ import "styles/views/Dashboard.scss";
 import { useParams } from "react-router-dom";
 import { Spinner } from "components/ui/Spinner";
 import useGroupMembers from "hooks/useGroupMembers";
+import { useContext } from "react";
+import UserContext from "components/contexts/UserContext";
 
 const InfoField = (props) => {
   return (
@@ -24,15 +26,17 @@ const InfoField = (props) => {
 const Final = () => {
   const history = useHistory();
   const [recipes, setRecipes] = useState(null);
-  const  groupId  = localStorage.getItem("groupId");
+  const groupId = localStorage.getItem("groupId");
   const [seeInstructions, setSeeIstructions] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+  console.log("user state: " + user.groupState);
 
   const showInstructions = () => {
-    setSeeIstructions(true)
+    setSeeIstructions(true);
   };
 
   const hideInstructions = () => {
-    setSeeIstructions(false)
+    setSeeIstructions(false);
   };
 
   const headers = useMemo(() => {
@@ -44,15 +48,17 @@ const Final = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-
-        const recipesResponse = await api.get(`/groups/${groupId}/result`, {headers});
+        const recipesResponse = await api.get(`/groups/${groupId}/result`, {
+          headers,
+        });
 
         // Get the returned users and update the state.
         setRecipes(recipesResponse.data);
-
       } catch (error) {
         alert(
-          `Something went wrong while fetching the recipe: \n${ handleError(error).info }`
+          `Something went wrong while fetching the recipe: \n${
+            handleError(error).info
+          }`
         );
         console.error("Details:", error);
       }
@@ -75,10 +81,11 @@ const Final = () => {
             <div className="groupforming sidebar">
               <div className="groupforming sidebar-buttons">
                 <i className="ingredientsvoting icon"> location_home </i> &nbsp;
-                Host:{" "} {group.hostName} &nbsp;
+                Host: {group.hostName} &nbsp;
               </div>
               <div className="groupforming sidebar-buttons">
-                <i className="ingredientsvoting icon majority">bar_chart</i> Voting System: Majority &nbsp;
+                <i className="ingredientsvoting icon majority">bar_chart</i>{" "}
+                Voting System: Majority &nbsp;
               </div>
               <ul className="groupforming invite-users">
                 <h3 className="player container">
@@ -86,12 +93,12 @@ const Final = () => {
                   &nbsp; Guests &nbsp;
                 </h3>
                 {users.map((user) => (
-                <div
-                className={`player container ${user.status.toLowerCase()}`}
-                key={user.id}
-                >
-                  {user.username}
-                </div>
+                  <div
+                    className={`player container ${user.status.toLowerCase()}`}
+                    key={user.id}
+                  >
+                    {user.username}
+                  </div>
                 ))}
               </ul>
             </div>
@@ -102,54 +109,72 @@ const Final = () => {
                   <div className="final title">Everything is set!</div>
                 </div>
                 <div className="final bottom">
-                  <img className="final img" alt="recipe" src={recipes[0].image}/>
+                  <img
+                    className="final img"
+                    alt="recipe"
+                    src={recipes[0].image}
+                  />
                   <div className="final section">
-                    <InfoField 
-                    label="Recipe" 
-                    value={recipes[0].title}/>
+                    <InfoField label="Recipe" value={recipes[0].title} />
 
                     <InfoField
                       label="Approx. time"
-                      value={(recipes[0].readyInMinutes + " minutes").replace("null", "'")}/>
+                      value={(recipes[0].readyInMinutes + " minutes").replace(
+                        "null",
+                        "'"
+                      )}
+                    />
 
-                    <InfoField 
-                    label="Instructions" 
-                    value={<i className="final icon clickable" onClick={showInstructions}>read_more</i>}></InfoField>
-
+                    <InfoField
+                      label="Instructions"
+                      value={
+                        <i
+                          className="final icon clickable"
+                          onClick={showInstructions}
+                        >
+                          read_more
+                        </i>
+                      }
+                    ></InfoField>
                   </div>
                 </div>
 
                 <div className="final bottom">
-
                   <div className="final ingredients">
                     <div className="final ingredients-title">
-                    <i className="final icon">kitchen</i>
+                      <i className="final icon">kitchen</i>
                       <h3 className="final label"> Bring from home </h3>
                     </div>
                     <ul class="final">
-                      {recipes[0].usedIngredients.map((ingredient) => 
-
-                        <li class="final">{ingredient}</li>  
-                      )}
+                      {recipes[0].usedIngredients.map((ingredient) => (
+                        <li class="final">{ingredient}</li>
+                      ))}
                     </ul>
                   </div>
 
                   <div className="final ingredients">
                     <div className="final ingredients-title">
-                    <i className="final icon">shopping_cart</i>
+                      <i className="final icon">shopping_cart</i>
                       <h3 className="final label"> Shopping list </h3>
                     </div>
                     <ul class="final">
-                      {recipes[0].missedIngredients.map((ingredient) => 
-
-                        <li class="final">{ingredient}</li>  
-                      )}
+                      {recipes[0].missedIngredients.map((ingredient) => (
+                        <li class="final">{ingredient}</li>
+                      ))}
                     </ul>
                   </div>
-
                 </div>
 
-                <button className="final button" onClick={() => history.push("/game")}>
+                <button
+                  className="final button"
+                  onClick={() => {
+                    // make the user groupState in the user context "NOGROUP"
+                    setUser({ ...user, groupState: "NOGROUP" });
+                    history.push(`/dashboard`);
+                    localStorage.removeItem("groupId");
+                  }}
+                >
+
                   Back to home page
                 </button>
               </div>
@@ -157,24 +182,17 @@ const Final = () => {
           </div>
         </div>
 
-
         {seeInstructions && 
         <div id="modal-root">
           <div className="modal">
             <div className="modal-form">
               <i className="final icon clickable" onClick={hideInstructions}>close</i>
               <div  className="modal-text" dangerouslySetInnerHTML={{__html: `${recipes[0].instructions}`}} />
+
             </div>
           </div>
-        </div>}
-
-
+        )}
       </AppContainer>
-      
-      
-
-      
-      
     );
   }
 };

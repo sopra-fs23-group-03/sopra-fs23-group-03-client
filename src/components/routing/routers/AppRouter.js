@@ -1,6 +1,5 @@
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { GameGuard } from "components/routing/routeProtectors/GameGuard";
-import GameRouter from "components/routing/routers/GameRouter";
 import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "components/views/Register";
@@ -17,6 +16,8 @@ import IngredientSolo from "components/views/IngredientSolo";
 import IngredientsVoting from "components/views/IngredientsVoting";
 import Dashboard from "components/views/Dashboard";
 import IngredientsFinal from "components/views/IngredientsFinal";
+import Lobby from "components/views/Lobby";
+import UserStateGuard from "components/routing/routeProtectors/UserStateGuard";
 
 /**
  * Main router of your application.
@@ -35,16 +36,20 @@ const AppRouter = () => {
     <BrowserRouter>
       <NavigationBar isLoggedIn={isLoggedIn} />
       <Switch>
-        <Route path="/dashboard">
+        <Route exact path="/dashboard">
           <GameGuard>
-            <Dashboard/>
+            <UserStateGuard state="NOGROUP">
+              <Dashboard />
+            </UserStateGuard>
           </GameGuard>
         </Route>
+
         <Route exact path="/login">
           <LoginGuard>
             <Login />
           </LoginGuard>
         </Route>
+
         <Route exact path="/register">
           <LoginGuard>
             <Register />
@@ -53,78 +58,156 @@ const AppRouter = () => {
 
         <Route exact path="/profile/:userId">
           <GameGuard>
-            <Profile />
-          </GameGuard>
-        </Route>
-
-        <Route path="/group-creation">
-          <GameGuard>
-            <GroupCreation />
-          </GameGuard>
-        </Route>
-
-        <Route exact path="/final/:groupId">
-          <GameGuard>
-            <Final />
+            <UserStateGuard state="NOGROUP">
+              <Profile />
+            </UserStateGuard>
           </GameGuard>
         </Route>
 
         <Route exact path="/users/:userId">
           <GameGuard>
-            <Profile />
+            <UserStateGuard state="NOGROUP">
+              <Profile />
+            </UserStateGuard>
           </GameGuard>
         </Route>
 
-        <Route exact path="/groupforming/:groupId/host">
+        <Route path="/group-creation">
           <GameGuard>
-            <GroupFormingHost />
+            {/* <UserStateGuard state="NOGROUP" > */}
+            <GroupCreation />
+            {/* </UserStateGuard> */}
+          </GameGuard>
+        </Route>
+
+        <Route exact path="/recipe/:groupId">
+          <GameGuard>
+            <UserStateGuard state="RECIPE">
+              <Final />
+            </UserStateGuard>
           </GameGuard>
         </Route>
 
         <Route exact path="/groupforming/:groupId/guest">
           <GameGuard>
-            <GroupFormingGuest
-              exitbuttonLabel={"Exit Group"}
-              buttonLabel={"Ready"}
-            />
+            <UserStateGuard state="GROUPFORMING_GUEST">
+              <GroupFormingGuest
+                exitbuttonLabel={"Exit Group"}
+                buttonLabel={"Ready"}
+              />
+            </UserStateGuard>
           </GameGuard>
         </Route>
 
-        <Route exact path="/ingredients/:groupId">
+        <Route exact path="/groupforming/host/lobby">
           <GameGuard>
-            <Ingredient />
+            <UserStateGuard state="GROUPFORMING_HOST_LOBBY">
+              <Lobby
+                groupState={"INGREDIENTENTERING"}
+                message={"Enjoy the event!"}
+                nextRoute={"/ingredients/:groupId"}
+              />
+            </UserStateGuard>
+          </GameGuard>
+        </Route>
+
+        <Route exact path="/groupforming/:groupId/host">
+          <GameGuard>
+            <UserStateGuard state="GROUPFORMING_HOST">
+              <GroupFormingHost />
+            </UserStateGuard>
+          </GameGuard>
+        </Route>
+
+        <Route path="/groupforming/lobby">
+          <GameGuard>
+            <UserStateGuard state="GROUPFORMING_LOBBY">
+              <Lobby
+                groupState={"INGREDIENTENTERING"}
+                message={
+                  "You successfully registered for this event! Wait for other friends to join..."
+                }
+                nextRoute={"/ingredients/:groupId"}
+              />
+            </UserStateGuard>
           </GameGuard>
         </Route>
 
         <Route exact path="/invitation/:groupId">
           <GameGuard>
-            <GroupFormingGuest
-              exitbuttonLabel={"Cancel"}
-              buttonLabel={"Join"}
-            />
+            <UserStateGuard state="NOGROUP">
+              <GroupFormingGuest
+                exitbuttonLabel={"Cancel"}
+                buttonLabel={"Join"}
+              />
+            </UserStateGuard>
           </GameGuard>
         </Route>
 
         <Route exact path="/solo">
           <GameGuard>
-            <IngredientSolo />
-          </GameGuard>
-        </Route>
-
-        <Route exact path="/ingredientsvoting/:groupId">
-          <GameGuard>
-            <IngredientsVoting />
+            <UserStateGuard state="NOGROUP">
+              <IngredientSolo />
+            </UserStateGuard>
           </GameGuard>
         </Route>
 
         <Route exact path="/ingredientsfinal/:groupId">
           <GameGuard>
-            <IngredientsFinal />
+            <UserStateGuard state="FINAL">
+              <IngredientsFinal />
+            </UserStateGuard>
           </GameGuard>
         </Route>
 
-        <Route exact path="/">
-          <Redirect to="/dashboard" />
+        <Route path="/ingredients/lobby">
+          <GameGuard>
+            <UserStateGuard state="INGREDIENTENTERING_LOBBY">
+              <Lobby
+                groupState={"INGREDIENTVOTING"}
+                message={
+                  "We took note of your ingredients! Wait for the other members to complete this phase..."
+                }
+                nextRoute={"/ingredientvoting/:groupId"}
+              />
+            </UserStateGuard>
+          </GameGuard>
+        </Route>
+
+        <Route exact path="/ingredients/:groupId">
+          <GameGuard>
+            <UserStateGuard state="INGREDIENTENTERING">
+              <Ingredient />
+            </UserStateGuard>
+          </GameGuard>
+        </Route>
+
+        <Route path="/ingredientvoting/lobby">
+          <GameGuard>
+            <UserStateGuard state="INGREDIENTVOTING_LOBBY">
+              <Lobby
+                groupState={"FINAL"}
+                message={
+                  "You successfully submitted your preferences!Wait for the other members to vote...."
+                }
+                nextRoute={`/ingredientsfinal/:groupId`}
+              />
+            </UserStateGuard>
+          </GameGuard>
+        </Route>
+
+        <Route exact path="/ingredientvoting/:groupId">
+          <GameGuard>
+            <UserStateGuard state="INGREDIENTVOTING">
+              <IngredientsVoting />
+            </UserStateGuard>
+          </GameGuard>
+        </Route>
+
+        <Route path="/">
+          <UserStateGuard state="NOGROUP">
+            <Redirect to="/dashboard" />
+          </UserStateGuard>
         </Route>
       </Switch>
     </BrowserRouter>

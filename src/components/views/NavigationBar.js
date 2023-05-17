@@ -8,13 +8,16 @@ import NotificationBar from "components/views/NotificationBar";
 import { api } from "helpers/api";
 import { NotificationContext } from "components/contexts/NotificationContext";
 import logo from "assets/logo.jpg";
+import UserContext from "components/contexts/UserContext";
 
 const NavigationBar = () => {
   const history = useHistory();
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { user, setUser } = useContext(UserContext);
   const { notifications, hasNewNotifications } =
     useContext(NotificationContext);
   const [showNotificationBar, setShowNotificationBar] = useState(false); // For displaying the notification bar
+  const groupId = localStorage.getItem("groupId");
 
   const logout = async () => {
     try {
@@ -23,21 +26,21 @@ const NavigationBar = () => {
           "X-Token": localStorage.getItem("token"),
         },
       });
-      // localStorage.removeItem("token");
-      // localStorage.removeItem("userId");
       localStorage.clear();
       setIsLoggedIn(false);
+      // delete the user from the context without using the setuser => setuser(null)
+      setUser(null);
+
       history.push("/login");
     } catch (error) {
       console.error(error);
     }
   };
 
-
   return (
     <div className="navbar container">
       <div className="logo-container">
-        <img className="navbar logo" src={logo} alt="logo"/>
+        <img className="navbar logo" src={logo} alt="logo" />
       </div>
 
       {!isLoggedIn && (
@@ -56,7 +59,8 @@ const NavigationBar = () => {
         </div>
       )}
 
-      {isLoggedIn && (
+      {/* {isLoggedIn && ( */}
+      {isLoggedIn && !groupId && (
         <div className="navbar button-container">
           <Link to={`/profile/${localStorage.getItem("userId")}`}>
             <button className="navbar profile-icon">person</button>

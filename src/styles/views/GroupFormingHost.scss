@@ -37,18 +37,6 @@
     align-items: center;
   }
 
-  // /* Your Pages */
-  // &.sections {
-  //   //contains guests and buttons. probably not needed
-  //   display: flex;
-  //   flex-direction: column;
-  //   gap: 14px;
-  //   height: 50%;
-  //   //width: 100%;
-  //   white-space: nowrap;
-  //   min-width: fit-content;
-  // }
-
   &.preferences {
     // contains guests
     display: flex;
@@ -94,7 +82,6 @@
     text-align: justify;
     color: #666666;
   }
-    
 
   &.group-join-requests {
     //this is the container for the guest container : guest names and delete button
@@ -122,11 +109,7 @@
     font-size: 20px;
     height: 40px;
   }
-  &.accepted {
-    background-color: green;
-  }
-
-  .reply-button {
+  &.reply-button {
     &:hover {
       transform: translateY(-2px);
     }
@@ -137,13 +120,11 @@
         transform: none;
       }
     }
-
     cursor: pointer;
     color: #92929d;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 0px;
     width: 30px;
     height: 30px;
     //border-radius: 50%;
@@ -210,7 +191,7 @@
       border: 1px solid #e1e1e1;
     }
 
-    &.ingredients:hover::after{
+    &.ingredients:hover::after {
       content: "Please contribute with at least one ingredient.";
       position: absolute;
       transform: translate(30%, 10%);
@@ -228,7 +209,6 @@
       border: 1px solid #e1e1e1;
     }
   }
-
 
   &.cancel-button {
     background: #bab9b9;
@@ -274,7 +254,8 @@
     font-size: 14px;
     line-height: 24px;
     letter-spacing: 0.1px;
-    color: #333333;
+    //color: #333333;
+    color: #fefefe;
 
     max-width: 217.17px;
     overflow: hidden;
@@ -292,11 +273,9 @@
     list-style: none;
     //align-items: center;
     //justify-content: center;
-    background: rgba(151, 151, 151, 0.1);
-    padding-left: 15px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    //background: rgba(151, 151, 151, 0.1);
+    padding: 1rem;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 12px;
     max-height: 70%;
     overflow-x: auto;
@@ -315,7 +294,7 @@
       margin: 0.5em 0;
       border-radius: $borderRadius;
       align-items: center;
-      background: none;
+
       color: #000000;
       box-shadow: none;
       //font-size: 1em;
@@ -328,6 +307,7 @@
       font-size: 20px;
       color: #92929d;
       border: 2px solid #92929d;
+
       padding: 3px;
       padding-right: 6px;
     }

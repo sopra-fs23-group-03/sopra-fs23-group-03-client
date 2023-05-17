@@ -8,6 +8,8 @@ import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import Group from "models/Group"; //added
 import NotificationBar from "components/views/NotificationBar";
+import UserContext from "components/contexts/UserContext";
+import { useContext } from "react";
 
 const GroupCreation = () => {
   const history = useHistory();
@@ -22,6 +24,7 @@ const GroupCreation = () => {
   const [invitedUsers, setInvitedUsers] = useState([]);
   const [votingType, setVotingType] = useState("MAJORITYVOTE");
   const [hostId, setHostId] = useState(localStorage.getItem("userId"));
+  const { user, setUser } = useContext(UserContext);
 
 
   const [isHovering, setIsHovering] = useState(false);
@@ -61,6 +64,7 @@ const GroupCreation = () => {
       localStorage.setItem("groupId", group.id);
       <NotificationBar invitedUsers={invitedUsers} />;
 
+      setUser({ ...user, groupState: "GROUPFORMING_HOST", groupId: groupId });
       history.push(`/groupforming/${groupId}/host`);
     } catch (error) {
       alert(
@@ -148,7 +152,9 @@ const GroupCreation = () => {
               value={groupName}
               onChange={(e) => setGroupName(e.target.value)}
             />
-            <div className="group-creation small-text">only alphabetic characters allowed</div>
+            <div className="group-creation small-text">
+              only alphabetic characters allowed
+            </div>
           </div>
 
           <div className="group-creation field">

@@ -2,24 +2,30 @@ import { useState, useEffect, useMemo } from "react";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
 import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
 import { useParams } from "react-router-dom";
 import useGroupMembers from "hooks/useGroupMembers";
+import UserContext from "components/contexts/UserContext";
+import { useContext } from "react";
 
 const GroupFormingHost = () => {
   const history = useHistory();
   const { groupId } = useParams();
   const { group, users } = useGroupMembers(groupId);
+  const { user, setUser } = useContext(UserContext);
+  console.log("user state:", user.groupState);
+
   const [joinRequests, setJoinRequests] = useState([]);
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
+
   const handleDelete = async () => {
     try {
       await api.delete(`/groups/${groupId}`, { headers });
-
+      // make the groupstate=="NOGROUP" in the user context:
+      setUser({ ...user, groupState: "NOGROUP", groupId: null });
       history.push("/dashboard");
     } catch (error) {
       handleError(error);
@@ -32,7 +38,6 @@ const GroupFormingHost = () => {
         headers,
       });
       setJoinRequests(response.data);
-      fetchRequests();
     } catch (error) {
       handleError(error);
     }
@@ -77,9 +82,23 @@ const GroupFormingHost = () => {
     }
   };
 
+  const handleContinue = async () => {
+    try {
+      const newState = "INGREDIENTENTERING";
+      await api.put(`/groups/${groupId}/state`, newState, { headers });
+      const response = await api.get(`/groups/${groupId}/state`, { headers });
+      console.log("API response:", response);
+      setUser({ ...user, groupState: "GROUPFORMING_HOST_LOBBY" });
+      history.push("/groupforming/host/lobby");
+      //history.push(`/ingredients/${groupId}`);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   let content = [];
 
-  if (group) {
+  if (group && users) {
     content = (
       <div className="groupforming main-container">
         <div className=" groupforming sidebar">
@@ -127,7 +146,7 @@ const GroupFormingHost = () => {
                               {/* Assuming the username is available */}
                             </span>
                             <button
-                              className="material-icons reply-button"
+                              className="material-icons groupforming reply-button"
                               onClick={() =>
                                 handleAcceptRequest(joinRequest.id)
                               }
@@ -135,7 +154,7 @@ const GroupFormingHost = () => {
                               done
                             </button>
                             <button
-                              className="material-icons reply-button"
+                              className="material-icons groupforming reply-button"
                               onClick={() =>
                                 handleRejectRequest(joinRequest.id)
                               }
@@ -166,8 +185,11 @@ const GroupFormingHost = () => {
                   <button
                     className="groupforming general-button"
                     width="24%"
-                    onClick={ () => { history.push(`/ingredients/${groupId}`); } }
-                    disabled = {joinRequests === []}
+                    // disable the button continue if there are no guests in the group
+                    onClick={() => {
+                      handleContinue();
+                    }}
+                    disabled={users.length == 0}
                   >
                     Continue
                   </button>

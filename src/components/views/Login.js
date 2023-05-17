@@ -7,6 +7,7 @@ import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import AuthContext from "components/contexts/AuthContext";
+import UserContext from "components/contexts/UserContext";
 
 const FormField = (props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -53,23 +54,36 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const { setIsLoggedIn } = useContext(AuthContext);
-
+  const { setUser } = useContext(UserContext);
   const doLogin = async () => {
     try {
       const requestBody = JSON.stringify({ username, password });
       const response = await api.post(`/users/${username}/login`, requestBody);
 
       // Get the returned user and update a new object.
-      const user = new User(response.data);
+      // const user = new User(response.data);
+      const user = new User({
+        id: response.data.id,
+        username: response.data.username,
+        token: response.headers["X-token"],
+        status: response.data.status,
+        groupState: "NOGROUP",
+        // Add other properties from the response as needed
+      });
+      console.log("User:", user);
 
       // Store the token from the response headers into the local storage.
       const token = response.headers.authorization; //response.headers.authorization;
-      localStorage.setItem("token", response.headers["x-token"]);
+      localStorage.setItem("token", response.headers["X-token"]);
 
       // Store the user ID in local storage.
       localStorage.setItem("userId", user.id);
       localStorage.setItem("isLoggedIn", true);
       setIsLoggedIn(true);
+      // initialize the user context with the user object from the response
+      setUser(user);
+      // Store the user object in local storage.
+      localStorage.setItem("user", JSON.stringify(user));
 
       // Register successfully worked --> navigate to the route /dashboard in the GameRouter
       history.push(`/dashboard`);
