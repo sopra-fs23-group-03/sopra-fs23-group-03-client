@@ -192,8 +192,8 @@ const Final = () => {
               <div  className="modal-text" dangerouslySetInnerHTML={{__html: `${recipes[0].instructions}`}} />
             </div>
           </div>
-        </div>}
 
+        </div>}
 
       </AppContainer>
     );
