@@ -60,6 +60,21 @@ const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
     }
   }, [confirmExit, groupId, headers, history]);
 
+  const handleContinue = async (groupId, userId) => {
+    try {
+      await api.put(`/users/${userId}/${groupId}/ready`, null, {
+        headers,
+      });
+      setUser({
+        ...user,
+        groupState: "GROUPFORMING_LOBBY",
+      });
+      history.push("/groupforming/lobby");
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   let content = <Spinner />;
 
   if (users) {
@@ -135,11 +150,7 @@ const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
                       width="24%"
                       onClick={() => {
                         if (buttonLabel === "Ready") {
-                          setUser({
-                            ...user,
-                            groupState: "GROUPFORMING_LOBBY",
-                          });
-                          history.push("/groupforming/lobby");
+                          handleContinue(groupId, user.id);
                         } else {
                           setJoinedGroup(true);
                           setUser({ ...user, state: "GROUPFORMING" });

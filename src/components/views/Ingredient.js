@@ -51,7 +51,7 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
         headers,
       });
       setAllIngredients(response.data);
-      setSuggestions(allIngredients);
+      //setSuggestions(allIngredients);
     } catch (error) {
       console.error(
         `Something went wrong while fetching ingredients: \n${error}`

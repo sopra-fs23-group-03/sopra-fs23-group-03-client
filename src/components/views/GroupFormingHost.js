@@ -85,7 +85,19 @@ const GroupFormingHost = () => {
   const handleContinue = async () => {
     try {
       const newState = "INGREDIENTENTERING";
-      await api.put(`/groups/${groupId}/state`, newState, { headers });
+      //await api.put(`/groups/${groupId}/state`, newState, { headers });
+      try {
+        await api.put(`/users/${user.id}/${groupId}/ready`, null, {
+          headers,
+        });
+        setUser({
+          ...user,
+          groupState: "GROUPFORMING_LOBBY",
+        });
+        history.push("/groupforming/lobby");
+      } catch (error) {
+        handleError(error);
+      }
       const response = await api.get(`/groups/${groupId}/state`, { headers });
       console.log("API response:", response);
       setUser({ ...user, groupState: "GROUPFORMING_HOST_LOBBY" });
