@@ -110,14 +110,14 @@ const Register = (props) => {
             friends.
           </p>
         </div>
-        <FormField
-          label="Username"
-          value={username}
-          onChange={(un) => setUsername(un)}
-        />
-        <div className="login small-text">
-          only alphabetic characters allowed
-        </div>
+          <FormField
+            label="Username"
+            value={username}
+            onChange={(un) => setUsername(un)}
+          />
+          <div className="login small-text">
+            only alphabetic characters allowed
+          </div>
         <FormField
           label="Password"
           name="Password"
