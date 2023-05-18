@@ -55,7 +55,7 @@ const Final = () => {
       } catch (error) {
         alert(
           `Something went wrong while fetching the recipe: \n${
-            handleError(error).info
+            handleError(error)
           }`
         );
         console.error("Details:", error);

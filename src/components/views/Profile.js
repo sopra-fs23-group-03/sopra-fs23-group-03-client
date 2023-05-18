@@ -41,7 +41,7 @@ const Profile = () => {
   const [username, setUsername] = useState(user?.username);
   const [currentPassword, setCurrentPassword] = useState(null);
   const [newPassword, setNewPassword] = useState(null);
-  const [diet, setDiet] = useState(null);
+  const [diet, setDiet] = useState(user?.specialDiet);
   const [allergies, setAllergies] = useState([]);
   const [cuisine, setCuisine] = useState([]);
 
@@ -58,20 +58,21 @@ const Profile = () => {
     {value:"primal", label: "primal"}
   ]
 
-  const allergens = [
-    {value:"dairy", label: "dairy"},
-    {value:"egg", label: "egg"},
-    {value:"gluten", label: "gluten"},
-    {value:"grain", label: "grain"},
-    {value:"peanut", label: "peanut"},
-    {value:"seafood", label: "seafood"},
-    {value:"sesame", label: "sesame"},
-    {value:"shellfish", label: "shellfish"},
-    {value:"soy", label: "soy"},
-    {value:"sulfite", label: "sulfite"},
-    {value:"tree-nut", label: "tree-nut"},
-    {value:"wheat", label: "wheat"}
-  ]
+
+ const allergens = [
+   {value:"dairy", label: "dairy"},
+   {value:"egg", label: "egg"},
+   {value:"gluten", label: "gluten"},
+   {value:"grain", label: "grain"},
+   {value:"peanut", label: "peanut"},
+   {value:"seafood", label: "seafood"},
+   {value:"sesame", label: "sesame"},
+   {value:"shellfish", label: "shellfish"},
+   {value:"soy", label: "soy"},
+   {value:"sulfite", label: "sulfite"},
+   {value:"tree-nut", label: "tree-nut"},
+   {value:"wheat", label: "wheat"}
+ ]
 
   const cuisines = [
     {value:"african", label: "african"},
@@ -104,14 +105,21 @@ const Profile = () => {
     setCuisine(selectedOptions.map((option) => option.value));}
 
   const handleAllergiesChange = (selectedOptions) => {
-    setAllergies(selectedOptions.map((option) => option.value));}
+    
+    if (selectedOptions) {
+    setAllergies(selectedOptions.map((option) => option.value));
+    }
+    else {
+      setAllergies([])
+    }
+  }
 
   const handleDietChange = (d) => {
     setDiet(d.value)
   }
 
-  console.log(user)
-  console.log(user?.allergiesSet)
+  console.log(user?.allergies[0].toString())
+  console.log(user?.allergies.map((option) => option.toString()))
   
 
   const handleUpdate = async () => {
@@ -122,7 +130,7 @@ const Profile = () => {
       //history.push(`/profile/${userId}`);
     } catch (error) {
       alert(
-        `Something went wrong while updating the profile: \n${handleError(error).info
+        `Something went wrong while updating the profile: \n${handleError(error)
         }`
       );
     }
@@ -213,7 +221,7 @@ const Profile = () => {
                   placeHolder="add allergy"
                   options={allergens}
                   onChange={handleAllergiesChange}
-                  value={user?.allergiesSet}
+                  value={user?.allergies[0].toString()}
                   />                
                 </div>
             
