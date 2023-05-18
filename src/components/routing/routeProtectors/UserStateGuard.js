@@ -83,6 +83,7 @@ UserStateGuard.propTypes = {
     "INGREDIENTVOTING",
     "INGREDIENTVOTING_LOBBY",
     "FINAL",
+    "FINAL_LOBBY",
     "RECIPE",
   ]).isRequired,
 };

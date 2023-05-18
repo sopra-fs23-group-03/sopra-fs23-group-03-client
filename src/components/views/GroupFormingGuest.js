@@ -11,15 +11,34 @@ import useInvitationActions from "hooks/useInvitationActions";
 import useGroupMembers from "hooks/useGroupMembers";
 import { useContext } from "react";
 import UserContext from "components/contexts/UserContext";
+import ConfirmationModal from "components/ui/ConfirmationModal";
 
 const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
   const history = useHistory();
+  const { groupId } = useParams();
+  const { group, users, groupExists } = useGroupMembers(groupId);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const handleConfirmation = () => {
+    // Perform any necessary actions
+    setUser({ ...user, groupState: "NOGROUP", groupId: null });
+    localStorage.removeItem("groupId");
+
+    history.push("/dashboard"); // Redirect to the dashboard when the group doesn't exist
+    setShowConfirmationModal(false);
+  };
+
+  useEffect(() => {
+    if (!groupExists) {
+      setShowConfirmationModal(true);
+    }
+  }, [groupExists, history]);
+
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
-  const { groupId } = useParams();
+
   const [joinedGroup, setJoinedGroup] = useState(false); // add state variable for tracking if user joined group
-  const { group, users } = useGroupMembers(groupId);
+
   const [confirmExit, setConfirmExit] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
@@ -44,7 +63,8 @@ const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
           });
           localStorage.removeItem("groupId");
           // Exit successful, redirect to the game page or any other desired destination
-          setUser({ ...user, state: "NOGROUP" });
+          setUser({ ...user, groupState: "NOGROUP", groupId: null });
+
           history.push("/dashboard");
         } catch (error) {
           // Handle the case when the exit was not successful
@@ -77,7 +97,7 @@ const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
 
   let content = <Spinner />;
 
-  if (users) {
+  if (users && group) {
     content = (
       <BaseContainer>
         <div className="groupforming form">
@@ -173,7 +193,16 @@ const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
 
   return (
     <AppContainer>
-      <div className="game container">{content}</div>;
+      <div className="game container">
+        {content}
+        {showConfirmationModal && (
+          <ConfirmationModal
+            message="Unfortunatelly the host deleted this group. You will be directed to the dashboard."
+            onConfirm={() => handleConfirmation()}
+          />
+        )}
+      </div>
+      ;
     </AppContainer>
   );
 };
