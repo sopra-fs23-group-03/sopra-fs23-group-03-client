@@ -179,7 +179,7 @@ const Ingredient = () => {
       const formattedIngredients = ingredients.map((ingredient) => {
         return { name: ingredient.name };
       });
-      await api.put(`/user/${userId}/ingredients`, formattedIngredients, {
+      await api.put(`/users/${userId}/ingredients`, formattedIngredients, {
         headers,
       });
       setUser({ ...user, groupState: "INGREDIENTENTERING_LOBBY" });
