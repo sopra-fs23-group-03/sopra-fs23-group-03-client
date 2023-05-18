@@ -105,7 +105,7 @@ const Final = () => {
             <BaseContainer>
               <div className="final form">
                 <div className="final main">
-                  <i className="final icon">sentiment_satisfied</i>
+                  <i className="final icon happy">sentiment_satisfied</i>
                   <div className="final title">Everything is set!</div>
                 </div>
                 <div className="final bottom">

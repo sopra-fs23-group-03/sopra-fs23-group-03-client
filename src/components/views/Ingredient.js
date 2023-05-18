@@ -184,11 +184,8 @@ const Ingredient = () => {
       setUser({ ...user, groupState: "INGREDIENTENTERING_LOBBY" });
       history.push(`/ingredients/lobby`);
     } catch (error) {
-      console.error(
-        `Something went wrong while updating user ingredients: \n${error}`
-      );
       alert(
-        "Something went wrong while updating user ingredients! See the console for details."
+        `Something went wrong while updating user ingredients: \n${error}`
       );
     }
   };

@@ -19,15 +19,13 @@ const useGroupMembers = (groupId) => {
         setGroup(groupResponse.data);
         setUsers(membersResponse.data || []);
       } catch (error) {
-        console.error(
+        alert(
           `Something went wrong while fetching the group and its members: \n${handleError(
             error
           )}`
         );
         console.error("Details:", error);
-        alert(
-          "Something went wrong while fetching the group and its members! See the console for details."
-        );
+
       }
     }
 

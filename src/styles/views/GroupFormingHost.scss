@@ -292,12 +292,13 @@
       flex-direction: row;
       max-width: 10em;
       padding: 1px;
-      margin: 0.5em 0;
+      margin: 5px;
       border-radius: $borderRadius;
       align-items: center;
 
       color: #000000;
       box-shadow: none;
+      min-height: 23px;
       //font-size: 1em;
     }
     .person-icon {
