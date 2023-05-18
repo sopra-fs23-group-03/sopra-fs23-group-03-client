@@ -204,6 +204,18 @@ const AppRouter = () => {
           </GameGuard>
         </Route>
 
+        <Route path="/final/lobby">
+          <GameGuard>
+            <UserStateGuard state="FINAL_LOBBY">
+              <Lobby
+                groupState={"RECIPE"}
+                message={"We’re looking for the best recipe for your meal!"}
+                nextRoute={`/recipe/:groupId`}
+              />
+            </UserStateGuard>
+          </GameGuard>
+        </Route>
+
         <Route path="/">
           <UserStateGuard state="NOGROUP">
             <Redirect to="/dashboard" />

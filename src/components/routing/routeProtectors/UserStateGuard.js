@@ -54,6 +54,8 @@ const UserStateGuard = ({ children, state }) => {
             to={`/ingredientsfinal/${localStorage.getItem("groupId")}`}
           />
         );
+      case "FINAL_LOBBY":
+        return <Redirect to={`/final/lobby`} />;
       case "RECIPE":
         return <Redirect to={`/recipe/${localStorage.getItem("groupId")}`} />;
 
