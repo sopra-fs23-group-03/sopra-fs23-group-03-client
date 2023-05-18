@@ -118,7 +118,6 @@ const Profile = () => {
     setDiet(d.value)
   }
 
-  console.log(user?.allergies[0].toString())
   console.log(user?.allergies.map((option) => option.toString()))
   
 
