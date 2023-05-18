@@ -61,16 +61,16 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
       );
     }
 
-    setSuggestions(
-      allIngredients.filter((ingredient) => {
-        return (
-          ingredient.toLowerCase().startsWith(text.toLowerCase()) &&
-          !tasks.some(
-            (task) => task.text.toLowerCase() === ingredient.toLowerCase()
-          )
-        );
-      })
-    );
+    //   setSuggestions(
+    //     allIngredients.filter((ingredient) => {
+    //       return (
+    //         ingredient.toLowerCase().startsWith(text.toLowerCase()) &&
+    //         !tasks.some(
+    //           (task) => task.text.toLowerCase() === ingredient.toLowerCase()
+    //         )
+    //       );
+    //     })
+    //   );
   };
 
   return (
