@@ -109,6 +109,11 @@
     font-size: 20px;
     height: 40px;
   }
+  &.ready {
+    background-color: rgb(190, 236, 190);
+    color: white;
+  }
+
   &.reply-button {
     &:hover {
       transform: translateY(-2px);
