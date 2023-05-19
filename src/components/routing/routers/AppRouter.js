@@ -104,7 +104,7 @@ const AppRouter = () => {
             <UserStateGuard state="GROUPFORMING_HOST_LOBBY">
               <Lobby
                 groupState={"INGREDIENTENTERING"}
-                message={"Enjoy the event!"}
+                message={"Now it's time to check out your fridge and pantry! What would you like to contribute?"}
                 nextRoute={"/ingredients/:groupId"}
               />
             </UserStateGuard>
@@ -188,7 +188,7 @@ const AppRouter = () => {
               <Lobby
                 groupState={"FINAL"}
                 message={
-                  "You successfully submitted your preferences!Wait for the other members to vote...."
+                  "You successfully submitted your preferences! Wait for the other members to vote...."
                 }
                 nextRoute={`/ingredientsfinal/:groupId`}
               />

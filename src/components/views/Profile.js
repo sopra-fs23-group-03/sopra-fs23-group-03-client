@@ -176,7 +176,9 @@ const Profile = () => {
             <div className="profile sections">
               <div className="profile preferences">
                 <div className="profile titles">Allergies</div>
+                <div className="profile items">
                 {user && user.allergies && user.allergies.filter(Boolean).map((allergy) => (<div className="profile item" key={allergy}> {allergy} </div>))}
+                </div>
               </div>
 
               <div className="profile preferences">
