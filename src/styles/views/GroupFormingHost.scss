@@ -288,7 +288,6 @@
     margin-top: 30px;
     margin-bottom: 0px;
     //max-height: 280px;
-    overflow-y: auto;
   }
 
   .player {
@@ -325,5 +324,11 @@
       margin-left: 0.5em;
       font-size: 18px;
     }
+  }
+
+  &.list-box{
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
   }
 }

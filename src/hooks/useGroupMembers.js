@@ -21,15 +21,20 @@ const useGroupMembers = (groupId) => {
       } catch (error) {
         //if useGroupMembers(groupId); returns a 404 error, then the group does not exist and the user should be redirected to the dashboard
 
-        console.error(
-          `Something went wrong while fetching the group and its members: \n${handleError(
-            error
-          )}`
-        );
-        console.error("Details:", error);
-        alert(
-          "Something went wrong while fetching the group and its members! See the console for details."
-        );
+        if (error.response && error.response.status === 404) {
+          // Group not found
+          setGroupExists(false);
+          console.error(
+            `The group with id ${groupId} does not exist! Redirecting to dashboard...`
+          );
+        } else {
+          alert(
+            `Something went wrong while fetching the group and its members: \n${handleError(
+              error
+            )}`
+          );
+          console.error("Details:", error);
+        }
       }
     }
 
