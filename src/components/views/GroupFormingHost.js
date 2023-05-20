@@ -206,17 +206,18 @@ const GroupFormingHost = () => {
                 </div>
                 <div className="groupforming buttons">
                   <button
-                    className="groupforming cancel-button"
+                    className={`groupforming general-button ${
+                      Object.values(guestReadyStatus).some(
+                        (value) => value === true
+                      )
+                        ? "disabled-button"
+                        : ""
+                    }`}
                     width="24%"
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          "Deleting the group will cancel the event for all guests. Are you sure you want to proceed? This action cannot be undone."
-                        )
-                      ) {
-                        handleDelete();
-                      }
-                    }}
+                    onClick={handleDelete}
+                    disabled={Object.values(guestReadyStatus).some(
+                      (value) => value === true
+                    )}
                   >
                     Delete Group
                   </button>
