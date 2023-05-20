@@ -43,6 +43,24 @@ const Final = () => {
 
   const { group, users } = useGroupMembers(groupId);
 
+  const handleContinue = async () => {
+    try {
+      await api.put(`/users/${user.id}/${groupId}/ready`, null, {
+        headers,
+      });
+      localStorage.removeItem("groupId");
+      setUser({
+        ...user,
+        groupState: "NOGROUP",
+        groupId: null,
+      });
+
+      history.push("/dashboard");
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -169,12 +187,9 @@ const Final = () => {
                   className="final button"
                   onClick={() => {
                     // make the user groupState in the user context "NOGROUP"
-                    setUser({ ...user, groupState: "NOGROUP" });
-                    history.push(`/dashboard`);
-                    localStorage.removeItem("groupId");
+                    handleContinue(groupId, user.id);
                   }}
                 >
-
                   Back to home page
                 </button>
               </div>

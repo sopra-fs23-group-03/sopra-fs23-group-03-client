@@ -50,8 +50,8 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
       const response = await api.get(`/ingredients?initialString=${text}`, {
         headers,
       });
-      setAllIngredients(response.data);
-      setSuggestions(allIngredients);
+      //setAllIngredients(response.data);
+      setSuggestions(response.data);
     } catch (error) {
       console.error(
         `Something went wrong while fetching ingredients: \n${error}`

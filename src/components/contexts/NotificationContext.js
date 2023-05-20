@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { api } from "helpers/api";
 import AuthContext from "components/contexts/AuthContext";
+import UserContext from "./UserContext";
 
 export const NotificationContext = createContext();
 
@@ -14,30 +15,28 @@ export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const [hasNewNotifications, setHasNewNotifications] = useState(false);
   const { isLoggedIn } = useContext(AuthContext);
-  const groupId = localStorage.getItem("groupId");
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      if (isLoggedIn && groupId === null) {
-        if (isLoggedIn) {
-          const userId = localStorage.getItem("userId");
-          const headers = { "X-Token": localStorage.getItem("token") };
+      if (isLoggedIn && user.groupState === "NOGROUP") {
+        const userId = localStorage.getItem("userId");
+        const headers = { "X-Token": localStorage.getItem("token") };
 
-          try {
-            const response = await api.get(`/users/${userId}/invitations`, {
-              headers,
-            });
-            const data = response.data;
-            if (data.length > 0) {
-              setHasNewNotifications(true);
-              setNotifications(data);
-            } else {
-              setHasNewNotifications(false);
-              setNotifications([]);
-            }
-          } catch (error) {
-            console.error(error);
+        try {
+          const response = await api.get(`/users/${userId}/invitations`, {
+            headers,
+          });
+          const data = response.data;
+          if (data.length > 0) {
+            setHasNewNotifications(true);
+            setNotifications(data);
+          } else {
+            setHasNewNotifications(false);
+            setNotifications([]);
           }
+        } catch (error) {
+          console.error(error);
         }
       }
     };
