@@ -42,6 +42,7 @@ const Dashboard = () => {
     // Perform any necessary actions
     localStorage.setItem("groupId", userGroupId);
     setUser({ ...user, groupState: "GROUPFORMING_GUEST" });
+    //localStorage.removeItem("joinRequests");
     history.push(`/groupforming/${userGroupId}/guest`);
 
     // Close the confirmation modal
@@ -112,7 +113,7 @@ const Dashboard = () => {
         return () => clearInterval(membersInterval);
       });
     }
-  }, [groups]);
+  }, []);
 
   // Load joinRequests from localStorage on component mount
   useEffect(() => {

@@ -83,15 +83,12 @@ const GroupCreation = () => {
         setUsers(response.data);
 
       } catch (error) {
-        console.error(
+        alert(
           `Something went wrong while fetching the users: \n${handleError(
             error
           )}`
         );
         console.error("Details:", error);
-        alert(
-          "Something went wrong while fetching the users! See the console for details."
-        );
       }
       console.log(invitedUsers, groupName);
     }

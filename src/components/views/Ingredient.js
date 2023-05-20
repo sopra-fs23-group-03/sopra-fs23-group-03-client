@@ -46,32 +46,31 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
   const [allIngredients, setAllIngredients] = useState([]);
 
   const fetchIngredients = async (text) => {
-    if (text.length === 3) {
-      try {
-        const response = await api.get(`/ingredients?initialString=${text}`, {
-          headers,
-        });
-        setAllIngredients(response.data);
-      } catch (error) {
-        console.error(
-          `Something went wrong while fetching ingredients: \n${error}`
-        );
-        alert(
-          "Something went wrong while fetching ingredients! See the console for details."
-        );
-      }
+    try {
+      const response = await api.get(`/ingredients?initialString=${text}`, {
+        headers,
+      });
+      //setAllIngredients(response.data);
+      setSuggestions(response.data);
+    } catch (error) {
+      console.error(
+        `Something went wrong while fetching ingredients: \n${error}`
+      );
+      alert(
+        "Something went wrong while fetching ingredients! See the console for details."
+      );
     }
 
-    setSuggestions(
-      allIngredients.filter((ingredient) => {
-        return (
-          ingredient.toLowerCase().startsWith(text.toLowerCase()) &&
-          !tasks.some(
-            (task) => task.text.toLowerCase() === ingredient.toLowerCase()
-          )
-        );
-      })
-    );
+    //   setSuggestions(
+    //     allIngredients.filter((ingredient) => {
+    //       return (
+    //         ingredient.toLowerCase().startsWith(text.toLowerCase()) &&
+    //         !tasks.some(
+    //           (task) => task.text.toLowerCase() === ingredient.toLowerCase()
+    //         )
+    //       );
+    //     })
+    //   );
   };
 
   return (

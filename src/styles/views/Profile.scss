@@ -51,6 +51,12 @@
     min-height: 300px;
   }
 
+  &.items {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
   &.item {
     text-align: left;
     width: 80%;

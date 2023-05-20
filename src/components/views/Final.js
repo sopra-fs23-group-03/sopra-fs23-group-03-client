@@ -43,6 +43,24 @@ const Final = () => {
 
   const { group, users } = useGroupMembers(groupId);
 
+  const handleContinue = async () => {
+    try {
+      await api.put(`/users/${user.id}/${groupId}/ready`, null, {
+        headers,
+      });
+      localStorage.removeItem("groupId");
+      setUser({
+        ...user,
+        groupState: "NOGROUP",
+        groupId: null,
+      });
+
+      history.push("/dashboard");
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -55,7 +73,7 @@ const Final = () => {
       } catch (error) {
         alert(
           `Something went wrong while fetching the recipe: \n${
-            handleError(error).info
+            handleError(error)
           }`
         );
         console.error("Details:", error);
@@ -105,7 +123,7 @@ const Final = () => {
             <BaseContainer>
               <div className="final form">
                 <div className="final main">
-                  <i className="final icon">sentiment_satisfied</i>
+                  <i className="final icon happy">sentiment_satisfied</i>
                   <div className="final title">Everything is set!</div>
                 </div>
                 <div className="final bottom">
@@ -169,12 +187,9 @@ const Final = () => {
                   className="final button"
                   onClick={() => {
                     // make the user groupState in the user context "NOGROUP"
-                    setUser({ ...user, groupState: "NOGROUP" });
-                    history.push(`/dashboard`);
-                    localStorage.removeItem("groupId");
+                    handleContinue(groupId, user.id);
                   }}
                 >
-
                   Back to home page
                 </button>
               </div>
@@ -187,8 +202,6 @@ const Final = () => {
           <div className="modal">
             <div className="modal-form">
               <i className="final icon clickable" onClick={hideInstructions}>close</i>
-              <div  className="modal-text" dangerouslySetInnerHTML={{__html: `${recipes[0].instructions}`}} />
-
               <div  className="modal-text" dangerouslySetInnerHTML={{__html: `${recipes[0].instructions}`}} />
             </div>
           </div>

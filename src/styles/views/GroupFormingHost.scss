@@ -110,6 +110,11 @@
     font-size: 20px;
     height: 40px;
   }
+  &.ready {
+    background-color: rgb(190, 236, 190);
+    color: white;
+  }
+
   &.reply-button {
     &:hover {
       transform: translateY(-2px);
@@ -292,12 +297,13 @@
       flex-direction: row;
       max-width: 10em;
       padding: 1px;
-      margin: 0.5em 0;
+      margin: 5px;
       border-radius: $borderRadius;
       align-items: center;
 
       color: #000000;
       box-shadow: none;
+      min-height: 23px;
       //font-size: 1em;
     }
     .person-icon {

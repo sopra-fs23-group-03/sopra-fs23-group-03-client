@@ -3,8 +3,9 @@
     border: 1px solid #e1e1e1;
     position: relative;
     border-radius: 5px;
-    height: 35px;
+    height: fit-content;
     background-color: #ededed;
+    padding: 5px;
   }
   
   .multidropdown-input {
@@ -15,7 +16,7 @@
     justify-content: space-between;
     user-select: none;
     color: #333333;
-    height: 35px;
+    height: fit-content;
     white-space: nowrap;
   }
   

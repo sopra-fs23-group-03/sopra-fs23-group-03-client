@@ -14,6 +14,7 @@ const GroupFormingHost = () => {
   const { groupId } = useParams();
   const { group, users } = useGroupMembers(groupId);
   const { user, setUser } = useContext(UserContext);
+  const [guestReadyStatus, setGuestReadyStatus] = useState({});
   console.log("user state:", user.groupState);
 
   const [joinRequests, setJoinRequests] = useState([]);
@@ -22,14 +23,37 @@ const GroupFormingHost = () => {
   }, []);
 
   const handleDelete = async () => {
+    if (Object.values(guestReadyStatus).includes(true)) {
+      // If any user is ready, do not proceed with the deletion
+      alert("Cannot delete group while users are ready!");
+    }
     try {
       await api.delete(`/groups/${groupId}`, { headers });
       // make the groupstate=="NOGROUP" in the user context:
       setUser({ ...user, groupState: "NOGROUP", groupId: null });
+      localStorage.removeItem("groupId");
       history.push("/dashboard");
     } catch (error) {
       handleError(error);
     }
+  };
+
+  const fetchReady = async () => {
+    try {
+      console.log("user id: ", user.id);
+
+      const response = await api.get(`/groups/${groupId}/members/ready`, {
+        headers,
+      });
+
+      setGuestReadyStatus(response.data);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  const isGuestReady = (guestId) => {
+    return guestReadyStatus[guestId] === true;
   };
 
   const fetchRequests = async () => {
@@ -45,7 +69,7 @@ const GroupFormingHost = () => {
 
   useEffect(() => {
     fetchRequests();
-
+    fetchReady();
     // Poll for requests every 5 seconds
     const interval = setInterval(fetchRequests, 5000);
 
@@ -84,13 +108,12 @@ const GroupFormingHost = () => {
 
   const handleContinue = async () => {
     try {
-      const newState = "INGREDIENTENTERING";
-      await api.put(`/groups/${groupId}/state`, newState, { headers });
-      const response = await api.get(`/groups/${groupId}/state`, { headers });
-      console.log("API response:", response);
+      await api.put(`/users/${user.id}/${groupId}/ready`, null, {
+        headers,
+      });
+
       setUser({ ...user, groupState: "GROUPFORMING_HOST_LOBBY" });
       history.push("/groupforming/host/lobby");
-      //history.push(`/ingredients/${groupId}`);
     } catch (error) {
       handleError(error);
     }
@@ -126,7 +149,9 @@ const GroupFormingHost = () => {
                       {users &&
                         users.map((member) => (
                           <div
-                            className="groupforming group-join-request"
+                            className={`groupforming group-join-request ${
+                              isGuestReady(member.id) ? "ready" : ""
+                            }`}
                             key={member.username}
                           >
                             <span className="groupforming player username">

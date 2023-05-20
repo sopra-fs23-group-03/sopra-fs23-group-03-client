@@ -27,6 +27,21 @@ const IngredientsFinal = () => {
 
   const [finalIngredients, setFinalIngredients] = useState([]);
 
+  const handleContinue = async (groupId, userId) => {
+    try {
+      await api.put(`/users/${user.id}/${groupId}/ready`, null, {
+        headers,
+      });
+
+      setUser({ ...user, groupState: "FINAL_LOBBY" });
+      console.log("user state: " + user.groupState);
+      history.push(`/final/lobby`);
+      // history.push(`/recipe/${groupId}`);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   const votes = {};
 
   useEffect(() => {
@@ -49,15 +64,12 @@ const IngredientsFinal = () => {
 
         setFinalIngredients(finalIngredientsResponse.data);
       } catch (error) {
-        console.error(
+        alert(
           `Something went wrong while fetching the group and its members: \n${handleError(
             error
           )}`
         );
         console.error("Details:", error);
-        alert(
-          "Something went wrong while fetching the group and its members! See the console for details."
-        );
       }
     }
 
@@ -129,9 +141,7 @@ const IngredientsFinal = () => {
                   className="groupforming general-button"
                   width="24%"
                   onClick={() => {
-                    setUser({ ...user, groupState: "RECIPE" });
-                    console.log("user state: " + user.groupState);
-                    history.push(`/recipe/${groupId}`);
+                    handleContinue(groupId, user.id);
                   }}
                 >
                   Continue
