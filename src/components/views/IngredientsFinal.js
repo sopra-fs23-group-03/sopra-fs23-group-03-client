@@ -120,7 +120,10 @@ const IngredientsFinal = () => {
                       Final ingredients{" "}
                     </div>
                     <div className="ingredientsvoting ingredients">
-                      {finalIngredients &&
+                      {finalIngredients && finalIngredients.length === 0 &&
+                      <div className="ingredientsvoting text">All the ingredients have been voted out! You’ll now get a recipe with respect to your allergies and excluding your outvoted ingredients.</div>}
+
+                      {finalIngredients && finalIngredients.length !== 0 &&
                         finalIngredients.map((ingredient) => (
                           <div
                             className="ingredientsvoting item"
