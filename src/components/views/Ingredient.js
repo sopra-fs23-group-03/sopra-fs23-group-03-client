@@ -179,17 +179,14 @@ const Ingredient = () => {
       const formattedIngredients = ingredients.map((ingredient) => {
         return { name: ingredient.name };
       });
-      await api.put(`/user/${userId}/ingredients`, formattedIngredients, {
+      await api.put(`/users/${userId}/ingredients`, formattedIngredients, {
         headers,
       });
       setUser({ ...user, groupState: "INGREDIENTENTERING_LOBBY" });
       history.push(`/ingredients/lobby`);
     } catch (error) {
-      console.error(
-        `Something went wrong while updating user ingredients: \n${error}`
-      );
       alert(
-        "Something went wrong while updating user ingredients! See the console for details."
+        `Something went wrong while updating user ingredients: \n${error}`
       );
     }
   };
