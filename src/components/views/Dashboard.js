@@ -42,6 +42,7 @@ const Dashboard = () => {
     // Perform any necessary actions
     localStorage.setItem("groupId", userGroupId);
     setUser({ ...user, groupState: "GROUPFORMING_GUEST" });
+    //localStorage.removeItem("joinRequests");
     history.push(`/groupforming/${userGroupId}/guest`);
 
     // Close the confirmation modal
@@ -91,17 +92,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchUsers();
-    const usersInterval = setInterval(fetchUsers, 5000);
-    return () => clearInterval(usersInterval);
-  }, []);
-
-  useEffect(() => {
     fetchGroups();
+    const usersInterval = setInterval(fetchUsers, 5000);
     const groupsInterval = setInterval(fetchGroups, 10000);
-    return () => clearInterval(groupsInterval);
-  }, []);
 
-  useEffect(() => {
     if (groups) {
       groups.forEach((group) => {
         fetchGroupMembers(group.id);
@@ -109,10 +103,15 @@ const Dashboard = () => {
           () => fetchGroupMembers(group.id),
           10000
         );
-        return () => clearInterval(membersInterval);
+
+        return () => {
+          clearInterval(usersInterval);
+          clearInterval(groupsInterval);
+          clearInterval(membersInterval);
+        };
       });
     }
-  }, [groups]);
+  }, []);
 
   // Load joinRequests from localStorage on component mount
   useEffect(() => {
@@ -195,112 +194,118 @@ const Dashboard = () => {
       }
     };
 
-    content = (
-      <div className="game main-container">
-        <div className=" game sidebar">
-          <Button
-            className="game sidebar-buttons"
-            onClick={() => history.push("/group-creation")}
-          >
-            <i className="material-icons">groups</i> &nbsp; Form Group &nbsp;
-          </Button>
+    // if there are users display the content
+    if (users.length) {
+      content = (
+        <div className="game main-container">
+          <div className=" game sidebar">
+            <Button
+              className="game sidebar-buttons"
+              onClick={() => history.push("/group-creation")}
+            >
+              <i className="material-icons">groups</i> &nbsp; Form Group &nbsp;
+            </Button>
 
-          <Button
-            className="game sidebar-buttons"
-            onClick={() => history.push("/solo")}
-          >
-            <i className="material-icons">person</i>
-            &nbsp; Go Solo &nbsp;
-          </Button>
+            <Button
+              className="game sidebar-buttons"
+              onClick={() => history.push("/solo")}
+            >
+              <i className="material-icons">person</i>
+              &nbsp; Go Solo &nbsp;
+            </Button>
 
-          <ul className="game user-list">
-            <ul className="game user-list-title">
-              <i className="material-icons">group</i>
-              &nbsp; Users &nbsp;
+            <ul className="game user-list">
+              <ul className="game user-list-title">
+                <i className="material-icons">group</i>
+                &nbsp; Users &nbsp;
+              </ul>
+              {users.sort(sortUsersByStatus).map((user) => (
+                <Button
+                  className={`player container ${user.status.toLowerCase()}`}
+                  key={user.id}
+                  onClick={() => history.push(`/profile/${user.id}`)}
+                >
+                  <div className="status-circle" />
+
+                  {user.username}
+                </Button>
+              ))}
             </ul>
-            {users.sort(sortUsersByStatus).map((user) => (
-              <Button
-                className={`player container ${user.status.toLowerCase()}`}
-                key={user.id}
-                onClick={() => history.push(`/profile/${user.id}`)}
-              >
-                <div className="status-circle" />
-
-                {user.username}
-              </Button>
-            ))}
-          </ul>
-        </div>
-
-        <div className=" game  group-container">
-          <h2>Groups</h2>
-
-          <div className="game group-container-labels">
-            <label className="game label-text">Group</label>
-            <label className="game label-text">Host</label>
-            <label className="game label-text">Guests</label>
           </div>
 
-          <div className="game group">
-            {groups ? (
-              groups.map((group) => (
-                <ul className="game group-list" key={group.id}>
-                  <li className="game group-text">{group.groupName}</li>
-                  <li className="game host-text">{group.hostName}</li>
-                  <ul className="game group-members">
-                    {members[group.id] &&
-                      (members[group.id].length > 0 ? (
-                        members[group.id].map((member) => (
-                          <li className="game player username" key={member.id}>
-                            {member.username}
-                          </li>
-                        ))
+          <div className=" game  group-container">
+            <h2>Groups</h2>
+
+            <div className="game group-container-labels">
+              <label className="game label-text">Group</label>
+              <label className="game label-text">Host</label>
+              <label className="game label-text">Guests</label>
+            </div>
+
+            <div className="game group">
+              {groups ? (
+                groups.map((group) => (
+                  <ul className="game group-list" key={group.id}>
+                    <li className="game group-text">{group.groupName}</li>
+                    <li className="game host-text">{group.hostName}</li>
+                    <ul className="game group-members">
+                      {members[group.id] &&
+                        (members[group.id].length > 0 ? (
+                          members[group.id].map((member) => (
+                            <li
+                              className="game player username"
+                              key={member.id}
+                            >
+                              {member.username}
+                            </li>
+                          ))
+                        ) : (
+                          <li className="game no-members">No members yet</li>
+                        ))}
+                    </ul>
+                    <button
+                      className={`game join-group-button ${
+                        joinRequests[group.id] ? "requested" : ""
+                      }`}
+                      onClick={() => SendJoinRequest(group.id)}
+                      disabled={
+                        group.groupState !== "GROUPFORMING" ||
+                        joinRequests[group.id]
+                      }
+                    >
+                      {joinRequests[group.id] ? (
+                        <i className="material-icons done-icon">done</i>
                       ) : (
-                        <li className="game no-members">No members yet</li>
-                      ))}
+                        <span>Join</span>
+                      )}
+                    </button>
                   </ul>
-                  <button
-                    className={`game join-group-button ${
-                      joinRequests[group.id] ? "requested" : ""
-                    }`}
-                    onClick={() => SendJoinRequest(group.id)}
-                    disabled={
-                      group.groupState !== "GROUPFORMING" ||
-                      joinRequests[group.id]
-                    }
-                  >
-                    {joinRequests[group.id] ? (
-                      <i className="material-icons done-icon">done</i>
-                    ) : (
-                      <span>Join</span>
-                    )}
-                  </button>
-                </ul>
-              ))
-            ) : (
-              <div className="game group ">
-                <h3>No Groups Yet</h3>
-              </div>
-            )}
+                ))
+              ) : (
+                <div className="game group ">
+                  <h3>No Groups Yet</h3>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      );
+    }
+    return (
+      <AppContainer>
+        <div className="game container">
+          {content}
+
+          {showConfirmationModal && (
+            <ConfirmationModal
+              message="Your join request got accepted. You will be directed to the event."
+              onConfirm={() => handleConfirmation(userGroupId)}
+            />
+          )}
+        </div>
+      </AppContainer>
     );
   }
-  return (
-    <AppContainer>
-      <div className="game container">
-        {content}
-
-        {showConfirmationModal && (
-          <ConfirmationModal
-            message="Your join request got accepted. You will be directed to the event."
-            onConfirm={() => handleConfirmation(userGroupId)}
-          />
-        )}
-      </div>
-    </AppContainer>
-  );
 };
 
 export default Dashboard;

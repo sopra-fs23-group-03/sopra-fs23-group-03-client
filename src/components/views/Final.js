@@ -43,6 +43,24 @@ const Final = () => {
 
   const { group, users } = useGroupMembers(groupId);
 
+  const handleContinue = async () => {
+    try {
+      await api.put(`/users/${user.id}/${groupId}/ready`, null, {
+        headers,
+      });
+      localStorage.removeItem("groupId");
+      setUser({
+        ...user,
+        groupState: "NOGROUP",
+        groupId: null,
+      });
+
+      history.push("/dashboard");
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -52,6 +70,11 @@ const Final = () => {
 
         // Get the returned users and update the state.
         setRecipes(recipesResponse.data);
+        
+        if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
+          alert("All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!")
+        }
+
       } catch (error) {
         alert(
           `Something went wrong while fetching the recipe: \n${
@@ -81,7 +104,7 @@ const Final = () => {
             <div className="groupforming sidebar">
               <div className="groupforming sidebar-buttons">
                 <i className="ingredientsvoting icon"> location_home </i> &nbsp;
-                Host: {group.hostName} &nbsp;
+                Host: {group?.hostName} &nbsp;
               </div>
               <div className="groupforming sidebar-buttons">
                 <i className="ingredientsvoting icon majority">bar_chart</i>{" "}
@@ -92,7 +115,7 @@ const Final = () => {
                   <i className="material-icons">people_outline</i>
                   &nbsp; Guests &nbsp;
                 </h3>
-                {users.map((user) => (
+                {users?.map((user) => (
                   <div
                     className={`player container ${user.status.toLowerCase()}`}
                     key={user.id}
@@ -112,14 +135,14 @@ const Final = () => {
                   <img
                     className="final img"
                     alt="recipe"
-                    src={recipes[0].image}
+                    src={recipes[0]?.image}
                   />
                   <div className="final section">
-                    <InfoField label="Recipe" value={recipes[0].title} />
+                    <InfoField label="Recipe" value={recipes[0]?.title} />
 
                     <InfoField
                       label="Approx. time"
-                      value={(recipes[0].readyInMinutes + " minutes").replace(
+                      value={(recipes[0]?.readyInMinutes + " minutes").replace(
                         "null",
                         "'"
                       )}
@@ -138,43 +161,57 @@ const Final = () => {
                     ></InfoField>
                   </div>
                 </div>
-
+                {!recipes[0]?.usedIngredients.length === 0 &&
                 <div className="final bottom">
+                  
                   <div className="final ingredients">
                     <div className="final ingredients-title">
                       <i className="final icon">kitchen</i>
                       <h3 className="final label"> Bring from home </h3>
                     </div>
-                    <ul class="list">
-                      {recipes[0].usedIngredients.map((ingredient) => (
-                        <li>{ingredient}</li>
-                      ))}
+                    <ul className="list">
+                    {recipes[0]?.usedIngredients.map((ingredient, index) => (
+                      <li key={index}>{ingredient}</li>
+                    ))}
                     </ul>
                   </div>
+                  
 
                   <div className="final ingredients">
                     <div className="final ingredients-title">
                       <i className="final icon">shopping_cart</i>
                       <h3 className="final label"> Shopping list </h3>
                     </div>
-                    <ul class="list">
-                      {recipes[0].missedIngredients.map((ingredient) => (
-                        <li>{ingredient}</li>
-                      ))}
+                    <ul className="list">
+                    {recipes[0]?.missedIngredients.map((ingredient, index) => (
+                      <li key={index}>{ingredient}</li>
+                    ))}
                     </ul>
                   </div>
                 </div>
+                }
+
+                {recipes[0]?.usedIngredients.length === 0 && 
+                  <div className="final ingredients solo">
+                    <div className="final ingredients-title">
+                      <i className="final icon">shopping_cart</i>
+                      <h3 className="final label"> Shopping list </h3>
+                    </div>
+                    <ul className="list solo">
+                    {recipes[0]?.missedIngredients.map((ingredient, index) => (
+                      <li key={index}>{ingredient}</li>
+                    ))}
+                    </ul>
+                  </div>
+                }
 
                 <button
                   className="final button"
                   onClick={() => {
                     // make the user groupState in the user context "NOGROUP"
-                    setUser({ ...user, groupState: "NOGROUP" });
-                    history.push(`/dashboard`);
-                    localStorage.removeItem("groupId");
+                    handleContinue(groupId, user.id);
                   }}
                 >
-
                   Back to home page
                 </button>
               </div>
@@ -187,7 +224,7 @@ const Final = () => {
           <div className="modal">
             <div className="modal-form">
               <i className="final icon clickable" onClick={hideInstructions}>close</i>
-              <div  className="modal-text" dangerouslySetInnerHTML={{__html: `${recipes[0].instructions}`}} />
+              <div  className="modal-text" dangerouslySetInnerHTML={{__html: `${recipes[0]?.instructions}`}} />
             </div>
           </div>
 

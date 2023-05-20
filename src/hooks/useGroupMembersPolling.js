@@ -8,6 +8,7 @@ const useGroupMembers = (groupId) => {
 
   const [group, setGroup] = useState(null);
   const [users, setUsers] = useState(null);
+  const [groupExists, setGroupExists] = useState(true); // Track if the group exists
 
   useEffect(() => {
     async function fetchData() {
@@ -18,9 +19,8 @@ const useGroupMembers = (groupId) => {
         });
         setGroup(groupResponse.data);
         setUsers(membersResponse.data || []);
+        setGroupExists(true); // Group exists
       } catch (error) {
-        //if useGroupMembers(groupId); returns a 404 error, then the group does not exist and the user should be redirected to the dashboard
-
         if (error.response && error.response.status === 404) {
           // Group not found
           setGroupExists(false);
@@ -38,10 +38,18 @@ const useGroupMembers = (groupId) => {
       }
     }
 
-    fetchData();
-  }, []);
+    fetchData(); // Call once on component mount
 
-  return { group, users };
+    const intervalId = setInterval(() => {
+      fetchData(); // Call again after the specified interval
+    }, 5000); // Poll every 5 seconds
+
+    return () => {
+      clearInterval(intervalId); // Clear the interval on component unmount
+    };
+  }, []); // Only run once on component mount
+
+  return { group, users, groupExists };
 };
 
 export default useGroupMembers;

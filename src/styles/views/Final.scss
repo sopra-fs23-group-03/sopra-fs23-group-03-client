@@ -119,6 +119,10 @@
     border-radius: 8px;
     padding: 0px 20px 5px 20px;
     height: 100%;
+
+    &.solo {
+      width: 85%;
+    }
   }
 
   &.bottom{
@@ -148,11 +152,19 @@
 
   .list {
     list-style-type: circle;
+    width: 100%;
     margin: 0px;
     display: flex;
     flex-direction: column;
     margin-top: -5px;
     overflow-y: auto;
+
+    &.solo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, auto);
+    grid-column-gap: 40px;
+    }
   }
 
 }

@@ -50,8 +50,8 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
       const response = await api.get(`/ingredients?initialString=${text}`, {
         headers,
       });
-      setAllIngredients(response.data);
-      setSuggestions(allIngredients);
+      //setAllIngredients(response.data);
+      setSuggestions(response.data);
     } catch (error) {
       console.error(
         `Something went wrong while fetching ingredients: \n${error}`
@@ -219,7 +219,7 @@ const Ingredient = () => {
               <i className="material-icons">people_outline</i>
               &nbsp; Guests &nbsp;
             </h3>
-
+            <div className="groupforming list-box">
             {users.map((user) => (
               <div
                 className={`player container ${user.status.toLowerCase()}`}
@@ -228,6 +228,7 @@ const Ingredient = () => {
                 {user.username}
               </div>
             ))}
+            </div>
           </ul>
 
           {allergies.length > 0 && (
@@ -236,12 +237,13 @@ const Ingredient = () => {
                 <i className="material-icons">no_food</i>
                 &nbsp; Allergies &nbsp;
               </h3>
-
+              <div className="groupforming list-box">
               {allergies.map((allergy) => (
                 <div className={`player container`} key={allergy.id}>
                   {allergy}
                 </div>
               ))}
+              </div>
             </ul>
           )}
         </div>

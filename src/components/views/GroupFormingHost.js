@@ -5,15 +5,16 @@ import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
 import { useParams } from "react-router-dom";
-import useGroupMembers from "hooks/useGroupMembers";
+import useGroupMembersPolling from "hooks/useGroupMembersPolling";
 import UserContext from "components/contexts/UserContext";
 import { useContext } from "react";
 
 const GroupFormingHost = () => {
   const history = useHistory();
   const { groupId } = useParams();
-  const { group, users } = useGroupMembers(groupId);
+  const { group, users } = useGroupMembersPolling(groupId);
   const { user, setUser } = useContext(UserContext);
+  const [guestReadyStatus, setGuestReadyStatus] = useState({});
   console.log("user state:", user.groupState);
 
   const [joinRequests, setJoinRequests] = useState([]);
@@ -22,15 +23,50 @@ const GroupFormingHost = () => {
   }, []);
 
   const handleDelete = async () => {
+    if (Object.values(guestReadyStatus).includes(true)) {
+      // If any user is ready, do not proceed with the deletion
+      alert("Cannot delete group while users are ready!");
+    }
     try {
       await api.delete(`/groups/${groupId}`, { headers });
       // make the groupstate=="NOGROUP" in the user context:
       setUser({ ...user, groupState: "NOGROUP", groupId: null });
+      localStorage.removeItem("groupId");
       history.push("/dashboard");
     } catch (error) {
       handleError(error);
     }
   };
+
+  const fetchReady = async () => {
+    try {
+      console.log("user id: ", user.id);
+
+      const response = await api.get(`/groups/${groupId}/members/ready`, {
+        headers,
+      });
+
+      setGuestReadyStatus(response.data);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  const isGuestReady = (guestId) => {
+    return guestReadyStatus[guestId] === true;
+  };
+
+  let allUsersReady = false;
+
+  if (users && users.length > 0) {
+    allUsersReady = true;
+    for (const user of users) {
+      if (!isGuestReady(user.id)) {
+        allUsersReady = false;
+        break;
+      }
+    }
+  }
 
   const fetchRequests = async () => {
     try {
@@ -45,13 +81,14 @@ const GroupFormingHost = () => {
 
   useEffect(() => {
     fetchRequests();
-
     // Poll for requests every 5 seconds
-    const interval = setInterval(fetchRequests, 5000);
+    const intervalRequests = setInterval(fetchRequests, 3000);
+    const intervalReady = setInterval(fetchReady, 1000);
 
     // Cleanup the interval on component unmount
     return () => {
-      clearInterval(interval);
+      clearInterval(intervalRequests);
+      clearInterval(intervalReady);
     };
   }, []);
 
@@ -84,13 +121,12 @@ const GroupFormingHost = () => {
 
   const handleContinue = async () => {
     try {
-      const newState = "INGREDIENTENTERING";
-      await api.put(`/groups/${groupId}/state`, newState, { headers });
-      const response = await api.get(`/groups/${groupId}/state`, { headers });
-      console.log("API response:", response);
+      await api.put(`/users/${user.id}/${groupId}/ready`, null, {
+        headers,
+      });
+
       setUser({ ...user, groupState: "GROUPFORMING_HOST_LOBBY" });
       history.push("/groupforming/host/lobby");
-      //history.push(`/ingredients/${groupId}`);
     } catch (error) {
       handleError(error);
     }
@@ -126,7 +162,9 @@ const GroupFormingHost = () => {
                       {users &&
                         users.map((member) => (
                           <div
-                            className="groupforming group-join-request"
+                            className={`groupforming group-join-request ${
+                              isGuestReady(member.id) ? "ready" : ""
+                            }`}
                             key={member.username}
                           >
                             <span className="groupforming player username">
@@ -168,28 +206,31 @@ const GroupFormingHost = () => {
                 </div>
                 <div className="groupforming buttons">
                   <button
-                    className="groupforming cancel-button"
+                    className={`groupforming general-button ${
+                      Object.values(guestReadyStatus).some(
+                        (value) => value === true
+                      )
+                        ? "disabled-button"
+                        : ""
+                    }`}
                     width="24%"
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          "Deleting the group will cancel the event for all guests. Are you sure you want to proceed? This action cannot be undone."
-                        )
-                      ) {
-                        handleDelete();
-                      }
-                    }}
+                    onClick={handleDelete}
+                    disabled={Object.values(guestReadyStatus).some(
+                      (value) => value === true
+                    )}
                   >
                     Delete Group
                   </button>
                   <button
                     className="groupforming general-button"
                     width="24%"
-                    // disable the button continue if there are no guests in the group
-                    onClick={() => {
-                      handleContinue();
+                    onClick={handleContinue}
+                    disabled={!allUsersReady} // Step 3: Disable the button if not all users are ready
+                    onMouseOver={() => {
+                      if (!allUsersReady) {
+                        alert("Cannot continue until all guests are ready!"); // Step 4: Show a tooltip or message when the host hovers over the disabled button
+                      }
                     }}
-                    disabled={users.length == 0}
                   >
                     Continue
                   </button>

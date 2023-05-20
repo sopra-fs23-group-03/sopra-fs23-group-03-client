@@ -54,6 +54,8 @@ const UserStateGuard = ({ children, state }) => {
             to={`/ingredientsfinal/${localStorage.getItem("groupId")}`}
           />
         );
+      case "FINAL_LOBBY":
+        return <Redirect to={`/final/lobby`} />;
       case "RECIPE":
         return <Redirect to={`/recipe/${localStorage.getItem("groupId")}`} />;
 
@@ -81,6 +83,7 @@ UserStateGuard.propTypes = {
     "INGREDIENTVOTING",
     "INGREDIENTVOTING_LOBBY",
     "FINAL",
+    "FINAL_LOBBY",
     "RECIPE",
   ]).isRequired,
 };
