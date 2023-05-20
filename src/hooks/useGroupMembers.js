@@ -8,6 +8,7 @@ const useGroupMembers = (groupId) => {
 
   const [group, setGroup] = useState(null);
   const [users, setUsers] = useState(null);
+  const [groupExists, setGroupExists] = useState(true); // Track if the group exists
 
   useEffect(() => {
     async function fetchData() {
