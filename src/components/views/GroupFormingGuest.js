@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
 import useInvitationActions from "hooks/useInvitationActions";
-import useGroupMembers from "hooks/useGroupMembers";
+import useGroupMembersPolling from "hooks/useGroupMembersPolling";
 import { useContext } from "react";
 import UserContext from "components/contexts/UserContext";
 import ConfirmationModal from "components/ui/ConfirmationModal";
@@ -16,7 +16,7 @@ import ConfirmationModal from "components/ui/ConfirmationModal";
 const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
   const history = useHistory();
   const { groupId } = useParams();
-  const { group, users, groupExists } = useGroupMembers(groupId);
+  const { group, users, groupExists } = useGroupMembersPolling(groupId);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const handleConfirmation = () => {
     // Perform any necessary actions

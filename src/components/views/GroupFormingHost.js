@@ -5,14 +5,14 @@ import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/GroupFormingHost.scss";
 import AppContainer from "components/ui/AppContainer";
 import { useParams } from "react-router-dom";
-import useGroupMembers from "hooks/useGroupMembers";
+import useGroupMembersPolling from "hooks/useGroupMembersPolling";
 import UserContext from "components/contexts/UserContext";
 import { useContext } from "react";
 
 const GroupFormingHost = () => {
   const history = useHistory();
   const { groupId } = useParams();
-  const { group, users } = useGroupMembers(groupId);
+  const { group, users } = useGroupMembersPolling(groupId);
   const { user, setUser } = useContext(UserContext);
   const [guestReadyStatus, setGuestReadyStatus] = useState({});
   console.log("user state:", user.groupState);
@@ -56,6 +56,18 @@ const GroupFormingHost = () => {
     return guestReadyStatus[guestId] === true;
   };
 
+  let allUsersReady = false;
+
+  if (users && users.length > 0) {
+    allUsersReady = true;
+    for (const user of users) {
+      if (!isGuestReady(user.id)) {
+        allUsersReady = false;
+        break;
+      }
+    }
+  }
+
   const fetchRequests = async () => {
     try {
       const response = await api.get(`/groups/${groupId}/requests`, {
@@ -69,13 +81,14 @@ const GroupFormingHost = () => {
 
   useEffect(() => {
     fetchRequests();
-    fetchReady();
     // Poll for requests every 5 seconds
-    const interval = setInterval(fetchRequests, 5000);
+    const intervalRequests = setInterval(fetchRequests, 3000);
+    const intervalReady = setInterval(fetchReady, 1000);
 
     // Cleanup the interval on component unmount
     return () => {
-      clearInterval(interval);
+      clearInterval(intervalRequests);
+      clearInterval(intervalReady);
     };
   }, []);
 
@@ -210,11 +223,13 @@ const GroupFormingHost = () => {
                   <button
                     className="groupforming general-button"
                     width="24%"
-                    // disable the button continue if there are no guests in the group
-                    onClick={() => {
-                      handleContinue();
+                    onClick={handleContinue}
+                    disabled={!allUsersReady} // Step 3: Disable the button if not all users are ready
+                    onMouseOver={() => {
+                      if (!allUsersReady) {
+                        alert("Cannot continue until all guests are ready!"); // Step 4: Show a tooltip or message when the host hovers over the disabled button
+                      }
                     }}
-                    disabled={users.length == 0}
                   >
                     Continue
                   </button>
