@@ -199,15 +199,16 @@ const Dashboard = () => {
     content = (
       <div className="game main-container">
         <div className=" game sidebar">
+          <div className="game welcome">CollaborEat helps you find a suitable dish for your next planned meal. Start with creating/joining a group or go solo!</div>
           <Button
-            className="game sidebar-buttons"
+            className="game sidebar-buttons create-group"
             onClick={() => history.push("/group-creation")}
           >
             <i className="material-icons">groups</i> &nbsp; Form Group &nbsp;
           </Button>
 
           <Button
-            className="game sidebar-buttons"
+            className="game sidebar-buttons solo"
             onClick={() => history.push("/solo")}
           >
             <i className="material-icons">person</i>
@@ -219,6 +220,7 @@ const Dashboard = () => {
               <i className="material-icons">group</i>
               &nbsp; Users &nbsp;
             </ul>
+            <div className="game users">
             {users.sort(sortUsersByStatus).map((user) => (
               <Button
                 className={`player container ${user.status.toLowerCase()}`}
@@ -230,6 +232,7 @@ const Dashboard = () => {
                 {user.username}
               </Button>
             ))}
+            </div>
           </ul>
         </div>
 
