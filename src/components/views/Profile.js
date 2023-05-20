@@ -119,10 +119,10 @@ const Profile = () => {
       const requestBody = JSON.stringify({ username : username, specialDiet : diet, password : newPassword, currentPassword : currentPassword, allergies : allergies, favoriteCuisine : cuisine });
       await api.put(`/users/${userId}`, requestBody, { headers });
       window.location.reload();
-      //history.push(`/profile/${userId}`);
+
     } catch (error) {
       alert(
-        `Something went wrong while updating the profile: \n${handleError(error).info
+        `Something went wrong while updating the profile: \n${handleError(error)
         }`
       );
     }
@@ -176,12 +176,16 @@ const Profile = () => {
             <div className="profile sections">
               <div className="profile preferences">
                 <div className="profile titles">Allergies</div>
+                <div className="profile items">
                 {user && user.allergies && user.allergies.filter(Boolean).map((allergy) => (<div className="profile item" key={allergy}> {allergy} </div>))}
+                </div>
               </div>
 
               <div className="profile preferences">
                 <div className="profile titles">Favourite cuisines</div>
+                <div className="profile items">
                 {user && user.favoriteCuisine && user.favoriteCuisine.filter(Boolean).map((cuisine) => (<div className="profile item" key={cuisine}> {cuisine} </div>))}
+                </div>
               </div>
             </div>
           )}

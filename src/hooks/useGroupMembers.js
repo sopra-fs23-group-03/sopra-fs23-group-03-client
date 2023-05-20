@@ -72,6 +72,7 @@ const useGroupMembers = (groupId) => {
         setUsers(membersResponse.data || []);
         setGroupExists(true); // Group exists
       } catch (error) {
+
         if (error.response && error.response.status === 404) {
           // Group not found
           setGroupExists(false);
@@ -79,16 +80,15 @@ const useGroupMembers = (groupId) => {
             `The group with id ${groupId} does not exist! Redirecting to dashboard...`
           );
         } else {
-          console.error(
+          alert(
             `Something went wrong while fetching the group and its members: \n${handleError(
               error
             )}`
           );
           console.error("Details:", error);
-          alert(
-            "Something went wrong while fetching the group and its members! See the console for details."
           );
         }
+
       }
     }
 

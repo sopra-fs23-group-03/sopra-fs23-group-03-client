@@ -45,11 +45,8 @@ const ToDoList = ({ ingredients, setIngredients, onIngredientSelect }) => {
       });
       setSuggestions(response.data);
     } catch (error) {
-      console.error(
-        `Something went wrong while fetching ingredients: \n${error}`
-      );
       alert(
-        "Something went wrong while fetching ingredients! See the console for details."
+        `Something went wrong while fetching ingredients: \n${error}`
       );
     }
   };

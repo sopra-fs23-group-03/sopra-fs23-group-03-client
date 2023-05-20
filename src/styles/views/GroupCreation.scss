@@ -68,6 +68,13 @@
     margin-top: 20px;
   }
 
+  &.no-users{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45%;
+  }
+
   &.button {
     background-color: #c3c3c3;
     color: #ffffff;
@@ -111,49 +118,64 @@
     width: 48%;
     height: 45px;
     border-radius: 32px;
-    cursor: pointer;
     border: 0px;
     background-color: #c3c3c3;
     color: #ffffff;
     font-style: normal;
     font-weight: 500;
     font-size: 15px;
-    line-height: 22px;
     letter-spacing: 0.1px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
     transition: background-color 0.2s ease-in-out;
-
     margin: 5px;
 
-    &.majority {
-      justify-content: center;
-      gap: 5px;
-    }
-
-    &:hover {
-      background-color: #333333;
-    }
-
     &:hover::after {
-      content: "Host and guest rate yes/no/indifferent per ingredient. Only the ingredients which obtained the majority stay in the final overview. 'No' and 'yes' votes can cancel each other out.";
+      content: "So far the default voting mechanism is majority vote, the point distribution voting will be implemented in potential future work.";
       position: absolute;
       left: 50%;
-      transform:translate(80%,50%);
+      transform:translate(-180%,50%);
       background: #f2f2f2;
       color: #666666;
       padding: 5px;
       border-radius: 5px;
       font-size: 12px;
       z-index: 1;
-      height: 155px;
+      height: 90px;
       width: 200px;
       text-align: left;
       font-weight: 100;
       border: 1px solid #e1e1e1;
     }
+
+    &.majority {
+      justify-content: center;
+      gap: 5px;
+      background-color: #333333;
+      cursor: pointer;
+
+      &:hover::after {
+        content: "Host and guest rate yes/no/indifferent per ingredient. Only the ingredients which obtained the majority stay in the final overview. 'No' and 'yes' votes can cancel each other out.";
+        position: absolute;
+        left: 50%;
+        transform:translate(80%,50%);
+        background: #f2f2f2;
+        color: #666666;
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 12px;
+        z-index: 1;
+        height: 125px;
+        width: 200px;
+        text-align: left;
+        font-weight: 100;
+        border: 1px solid #e1e1e1;
+      }
+    }
+
+
   }
 
   &.icon {
