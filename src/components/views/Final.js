@@ -70,16 +70,17 @@ const Final = () => {
 
         // Get the returned users and update the state.
         setRecipes(recipesResponse.data);
-        
-        if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
-          alert("All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!")
-        }
 
+        if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
+          alert(
+            "All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!"
+          );
+        }
       } catch (error) {
         alert(
-          `Something went wrong while fetching the recipe: \n${
-            handleError(error)
-          }`
+          `Something went wrong while fetching the recipe: \n${handleError(
+            error
+          )}`
         );
         console.error("Details:", error);
       }
@@ -93,10 +94,8 @@ const Final = () => {
       <AppContainer>
         <Spinner />
       </AppContainer>
-    );}
-   
-  
-  else {
+    );
+  } else {
     return (
       <AppContainer>
         <div className="game container">
@@ -161,49 +160,53 @@ const Final = () => {
                     ></InfoField>
                   </div>
                 </div>
-                {recipes[0]?.usedIngredients.length !== 0 &&
-                <div className="final bottom">
-                  
-                  <div className="final ingredients">
-                    <div className="final ingredients-title">
-                      <i className="final icon">kitchen</i>
-                      <h3 className="final label"> Bring from home </h3>
+                {recipes[0]?.usedIngredients.length !== 0 && (
+                  <div className="final bottom">
+                    <div className="final ingredients">
+                      <div className="final ingredients-title">
+                        <i className="final icon">kitchen</i>
+                        <h3 className="final label"> Bring from home </h3>
+                      </div>
+                      <ul className="list">
+                        {recipes[0]?.usedIngredients.map(
+                          (ingredient, index) => (
+                            <li key={index}>{ingredient}</li>
+                          )
+                        )}
+                      </ul>
                     </div>
-                    <ul className="list">
-                    {recipes[0]?.usedIngredients.map((ingredient, index) => (
-                      <li key={index}>{ingredient}</li>
-                    ))}
-                    </ul>
-                  </div>
-                  
 
-                  <div className="final ingredients">
-                    <div className="final ingredients-title">
-                      <i className="final icon">shopping_cart</i>
-                      <h3 className="final label"> Shopping list </h3>
+                    <div className="final ingredients">
+                      <div className="final ingredients-title">
+                        <i className="final icon">shopping_cart</i>
+                        <h3 className="final label"> Shopping list </h3>
+                      </div>
+                      <ul className="list">
+                        {recipes[0]?.missedIngredients.map(
+                          (ingredient, index) => (
+                            <li key={index}>{ingredient}</li>
+                          )
+                        )}
+                      </ul>
                     </div>
-                    <ul className="list">
-                    {recipes[0]?.missedIngredients.map((ingredient, index) => (
-                      <li key={index}>{ingredient}</li>
-                    ))}
-                    </ul>
                   </div>
-                </div>
-                }
+                )}
 
-                {recipes[0]?.usedIngredients.length === 0 && 
+                {recipes[0]?.usedIngredients.length === 0 && (
                   <div className="final ingredients solo">
                     <div className="final ingredients-title">
                       <i className="final icon">shopping_cart</i>
                       <h3 className="final label"> Shopping list </h3>
                     </div>
                     <ul className="list solo">
-                    {recipes[0]?.missedIngredients.map((ingredient, index) => (
-                      <li key={index}>{ingredient}</li>
-                    ))}
+                      {recipes[0]?.missedIngredients.map(
+                        (ingredient, index) => (
+                          <li key={index}>{ingredient}</li>
+                        )
+                      )}
                     </ul>
                   </div>
-                }
+                )}
 
                 <button
                   className="final button"
@@ -219,22 +222,26 @@ const Final = () => {
           </div>
         </div>
 
-        {seeInstructions && 
-        <div id="modal-root">
-          <div className="modal">
-            <div className="modal-form">
-              <i className="final icon clickable" onClick={hideInstructions}>close</i>
-              <div  className="modal-text" dangerouslySetInnerHTML={{__html: `${recipes[0]?.instructions}`}} />
+        {seeInstructions && (
+          <div id="modal-root">
+            <div className="modal">
+              <div className="modal-form">
+                <i className="final icon clickable" onClick={hideInstructions}>
+                  close
+                </i>
+                <div
+                  className="modal-text"
+                  dangerouslySetInnerHTML={{
+                    __html: `${recipes[0]?.instructions}`,
+                  }}
+                />
+              </div>
             </div>
           </div>
-
-        </div>}
-
+        )}
       </AppContainer>
     );
-    
   }
-      
 };
 
 export default Final;

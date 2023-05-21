@@ -23,10 +23,6 @@ const GroupFormingHost = () => {
   }, []);
 
   const handleDelete = async () => {
-    if (Object.values(guestReadyStatus).includes(true)) {
-      // If any user is ready, do not proceed with the deletion
-      alert("Cannot delete group while users are ready!");
-    }
     try {
       await api.delete(`/groups/${groupId}`, { headers });
       // make the groupstate=="NOGROUP" in the user context:
@@ -206,7 +202,7 @@ const GroupFormingHost = () => {
                 </div>
                 <div className="groupforming buttons">
                   <button
-                    className={`groupforming general-button ${
+                    className={`groupforming delete-button ${
                       Object.values(guestReadyStatus).some(
                         (value) => value === true
                       )

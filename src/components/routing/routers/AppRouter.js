@@ -12,7 +12,7 @@ import AuthContext from "components/contexts/AuthContext";
 import GroupFormingGuest from "components/views/GroupFormingGuest";
 import GroupFormingHost from "components/views/GroupFormingHost";
 import Ingredient from "components/views/Ingredient";
-import GoSoloFinal from "components/views/GoSoloFinal";
+import IngredientSolo from "components/views/IngredientSolo";
 import IngredientsVoting from "components/views/IngredientsVoting";
 import Dashboard from "components/views/Dashboard";
 import IngredientsFinal from "components/views/IngredientsFinal";
@@ -147,7 +147,7 @@ const AppRouter = () => {
         <Route exact path="/solo">
           <GameGuard>
             <UserStateGuard state="NOGROUP">
-              <GoSoloFinal />
+              <IngredientSolo />
             </UserStateGuard>
           </GameGuard>
         </Route>

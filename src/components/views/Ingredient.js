@@ -51,21 +51,13 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
         headers,
       });
       setSuggestions(response.data);
-
-
     } catch (error) {
-
       if (error.response && error.response.status === 404) {
-
         setSuggestions([]);
-
       } else {
-
         alert(`Something went wrong while fetching ingredients: \n${error}`);
       }
     }
-
-
   };
 
   return (
@@ -94,11 +86,9 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
             />
 
             <div className="list suggestions">
-            {suggestions.length === 0 &&
-            <div>No such ingredient found</div>}
+              {suggestions.length === 0 && <div>No such ingredient found</div>}
 
-            {suggestions.length > 0 && (
-              
+              {suggestions.length > 0 &&
                 suggestions.map((suggestion, index) => (
                   <div
                     className="list suggestion"
@@ -115,8 +105,7 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
                   >
                     {suggestion}
                   </div>
-                ))
-            )}
+                ))}
             </div>
           </div>
         </div>
@@ -184,9 +173,7 @@ const Ingredient = () => {
       setUser({ ...user, groupState: "INGREDIENTENTERING_LOBBY" });
       history.push(`/ingredients/lobby`);
     } catch (error) {
-      alert(
-        `Something went wrong while updating user ingredients: \n${error}`
-      );
+      alert(`Something went wrong while updating user ingredients: \n${error}`);
     }
   };
 
@@ -220,14 +207,14 @@ const Ingredient = () => {
               &nbsp; Guests &nbsp;
             </h3>
             <div className="groupforming list-box">
-            {users.map((user) => (
-              <div
-                className={`player container ${user.status.toLowerCase()}`}
-                key={user.id}
-              >
-                {user.username}
-              </div>
-            ))}
+              {users.map((user) => (
+                <div
+                  className={`player container ${user.status.toLowerCase()}`}
+                  key={user.id}
+                >
+                  {user.username}
+                </div>
+              ))}
             </div>
           </ul>
 
@@ -238,11 +225,11 @@ const Ingredient = () => {
                 &nbsp; Allergies &nbsp;
               </h3>
               <div className="groupforming list-box">
-              {allergies.map((allergy) => (
-                <div className={`player container`} key={allergy.id}>
-                  {allergy}
-                </div>
-              ))}
+                {allergies.map((allergy) => (
+                  <div className={`player container`} key={allergy.id}>
+                    {allergy}
+                  </div>
+                ))}
               </div>
             </ul>
           )}
@@ -285,7 +272,6 @@ const Ingredient = () => {
                 cheese"). Additionally, we assume you already have pantry items
                 such as salt, pepper, oil, etc. at home.
               </div>
-
             </div>
           </div>
         </BaseContainer>
