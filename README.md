@@ -89,7 +89,5 @@ lany- I will copy the final text in here when it is ready -lany
 - Lany Dennise Weizenblut Oseguera - [wlany](https://github.com/wlany)
 
 ## License
-TODO:
-lany- I will copy the final text in here when it is ready -lany
-
+Apache License 2.0
 
