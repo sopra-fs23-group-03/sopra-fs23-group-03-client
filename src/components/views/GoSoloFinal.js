@@ -6,8 +6,6 @@ import BaseContainer from "components/ui/BaseContainer";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import { Spinner } from "components/ui/Spinner";
-import { useContext } from "react";
-import UserContext from "components/contexts/UserContext";
 
 const InfoField = (props) => {
   return (
@@ -46,7 +44,7 @@ const GoSoloFinal = () => {
 
          // Get the returned users and update the state.
          setRecipe(recipeResponse.data);
-         console.log(recipe)
+
        } catch (error) {
          alert(
            `Something went wrong while fetching the recipe: \n${
@@ -74,7 +72,7 @@ const GoSoloFinal = () => {
             <BaseContainer>
               <div className="final form">
                 <div className="final main">
-                  <i className="final icon">sentiment_satisfied</i>
+                  <i className="final icon happy">sentiment_satisfied</i>
                   <div className="final title">Everything is set!</div>
                 </div>
                 <div className="final bottom">
@@ -84,11 +82,11 @@ const GoSoloFinal = () => {
                     src={recipe.image}
                   />
                   <div className="final section">
-                    <InfoField label="Recipe" value={recipe[0].title} />
+                    <InfoField label="Recipe" value={recipe?.title} />
 
                     <InfoField
                       label="Approx. time"
-                      value={(recipe[0].readyInMinutes + " minutes").replace(
+                      value={(recipe?.readyInMinutes + " minutes").replace(
                         "null",
                         "'"
                       )}
@@ -109,14 +107,14 @@ const GoSoloFinal = () => {
                 </div>
 
                 <div className="final bottom">
-                  <div className="final ingredients">
+                  <div className="final ingredients solo">
                     <div className="final ingredients-title">
                       <i className="final icon">shopping_cart</i>
                       <h3 className="final label"> Shopping list </h3>
                     </div>
-                    <ul class="list">
-                      {recipe[0].missedIngredients.map((ingredient) => (
-                        <li>{ingredient}</li>
+                    <ul className="list solo">
+                      {recipe?.missedIngredients.map((ingredient, index) => (
+                        <li className="list-items" key={index}>{ingredient}</li>
                       ))}
                     </ul>
                   </div>
@@ -124,15 +122,12 @@ const GoSoloFinal = () => {
 
                 <button
                   className="final button"
-                //   onClick={() => {
-                //     // make the user groupState in the user context "NOGROUP"
-                //     setUser({ ...user, groupState: "NOGROUP" });
-                //     history.push(`/dashboard`);
-                //     localStorage.removeItem("groupId");
-                //   }}
+                  onClick={() => {
+                  history.push(`/dashboard`);
+                 }}
                 >
 
-                  Back to home page
+                  Back to Landing Page
                 </button>
                </div>
             </BaseContainer>
@@ -142,9 +137,7 @@ const GoSoloFinal = () => {
           <div className="modal">
             <div className="modal-form">
               <i className="final icon clickable" onClick={hideInstructions}>close</i>
-              <div  className="modal-text" dangerouslySetInnerHTML={{__html: `${recipe[0].instructions}`}} />
-
-              <div  className="modal-text" dangerouslySetInnerHTML={{__html: `${recipe[0].instructions}`}} />
+              <div  className="modal-text" dangerouslySetInnerHTML={{__html: `${recipe?.instructions}`}} />
             </div>
           </div>
 
