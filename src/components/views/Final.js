@@ -89,14 +89,6 @@ const Final = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
-      alert(
-        "All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!"
-      );
-    }
-  }, [recipes]);
-
   if (!recipes) {
     return (
       <AppContainer>

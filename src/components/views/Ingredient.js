@@ -1,6 +1,5 @@
 import { Spinner } from "components/ui/Spinner";
 import { useHistory } from "react-router-dom";
-import { useRef } from "react";
 import { useEffect, useState, useMemo } from "react";
 import { api, handleError } from "helpers/api";
 import BaseContainer from "components/ui/BaseContainer";
@@ -19,9 +18,6 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
   }, []);
   const [inputValue, setInputValue] = useState("");
   const [tasks, setTasks] = useState([]);
-
-  const suggestionsRef = useRef(null);
-  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const addTask = (text) => {
     if (text && !isMaxReached()) {
@@ -55,33 +51,14 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
         headers,
       });
       setSuggestions(response.data);
-      setShowSuggestions(response.data.length > 0);
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setSuggestions([]);
-        setShowSuggestions(false);
       } else {
         alert(`Something went wrong while fetching ingredients: \n${error}`);
       }
     }
   };
-
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (
-        suggestionsRef.current &&
-        !suggestionsRef.current.contains(event.target)
-      ) {
-        setSuggestions([]);
-      }
-    };
-
-    document.addEventListener("click", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("click", handleOutsideClick);
-    };
-  }, []);
 
   return (
     <div className="list todo-list">
@@ -108,17 +85,10 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
               value={inputValue}
             />
 
-            <div className="list suggestions" ref={suggestionsRef}>
-              {!showSuggestions &&
-                suggestions.length === 0 &&
-                inputValue.length > 0 && (
-                  <div className="list suggestion">
-                    No such ingredient found
-                  </div>
-                )}
+            <div className="list suggestions">
+              {suggestions.length === 0 && <div>No such ingredient found</div>}
 
-              {showSuggestions &&
-                suggestions.length > 0 &&
+              {suggestions.length > 0 &&
                 suggestions.map((suggestion, index) => (
                   <div
                     className="list suggestion"
@@ -252,7 +222,7 @@ const Ingredient = () => {
             <ul className="groupforming invite-users">
               <h3 className="player container">
                 <i className="material-icons">no_food</i>
-                &nbsp; Group Allergies &nbsp;
+                &nbsp; Allergies &nbsp;
               </h3>
               <div className="groupforming list-box">
                 {allergies.map((allergy) => (
