@@ -4,10 +4,10 @@ import User from "models/User";
 import { useHistory, Link } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import "styles/views/Login.scss";
+import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import AuthContext from "components/contexts/AuthContext";
 import UserContext from "components/contexts/UserContext";
-import ErrorModal from "components/ui/ErrorModal";
 
 const FormField = (props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -55,9 +55,6 @@ const Login = (props) => {
   const [username, setUsername] = useState("");
   const { setIsLoggedIn } = useContext(AuthContext);
   const { setUser } = useContext(UserContext);
-  const [showErrorModal, setShowErrorModal] = useState(false);
-  const [error, setError] = useState("");
-
   const doLogin = async () => {
     try {
       const requestBody = JSON.stringify({ username, password });
@@ -76,29 +73,28 @@ const Login = (props) => {
       console.log("User:", user);
 
       // Store the token from the response headers into the local storage.
+      const token = response.headers.authorization; //response.headers.authorization;
       localStorage.setItem("token", response.headers["x-token"]);
+
+      // Store the user ID in local storage.
       localStorage.setItem("userId", user.id);
       localStorage.setItem("isLoggedIn", true);
-      // initialize the user context with the user object from the response
       setIsLoggedIn(true);
+      // initialize the user context with the user object from the response
       setUser(user);
+      // Store the user object in local storage.
+      //localStorage.setItem("user", JSON.stringify(user));
 
       // Register successfully worked --> navigate to the route /dashboard in the GameRouter
       history.push(`/dashboard`);
     } catch (error) {
-      setError(
-        `Something went wrong during the login: \n 
-        ${error.response.data.message}`
-      );
-      handleError(error);
-      setShowErrorModal(true);
-
-      //alert(`Something went wrong during the login: \n${handleError(error)}`);
+      alert(`Something went wrong during the login: \n${handleError(error)}`);
       history.push(`/login`);
     }
   };
 
   return (
+    // <BaseContainer>
     <div className="login container">
       <img className="login image" alt="login background"></img>
       <div className="login form">
@@ -133,13 +129,8 @@ const Login = (props) => {
           </div>
         </div>
       </div>
-      {showErrorModal && (
-        <ErrorModal
-          message={error}
-          onConfirm={() => setShowErrorModal(false)}
-        />
-      )}
     </div>
+    // </BaseContainer>
   );
 };
 
