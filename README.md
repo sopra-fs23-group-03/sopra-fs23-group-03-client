@@ -1,16 +1,22 @@
 # CollaborEat
 
 [Deployed Server](https://sopra-fs23-group-03-server.oa.r.appspot.com/)
+
 [Deployed Client](https://sopra-fs23-group-03-client.oa.r.appspot.com/)
 
 ## Introduction
+TODO:
 the project’s goal and motivation
+
+lany- I think we should have the same text in both readmes, but I haven't gotten started on it yet. will copy it here when I got something :) -lany
 
 ## Technologies
 - React
 - Google Cloud (doployment)
 
 TODO: add more?
+
+lany- I just looked up the stack on the assignmentsheet 1 ^^' for the backend I knew what of that to add, but here I'm not certain :p -lany
 
 ## High-level components
 
