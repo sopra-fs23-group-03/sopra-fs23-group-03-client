@@ -193,8 +193,14 @@ const Profile = () => {
           {isEditable && (
             <div className="profile modify-section">
             <div className="profile singles">
-              <InfoField label="Username" value={username} onChange={(u)=>setUsername(u)} />
+              <div className="field-info">
+                <InfoField label="Username" value={username} onChange={(u)=>setUsername(u)} />
+                <div className="profile small-text"> only alphabetic characters allowed </div>
+              </div>
+              <div className="field-info">
               <InfoField label="Current Password" onChange={(cp)=>setCurrentPassword(cp)}/>
+              <div className="profile small-text"> username and password must differ </div>
+              </div>
               
               <div className="profile diet-dropdown">
               <label className="profile titles"> Diet preference </label>
