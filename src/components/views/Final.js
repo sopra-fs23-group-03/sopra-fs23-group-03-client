@@ -161,7 +161,7 @@ const Final = () => {
                     ></InfoField>
                   </div>
                 </div>
-                {!recipes[0]?.usedIngredients.length === 0 &&
+                {recipes[0]?.usedIngredients.length !== 0 &&
                 <div className="final bottom">
                   
                   <div className="final ingredients">

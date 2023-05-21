@@ -50,27 +50,22 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
       const response = await api.get(`/ingredients?initialString=${text}`, {
         headers,
       });
-      //setAllIngredients(response.data);
       setSuggestions(response.data);
+
+
     } catch (error) {
-      console.error(
-        `Something went wrong while fetching ingredients: \n${error}`
-      );
-      alert(
-        "Something went wrong while fetching ingredients! See the console for details."
-      );
+
+      if (error.response && error.response.status === 404) {
+
+        setSuggestions([]);
+
+      } else {
+
+        alert(`Something went wrong while fetching ingredients: \n${error}`);
+      }
     }
 
-    //   setSuggestions(
-    //     allIngredients.filter((ingredient) => {
-    //       return (
-    //         ingredient.toLowerCase().startsWith(text.toLowerCase()) &&
-    //         !tasks.some(
-    //           (task) => task.text.toLowerCase() === ingredient.toLowerCase()
-    //         )
-    //       );
-    //     })
-    //   );
+
   };
 
   return (
@@ -97,9 +92,14 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
               }}
               value={inputValue}
             />
+
+            <div className="list suggestions">
+            {suggestions.length === 0 &&
+            <div>No such ingredient found</div>}
+
             {suggestions.length > 0 && (
-              <div className="list suggestions">
-                {suggestions.map((suggestion, index) => (
+              
+                suggestions.map((suggestion, index) => (
                   <div
                     className="list suggestion"
                     key={index}
@@ -115,9 +115,9 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
                   >
                     {suggestion}
                   </div>
-                ))}
-              </div>
+                ))
             )}
+            </div>
           </div>
         </div>
       )}

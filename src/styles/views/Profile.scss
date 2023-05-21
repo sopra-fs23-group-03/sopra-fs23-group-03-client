@@ -14,7 +14,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(3, auto);
-    grid-row-gap: 20px;
+    grid-row-gap: 5px;
     grid-column-gap: 40px;
     background: none;
   }
@@ -105,7 +105,7 @@
   &.field {
     display: flex;
     flex-direction: column;
-    height: 20%;
+    height: 60%;
     white-space: nowrap;
   }
 
@@ -178,7 +178,8 @@
     justify-content: space-evenly;
     background: #f2f2f2;
     border-radius: 8px;
-    padding: 35px;
+    padding-top: 5%;
+    padding-bottom: 5%;
     padding-left: 10%;
     padding-right: 10%;
     display: flex;
@@ -196,5 +197,18 @@
   &.list {
     display: flex;
     flex-direction: column;
+  }
+
+  &.field-info{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &.small-text {
+    font-weight: 200;
+    font-size: 9.5px;
+    color: rgba(102, 102, 102, 0.8);
+    text-align: end;
   }
 }
