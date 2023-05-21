@@ -67,14 +67,9 @@ const Final = () => {
         const recipesResponse = await api.get(`/groups/${groupId}/result`, {
           headers,
         });
-
+  
         // Get the returned users and update the state.
         setRecipes(recipesResponse.data);
-        
-        if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
-          alert("All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!")
-        }
-
       } catch (error) {
         alert(
           `Something went wrong while fetching the recipe: \n${
@@ -84,9 +79,19 @@ const Final = () => {
         console.error("Details:", error);
       }
     }
-
+  
     fetchData();
   }, []);
+  
+  useEffect(() => {
+    if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
+      alert(
+        "All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!"
+      );
+    }
+  }, [recipes]);
+  
+  
 
   if (!recipes) {
     return (
