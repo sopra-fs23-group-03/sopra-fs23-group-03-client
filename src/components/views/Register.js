@@ -64,6 +64,7 @@ const Register = (props) => {
       setError("The two passwords are not matching");
       setShowErrorModal(true);
     }
+    doRegister();
   };
 
   const doRegister = async () => {
