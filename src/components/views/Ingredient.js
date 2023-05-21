@@ -50,27 +50,14 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
       const response = await api.get(`/ingredients?initialString=${text}`, {
         headers,
       });
-      //setAllIngredients(response.data);
       setSuggestions(response.data);
     } catch (error) {
-      console.error(
-        `Something went wrong while fetching ingredients: \n${error}`
-      );
-      alert(
-        "Something went wrong while fetching ingredients! See the console for details."
-      );
+      if (error.response && error.response.status === 404) {
+        setSuggestions([]);
+      } else {
+        alert(`Something went wrong while fetching ingredients: \n${error}`);
+      }
     }
-
-    //   setSuggestions(
-    //     allIngredients.filter((ingredient) => {
-    //       return (
-    //         ingredient.toLowerCase().startsWith(text.toLowerCase()) &&
-    //         !tasks.some(
-    //           (task) => task.text.toLowerCase() === ingredient.toLowerCase()
-    //         )
-    //       );
-    //     })
-    //   );
   };
 
   return (
@@ -97,9 +84,12 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
               }}
               value={inputValue}
             />
-            {suggestions.length > 0 && (
-              <div className="list suggestions">
-                {suggestions.map((suggestion, index) => (
+
+            <div className="list suggestions">
+              {suggestions.length === 0 && <div>No such ingredient found</div>}
+
+              {suggestions.length > 0 &&
+                suggestions.map((suggestion, index) => (
                   <div
                     className="list suggestion"
                     key={index}
@@ -116,8 +106,7 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
                     {suggestion}
                   </div>
                 ))}
-              </div>
-            )}
+            </div>
           </div>
         </div>
       )}
@@ -184,9 +173,7 @@ const Ingredient = () => {
       setUser({ ...user, groupState: "INGREDIENTENTERING_LOBBY" });
       history.push(`/ingredients/lobby`);
     } catch (error) {
-      alert(
-        `Something went wrong while updating user ingredients: \n${error}`
-      );
+      alert(`Something went wrong while updating user ingredients: \n${error}`);
     }
   };
 
@@ -220,14 +207,14 @@ const Ingredient = () => {
               &nbsp; Guests &nbsp;
             </h3>
             <div className="groupforming list-box">
-            {users.map((user) => (
-              <div
-                className={`player container ${user.status.toLowerCase()}`}
-                key={user.id}
-              >
-                {user.username}
-              </div>
-            ))}
+              {users.map((user) => (
+                <div
+                  className={`player container ${user.status.toLowerCase()}`}
+                  key={user.id}
+                >
+                  {user.username}
+                </div>
+              ))}
             </div>
           </ul>
 
@@ -238,11 +225,11 @@ const Ingredient = () => {
                 &nbsp; Allergies &nbsp;
               </h3>
               <div className="groupforming list-box">
-              {allergies.map((allergy) => (
-                <div className={`player container`} key={allergy.id}>
-                  {allergy}
-                </div>
-              ))}
+                {allergies.map((allergy) => (
+                  <div className={`player container`} key={allergy.id}>
+                    {allergy}
+                  </div>
+                ))}
               </div>
             </ul>
           )}
@@ -285,7 +272,6 @@ const Ingredient = () => {
                 cheese"). Additionally, we assume you already have pantry items
                 such as salt, pepper, oil, etc. at home.
               </div>
-
             </div>
           </div>
         </BaseContainer>
