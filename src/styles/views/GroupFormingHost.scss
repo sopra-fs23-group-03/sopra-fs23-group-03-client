@@ -180,7 +180,7 @@
     cursor: default;
 
     &:hover::after {
-      content: "Please wait until at least one guest joins and ensure that all your guests are ready.";
+      content: "Wait for at least one guest to join.";
       position: absolute;
       transform: translate(5%, 60%);
       background: #f2f2f2;
@@ -192,7 +192,7 @@
       text-align: left;
       font-weight: 100;
       width: 200px;
-      height: 50px;
+      height: 20px;
       word-wrap: break-word;
       border: 1px solid #e1e1e1;
     }
@@ -230,55 +230,6 @@
     line-height: 50px;
     text-align: center;
     color: #ffffff;
-  }
-
-  &.delete-button {
-    background: #333333;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 32px;
-    border: 0px;
-    width: 40%;
-    cursor: pointer;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    padding: 10px;
-    text-align: center;
-    color: #ffffff;
-    cursor: pointer;
-  }
-
-  &.delete-button[disabled] {
-    background: #bab9b9;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 32px;
-    border: 0px;
-    width: 40%;
-    height: 100%;
-    cursor: pointer;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    text-align: center;
-    color: #ffffff;
-  }
-
-  &.delete-button:hover::after {
-    content: "You cannot delete the group if some of your guests are already ready.";
-    position: absolute;
-    transform: translate(-40%, 0%);
-    background: #f2f2f2;
-    color: #666666;
-    padding: 20px;
-    border-radius: 5px;
-    font-size: 12px;
-    z-index: 1;
-    text-align: center;
-    font-weight: 100;
-    width: 200px;
-    height: 50px;
-    word-wrap: break-word;
-    border: 1px solid #e1e1e1;
   }
 
   &.sidebar {
@@ -375,7 +326,7 @@
     }
   }
 
-  &.list-box {
+  &.list-box{
     overflow-y: auto;
     display: flex;
     flex-direction: column;

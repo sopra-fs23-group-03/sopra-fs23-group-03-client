@@ -1,16 +1,15 @@
 @import "styles/theme";
 
 .final {
-  &.main {
+
+  &.form{
     display: flex;
     flex-direction: column;
-  }
-  &.form {
-    display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 30px;
     width: 100%;
+    max-height: 400px;
   }
 
   &.icon {
@@ -21,7 +20,8 @@
     color: #333333;
     margin-bottom: -7px;
     margin-top: -4px;
-    &.happy {
+
+    &.happy{
       font-size: 60px;
     }
   }
@@ -51,13 +51,21 @@
     padding: 15px;
   }
 
+  &.main {
+    display: flex;
+    flex-direction: column;
+  }
+
   &.section {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
     background: #f2f2f2;
     filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
     border-radius: 8px;
+    width: 70%;
+    height: 100%;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-right: 10px;
@@ -69,6 +77,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
     align-items: center;
     width: 90%;
   }
@@ -95,17 +104,15 @@
     background: #ededed;
     padding-left: 10px;
     margin-left: 10px;
-    min-height: 20px;
-    //max-height: fit-content;
-    max-height: 60px;
+    min-height: 30px;
+    max-height: fit-content;
     align-items: center;
-    overflow-y: auto;
   }
 
-  &.ingredients {
+  &.ingredients{
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content:start;
     width: 48%;
     background: #f2f2f2;
     filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
@@ -114,20 +121,20 @@
     height: 100%;
 
     &.solo {
-      width: 85%;
+      width: 100%;
     }
   }
 
-  &.bottom {
+  &.bottom{
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    justify-content: space-between;
     width: 85%;
     height: 50%;
     align-items: center;
   }
 
-  &.icon {
+  &.icon{
     font-size: 30px;
 
     &.clickable {
@@ -136,7 +143,7 @@
     }
   }
 
-  &.ingredients-title {
+  &.ingredients-title{
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -145,22 +152,33 @@
 
   .list {
     list-style-type: circle;
-    //width: 100%;
+    width: 100%;
     margin: 0px;
     display: flex;
     flex-direction: column;
     margin-top: -5px;
     overflow-y: auto;
-    max-height: 90px;
 
     &.solo {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: repeat(3, auto);
-      grid-column-gap: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, auto);
+    grid-column-gap: 40px;
     }
   }
+
+  .list-items {
+    background-color: #f2f2f2;
+    border: 0px;
+    margin: 8px;
+  }
+
 }
+
+
+
+
+
 
 #modal-root {
   position: relative;
@@ -177,7 +195,7 @@
   justify-content: center;
   overflow: auto;
   z-index: 99999;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0,0,0,0.5);
 }
 
 .modal-form {
@@ -202,3 +220,4 @@
   color: #333333;
   overflow-y: auto;
 }
+
