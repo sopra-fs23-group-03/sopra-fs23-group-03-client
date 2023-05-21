@@ -46,12 +46,18 @@ const GoSoloFinal = () => {
          setRecipe(recipeResponse.data);
 
        } catch (error) {
-         alert(
-           `Something went wrong while fetching the recipe: \n${
-             handleError(error).info
-           }`
-         );
-         console.error("Details:", error);
+
+        if (error.response && error.response.status === 404) {
+
+          alert("There's no recipe matching your personal preferences, try to change your favourite cuisine!");
+          history.push(`/dashboard`);
+  
+        } else {
+  
+          alert(`Something went wrong while fetching the recipe: \n${handleError(error)}`);
+          console.error("Details:", error);
+        }
+         
        }
      }
 

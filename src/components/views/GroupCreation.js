@@ -201,7 +201,7 @@ const GroupCreation = () => {
               </button>
               <button
                 className="group-creation button continue"
-                disabled={groupName === "" || invitedUsers.length === 0}
+                disabled={groupName === "" || guests.length === 0 || invitedUsers.length === 0}
                 onClick={createGroup}
               >
                 Continue
