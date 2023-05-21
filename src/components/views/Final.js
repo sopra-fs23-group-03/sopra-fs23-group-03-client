@@ -212,7 +212,7 @@ const Final = () => {
                     handleContinue(groupId, user.id);
                   }}
                 >
-                  Back to home page
+                  Back to Landing Page
                 </button>
               </div>
             </BaseContainer>
