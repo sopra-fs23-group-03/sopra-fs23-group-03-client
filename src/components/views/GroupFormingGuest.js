@@ -42,14 +42,6 @@ const GroupFormingGuest = ({ exitbuttonLabel, buttonLabel }) => {
   const [confirmExit, setConfirmExit] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    if (joinedGroup === true) {
-      // if user joined group, make the user.state = "GROUPFORMING" in the user context:
-      setUser({ ...user, groupState: "GROUPFORMING_GUEST" });
-      console.log("user state:", user.groupState);
-    }
-  }, [joinedGroup]);
-
   const { handleAcceptInvitation, handleRejectInvitation } =
     useInvitationActions();
 
