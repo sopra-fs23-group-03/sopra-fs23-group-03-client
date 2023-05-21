@@ -63,8 +63,9 @@ const Register = (props) => {
     if (password !== repeatPassword) {
       setError("The two passwords are not matching");
       setShowErrorModal(true);
+    } else {
+      doRegister();
     }
-    doRegister();
   };
 
   const doRegister = async () => {
