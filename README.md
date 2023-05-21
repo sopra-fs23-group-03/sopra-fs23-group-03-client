@@ -6,9 +6,7 @@
 
 ## Introduction
 TODO:
-the project’s goal and motivation
-
-lany- I think we should have the same text in both readmes, but I haven't gotten started on it yet. will copy it here when I got something :) -lany
+lany- I will copy the final text in here when it is ready -lany
 
 ## Technologies
 - React
@@ -81,7 +79,7 @@ In your client repository, briefly describe and illustrate the main user flow(s)
 
 ## Roadmap
 TODO:
-The top 2-3 features that new developers who want to contribute to your project could add.
+lany- I will copy the final text in here when it is ready -lany
 
 ## Authors and acknowledgment
 - Kalliopi Papadaki - [KallPap](https://github.com/KallPap)
@@ -92,7 +90,6 @@ The top 2-3 features that new developers who want to contribute to your project 
 
 ## License
 TODO:
-Say how your project is licensed.
-License guide: https://choosealicense.com/
+lany- I will copy the final text in here when it is ready -lany
 
 
