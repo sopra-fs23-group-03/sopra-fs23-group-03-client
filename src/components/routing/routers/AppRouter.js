@@ -9,7 +9,7 @@ import EditProfile from "components/views/EditProfile";
 import GroupCreation from "components/views/GroupCreation";
 import Final from "components/views/Final";
 import FinalStatic from "components/views/FinalStatic";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "components/contexts/AuthContext";
 import GroupFormingGuest from "components/views/GroupFormingGuest";
 import GroupFormingHost from "components/views/GroupFormingHost";
@@ -33,10 +33,14 @@ import UserStateGuard from "components/routing/routeProtectors/UserStateGuard";
 
 const AppRouter = () => {
   const { isLoggedIn } = useContext(AuthContext);
+  const showNotificationBar = useState(false);
 
   return (
     <BrowserRouter>
-      <NavigationBar isLoggedIn={isLoggedIn} />
+      <NavigationBar
+        showNotificationBar={showNotificationBar}
+        isLoggedIn={isLoggedIn}
+      />
       <Switch>
         <Route exact path="/dashboard">
           <GameGuard>
