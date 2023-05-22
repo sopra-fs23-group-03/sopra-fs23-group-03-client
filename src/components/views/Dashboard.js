@@ -54,7 +54,7 @@ const Dashboard = () => {
       const usersResponse = await api.get("/users", { headers });
       setUsers(usersResponse.data);
     } catch (error) {
-      localStorage.clear();
+      //localStorage.clear();
       console.error(`Failed to fetch users data: \n${handleError(error)}`);
     }
   };
