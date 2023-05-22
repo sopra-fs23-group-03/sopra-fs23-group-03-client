@@ -198,7 +198,6 @@ const Dashboard = () => {
       content = (
         <div className="game main-container">
           <div className=" game sidebar">
-            <div className="game welcome">CollaborEat helps to find a suitable dish for your next planned meal. Start with creating/joining a group or go solo.</div>
             <Button
               className="game sidebar-buttons create-group"
               onClick={() => history.push("/group-creation")}
@@ -234,6 +233,7 @@ const Dashboard = () => {
           </div>
 
           <div className=" game  group-container">
+          <div className="game welcome">CollaborEat helps to find a suitable dish for your next planned meal. Start with creating/joining a group or go solo. Have fun!</div>
             <h2>Groups</h2>
 
             <div className="game group-container-labels">
