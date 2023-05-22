@@ -42,6 +42,7 @@ const Final = () => {
       localStorage.removeItem("groupId");
       localStorage.removeItem("group");
       localStorage.removeItem("users");
+      localStorage.removeItem("recipes");
       setUser({
         ...user,
         groupState: "NOGROUP",
@@ -52,14 +53,6 @@ const Final = () => {
       handleError(error);
     }
   };
-
-  // useEffect(() => {
-  //   if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
-  //     alert(
-  //       "All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!"
-  //     );
-  //   }
-  // }, [recipes]);
 
   if (!recipes) {
     return (
