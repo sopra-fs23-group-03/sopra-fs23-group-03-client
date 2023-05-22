@@ -20,7 +20,6 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
   const [inputValue, setInputValue] = useState("");
   const [tasks, setTasks] = useState([]);
 
-  
   const suggestionsRef = useRef(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -48,7 +47,6 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
   };
 
   const [suggestions, setSuggestions] = useState([]);
-  const [allIngredients, setAllIngredients] = useState([]);
 
   const fetchIngredients = async (text) => {
     try {
@@ -57,27 +55,24 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
       });
       setSuggestions(response.data);
 
-
       setShowSuggestions(response.data.length > 0);
     } catch (error) {
-
       if (error.response && error.response.status === 404) {
-
         setSuggestions([]);
 
         setShowSuggestions(false);
       } else {
-
         alert(`Something went wrong while fetching ingredients: \n${error}`);
       }
     }
-
-
   };
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target)
+      ) {
         setSuggestions([]);
       }
     };
@@ -115,11 +110,16 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
             />
 
             <div className="list suggestions" ref={suggestionsRef}>
-            {!showSuggestions && suggestions.length === 0 && inputValue.length > 0 &&
-            <div className="list suggestion">No such ingredient found</div>}
+              {!showSuggestions &&
+                suggestions.length === 0 &&
+                inputValue.length > 0 && (
+                  <div className="list suggestion">
+                    No such ingredient found
+                  </div>
+                )}
 
-            {showSuggestions && suggestions.length > 0 && (
-              
+              {showSuggestions &&
+                suggestions.length > 0 &&
                 suggestions.map((suggestion, index) => (
                   <div
                     className="list suggestion"
@@ -136,8 +136,7 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
                   >
                     {suggestion}
                   </div>
-                ))
-            )}
+                ))}
             </div>
           </div>
         </div>
@@ -193,21 +192,21 @@ const Ingredient = () => {
     const newIngredients = [...ingredients, { name: ingredient }];
     setIngredients(newIngredients);
   };
-
   const handleSubmit = async (ingredients) => {
     try {
-      const formattedIngredients = ingredients.map((ingredient) => {
-        return { name: ingredient.name };
-      });
-      await api.put(`/users/${userId}/ingredients`, formattedIngredients, {
+      // Filter out duplicate ingredients
+      const uniqueIngredients = Array.from(
+        new Set(ingredients.map((ingredient) => ingredient.name))
+      ).map((name) => ({ name }));
+      console.log("ingredients:", ingredients);
+      console.log("uniqueIngredients:", uniqueIngredients);
+      await api.put(`/users/${userId}/ingredients`, uniqueIngredients, {
         headers,
       });
       setUser({ ...user, groupState: "INGREDIENTENTERING_LOBBY" });
       history.push(`/ingredients/lobby`);
     } catch (error) {
-      alert(
-        `Something went wrong while updating user ingredients: \n${error}`
-      );
+      alert(`Something went wrong while updating user ingredients: \n${error}`);
     }
   };
 
@@ -241,14 +240,14 @@ const Ingredient = () => {
               &nbsp; Guests &nbsp;
             </h3>
             <div className="groupforming list-box">
-            {users.map((user) => (
-              <div
-                className={`player container ${user.status.toLowerCase()}`}
-                key={user.id}
-              >
-                {user.username}
-              </div>
-            ))}
+              {users.map((user) => (
+                <div
+                  className={`player container ${user.status.toLowerCase()}`}
+                  key={user.id}
+                >
+                  {user.username}
+                </div>
+              ))}
             </div>
           </ul>
 
@@ -259,11 +258,11 @@ const Ingredient = () => {
                 &nbsp; Group Allergies &nbsp;
               </h3>
               <div className="groupforming list-box">
-              {allergies.map((allergy) => (
-                <div className={`player container`} key={allergy.id}>
-                  {allergy}
-                </div>
-              ))}
+                {allergies.map((allergy) => (
+                  <div className={`player container`} key={allergy.id}>
+                    {allergy}
+                  </div>
+                ))}
               </div>
             </ul>
           )}
@@ -306,7 +305,6 @@ const Ingredient = () => {
                 cheese"). Additionally, we assume you already have pantry items
                 such as salt, pepper, oil, etc. at home.
               </div>
-
             </div>
           </div>
         </BaseContainer>

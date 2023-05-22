@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState } from "react";
 import "styles/views/Profile.scss";
 import BaseContainer from "components/ui/BaseContainer";
-import { api, handleError } from "helpers/api";
+import { handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import AppContainer from "components/ui/AppContainer";
 import "styles/views/Final.scss";
 import "styles/views/GroupFormingHost.scss";
 import { Spinner } from "components/ui/Spinner";
-import useGroupMembers from "hooks/useGroupMembers";
 import { useContext } from "react";
 import UserContext from "components/contexts/UserContext";
+
 const InfoField = (props) => {
   return (
     <div className="final field">
@@ -18,69 +18,48 @@ const InfoField = (props) => {
     </div>
   );
 };
+
 const Final = () => {
   const history = useHistory();
-  const [recipes, setRecipes] = useState(null);
+  const recipes = JSON.parse(localStorage.getItem("recipes"));
   const groupId = localStorage.getItem("groupId");
   const [seeInstructions, setSeeIstructions] = useState(false);
   const { user, setUser } = useContext(UserContext);
-  const { group, users } = useGroupMembers(groupId);
   console.log("user state: " + user.groupState);
-  useEffect(() => {
-    // Save the group and users data in localStorage when they are fetched
-    if (group && users) {
-      localStorage.setItem("group", JSON.stringify(group));
-      localStorage.setItem("users", JSON.stringify(users));
-    }
-  }, [group, users]);
+  const group = JSON.parse(localStorage.getItem("group"));
+  const users = JSON.parse(localStorage.getItem("users"));
 
   const showInstructions = () => {
     setSeeIstructions(true);
   };
+
   const hideInstructions = () => {
     setSeeIstructions(false);
   };
-  const headers = useMemo(() => {
-    return { "X-Token": localStorage.getItem("token") };
-  }, []);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const recipesResponse = await api.get(`/groups/${groupId}/result`, {
-          headers,
-        });
-
-        // Get the returned users and update the state.
-        setRecipes(recipesResponse.data);
-        localStorage.setItem("recipes", JSON.stringify(recipesResponse.data));
-        await api.put(`/users/${user.id}/${groupId}/ready`, null, {
-          headers,
-        });
-        setUser({
-          ...user,
-          groupState: "RECIPE_STATIC",
-        });
-        history.push("/recipe");
-      } catch (error) {
-        alert(
-          `Something went wrong while fetching the recipe: \n${handleError(
-            error
-          )}`
-        );
-        console.error("Details:", error);
-      }
+  const handleContinue = async () => {
+    try {
+      localStorage.removeItem("groupId");
+      localStorage.removeItem("group");
+      localStorage.removeItem("users");
+      setUser({
+        ...user,
+        groupState: "NOGROUP",
+        groupId: null,
+      });
+      history.push("/dashboard");
+    } catch (error) {
+      handleError(error);
     }
-    fetchData();
-  }, []);
+  };
 
-  useEffect(() => {
-    if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
-      alert(
-        "All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!"
-      );
-    }
-  }, [recipes]);
+  // useEffect(() => {
+  //   if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
+  //     alert(
+  //       "All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!"
+  //     );
+  //   }
+  // }, [recipes]);
 
   if (!recipes) {
     return (
@@ -131,6 +110,7 @@ const Final = () => {
                   />
                   <div className="final section">
                     <InfoField label="Recipe" value={recipes[0]?.title} />
+
                     <InfoField
                       label="Approx. time"
                       value={(recipes[0]?.readyInMinutes + " minutes").replace(
@@ -138,6 +118,7 @@ const Final = () => {
                         "'"
                       )}
                     />
+
                     <InfoField
                       label="Instructions"
                       value={
@@ -166,6 +147,7 @@ const Final = () => {
                         )}
                       </ul>
                     </div>
+
                     <div className="final ingredients">
                       <div className="final ingredients-title">
                         <i className="final icon">shopping_cart</i>
@@ -181,6 +163,7 @@ const Final = () => {
                     </div>
                   </div>
                 )}
+
                 {recipes[0]?.usedIngredients.length === 0 && (
                   <div className="final ingredients solo">
                     <div className="final ingredients-title">
@@ -197,11 +180,19 @@ const Final = () => {
                   </div>
                 )}
 
-                <button className="final button">Back to Landing Page</button>
+                <button
+                  className="final button"
+                  onClick={() => {
+                    handleContinue(groupId, user.id);
+                  }}
+                >
+                  Back to Landing Page
+                </button>
               </div>
             </BaseContainer>
           </div>
         </div>
+
         {seeInstructions && (
           <div id="modal-root">
             <div className="modal">
@@ -223,4 +214,5 @@ const Final = () => {
     );
   }
 };
+
 export default Final;

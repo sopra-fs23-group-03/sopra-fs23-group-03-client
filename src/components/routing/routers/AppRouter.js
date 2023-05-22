@@ -7,6 +7,7 @@ import NavigationBar from "components/views/NavigationBar";
 import Profile from "components/views/Profile";
 import GroupCreation from "components/views/GroupCreation";
 import Final from "components/views/Final";
+import FinalStatic from "components/views/FinalStatic";
 import { useContext } from "react";
 import AuthContext from "components/contexts/AuthContext";
 import GroupFormingGuest from "components/views/GroupFormingGuest";
@@ -88,6 +89,14 @@ const AppRouter = () => {
           </GameGuard>
         </Route>
 
+        <Route exact path="/recipe">
+          <GameGuard>
+            <UserStateGuard state="RECIPE_STATIC">
+              <FinalStatic />
+            </UserStateGuard>
+          </GameGuard>
+        </Route>
+
         <Route exact path="/groupforming/:groupId/guest">
           <GameGuard>
             <UserStateGuard state="GROUPFORMING_GUEST">
@@ -104,7 +113,9 @@ const AppRouter = () => {
             <UserStateGuard state="GROUPFORMING_HOST_LOBBY">
               <Lobby
                 groupState={"INGREDIENTENTERING"}
-                message={"Now it's time to check out your fridge and pantry! What would you like to contribute?"}
+                message={
+                  "Now it's time to check out your fridge and pantry! What would you like to contribute?"
+                }
                 nextRoute={"/ingredients/:groupId"}
               />
             </UserStateGuard>
