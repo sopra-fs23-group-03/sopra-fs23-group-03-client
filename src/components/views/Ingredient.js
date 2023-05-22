@@ -11,6 +11,7 @@ import "styles/ui/List.scss";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import UserContext from "components/contexts/UserContext";
+import { useRef } from "react";
 
 const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
   const headers = useMemo(() => {
@@ -18,6 +19,10 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
   }, []);
   const [inputValue, setInputValue] = useState("");
   const [tasks, setTasks] = useState([]);
+
+  
+  const suggestionsRef = useRef(null);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const addTask = (text) => {
     if (text && !isMaxReached()) {
@@ -51,14 +56,38 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
         headers,
       });
       setSuggestions(response.data);
+
+
+      setShowSuggestions(response.data.length > 0);
     } catch (error) {
+
       if (error.response && error.response.status === 404) {
+
         setSuggestions([]);
+
+        setShowSuggestions(false);
       } else {
+
         alert(`Something went wrong while fetching ingredients: \n${error}`);
       }
     }
+
+
   };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
+        setSuggestions([]);
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
 
   return (
     <div className="list todo-list">
@@ -85,10 +114,12 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
               value={inputValue}
             />
 
-            <div className="list suggestions">
-              {suggestions.length === 0 && <div>No such ingredient found</div>}
+            <div className="list suggestions" ref={suggestionsRef}>
+            {!showSuggestions && suggestions.length === 0 && inputValue.length > 0 &&
+            <div className="list suggestion">No such ingredient found</div>}
 
-              {suggestions.length > 0 &&
+            {showSuggestions && suggestions.length > 0 && (
+              
                 suggestions.map((suggestion, index) => (
                   <div
                     className="list suggestion"
@@ -105,7 +136,8 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
                   >
                     {suggestion}
                   </div>
-                ))}
+                ))
+            )}
             </div>
           </div>
         </div>
@@ -173,7 +205,9 @@ const Ingredient = () => {
       setUser({ ...user, groupState: "INGREDIENTENTERING_LOBBY" });
       history.push(`/ingredients/lobby`);
     } catch (error) {
-      alert(`Something went wrong while updating user ingredients: \n${error}`);
+      alert(
+        `Something went wrong while updating user ingredients: \n${error}`
+      );
     }
   };
 
@@ -207,14 +241,14 @@ const Ingredient = () => {
               &nbsp; Guests &nbsp;
             </h3>
             <div className="groupforming list-box">
-              {users.map((user) => (
-                <div
-                  className={`player container ${user.status.toLowerCase()}`}
-                  key={user.id}
-                >
-                  {user.username}
-                </div>
-              ))}
+            {users.map((user) => (
+              <div
+                className={`player container ${user.status.toLowerCase()}`}
+                key={user.id}
+              >
+                {user.username}
+              </div>
+            ))}
             </div>
           </ul>
 
@@ -222,14 +256,14 @@ const Ingredient = () => {
             <ul className="groupforming invite-users">
               <h3 className="player container">
                 <i className="material-icons">no_food</i>
-                &nbsp; Allergies &nbsp;
+                &nbsp; Group Allergies &nbsp;
               </h3>
               <div className="groupforming list-box">
-                {allergies.map((allergy) => (
-                  <div className={`player container`} key={allergy.id}>
-                    {allergy}
-                  </div>
-                ))}
+              {allergies.map((allergy) => (
+                <div className={`player container`} key={allergy.id}>
+                  {allergy}
+                </div>
+              ))}
               </div>
             </ul>
           )}
@@ -272,6 +306,7 @@ const Ingredient = () => {
                 cheese"). Additionally, we assume you already have pantry items
                 such as salt, pepper, oil, etc. at home.
               </div>
+
             </div>
           </div>
         </BaseContainer>

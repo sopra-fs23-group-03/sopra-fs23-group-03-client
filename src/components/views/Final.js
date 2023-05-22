@@ -65,24 +65,9 @@ const Final = () => {
         const recipesResponse = await api.get(`/groups/${groupId}/result`, {
           headers,
         });
+
         // Get the returned users and update the state.
         setRecipes(recipesResponse.data);
-        localStorage.setItem("recipes", JSON.stringify(recipesResponse.data));
-
-        if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
-          alert(
-            "All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!"
-          );
-          // Perform the redirect to the static version of the page
-        }
-        await api.put(`/users/${user.id}/${groupId}/ready`, null, {
-          headers,
-        });
-        setUser({
-          ...user,
-          groupState: "RECIPE_STATIC",
-        });
-        history.push("/recipe");
       } catch (error) {
         alert(
           `Something went wrong while fetching the recipe: \n${handleError(
@@ -95,6 +80,14 @@ const Final = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
+      alert(
+        "All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!"
+      );
+    }
+  }, [recipes]);
 
   if (!recipes) {
     return (

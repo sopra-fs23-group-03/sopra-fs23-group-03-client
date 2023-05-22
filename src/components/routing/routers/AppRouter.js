@@ -13,7 +13,7 @@ import AuthContext from "components/contexts/AuthContext";
 import GroupFormingGuest from "components/views/GroupFormingGuest";
 import GroupFormingHost from "components/views/GroupFormingHost";
 import Ingredient from "components/views/Ingredient";
-import IngredientSolo from "components/views/IngredientSolo";
+import GoSoloFinal from "components/views/GoSoloFinal";
 import IngredientsVoting from "components/views/IngredientsVoting";
 import Dashboard from "components/views/Dashboard";
 import IngredientsFinal from "components/views/IngredientsFinal";
@@ -158,7 +158,7 @@ const AppRouter = () => {
         <Route exact path="/solo">
           <GameGuard>
             <UserStateGuard state="NOGROUP">
-              <IngredientSolo />
+              <GoSoloFinal />
             </UserStateGuard>
           </GameGuard>
         </Route>
@@ -199,7 +199,7 @@ const AppRouter = () => {
               <Lobby
                 groupState={"FINAL"}
                 message={
-                  "You successfully submitted your preferences! Wait for the other members to vote...."
+                  "You successfully submitted your preferences! Wait for the other members to vote..."
                 }
                 nextRoute={`/ingredientsfinal/:groupId`}
               />
