@@ -73,30 +73,29 @@ const Profile = () => {
   ];
 
   const cuisines = [
-    { value: "african", label: "african" },
-    { value: "american", label: "american" },
-    { value: "british", label: "british" },
-    { value: "cajun", label: "cajun" },
-    { value: "caribbean", label: "caribbean" },
-    { value: "chinese", label: "chinese" },
-    { value: "eastern european", label: "eastern european" },
-    { value: "european", label: "european" },
-    { value: "french", label: "french" },
-    { value: "german", label: "german" },
-    { value: "greek", label: "greek" },
-    { value: "indian", label: "indian" },
-    { value: "irish", label: "irish" },
-    { value: "italian", label: "italian" },
-    { value: "japanese", label: "japanese" },
-    { value: "jewish", label: "jewish" },
-    { value: "korean", label: "korean" },
-    { value: "mediterranean", label: "mediterranean" },
-    { value: "mexican", label: "mexican" },
-    { value: "middle eastern", label: "middle eastern" },
-    { value: "nordic", label: "nordic" },
-    { value: "spanish", label: "spanish" },
-    { value: "thai", label: "thai" },
-    { value: "vietnamese", label: "vietnamese" },
+    {value:"american", label: "american"},
+    {value:"british", label: "british"},
+    {value:"cajun", label: "cajun"},
+    {value:"caribbean", label: "caribbean"},
+    {value:"chinese", label: "chinese"},
+    {value:"eastern european", label: "eastern european"},
+    {value:"european", label: "european"},
+    {value:"french", label: "french"},
+    {value:"german", label: "german"},
+    {value:"greek", label: "greek"},
+    {value:"indian", label: "indian"},
+    {value:"irish", label: "irish"},
+    {value:"italian", label: "italian"},
+    {value:"japanese", label: "japanese"},
+    {value:"jewish", label: "jewish"},
+    {value:"korean", label: "korean"},
+    {value:"mediterranean", label: "mediterranean"},
+    {value:"mexican", label: "mexican"},
+    {value:"middle eastern", label: "middle eastern"},
+    {value:"nordic", label: "nordic"},
+    {value:"spanish", label: "spanish"},
+    {value:"thai", label: "thai"},
+    {value:"vietnamese", label: "vietnamese"}
   ];
 
   const handleCuisineChange = (selectedOptions) => {
@@ -134,6 +133,7 @@ const Profile = () => {
       );
     }
   };
+
 
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
