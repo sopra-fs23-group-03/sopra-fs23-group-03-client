@@ -42,7 +42,7 @@ const Dashboard = () => {
     // Perform any necessary actions
     localStorage.setItem("groupId", userGroupId);
     setUser({ ...user, groupState: "GROUPFORMING_GUEST" });
-    //localStorage.removeItem("joinRequests");
+    localStorage.removeItem("joinRequests");
     history.push(`/groupforming/${userGroupId}/guest`);
 
     // Close the confirmation modal
