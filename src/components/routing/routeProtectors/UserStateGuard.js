@@ -58,7 +58,8 @@ const UserStateGuard = ({ children, state }) => {
         return <Redirect to={`/final/lobby`} />;
       case "RECIPE":
         return <Redirect to={`/recipe/${localStorage.getItem("groupId")}`} />;
-
+      case "RECIPE_STATIC":
+        return <Redirect to={`/recipe`} />;
       // Add the rest of your states here...
       default:
         return <Redirect to="/dashboard" />;

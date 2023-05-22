@@ -22,19 +22,13 @@ const InfoField = (props) => {
 
 const Final = () => {
   const history = useHistory();
-  const [recipes, setRecipes] = useState(null);
+  const recipes = JSON.parse(localStorage.getItem("recipes"));
   const groupId = localStorage.getItem("groupId");
   const [seeInstructions, setSeeIstructions] = useState(false);
   const { user, setUser } = useContext(UserContext);
-  const { group, users } = useGroupMembers(groupId);
   console.log("user state: " + user.groupState);
-  useEffect(() => {
-    // Save the group and users data in localStorage when they are fetched
-    if (group && users) {
-      localStorage.setItem("group", JSON.stringify(group));
-      localStorage.setItem("users", JSON.stringify(users));
-    }
-  }, [group, users]);
+  const group = JSON.parse(localStorage.getItem("group"));
+  const users = JSON.parse(localStorage.getItem("users"));
 
   const showInstructions = () => {
     setSeeIstructions(true);
@@ -44,57 +38,21 @@ const Final = () => {
     setSeeIstructions(false);
   };
 
-  const headers = useMemo(() => {
-    return { "X-Token": localStorage.getItem("token") };
-  }, []);
-
-  // const handleContinue = async () => {
-  //   try {
-  //     await api.put(`/users/${user.id}/${groupId}/ready`, null, {
-  //       headers,
-  //     });
-  //     history.push("/finalstatic");
-  //   } catch (error) {
-  //     handleError(error);
-  //   }
-  // };
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const recipesResponse = await api.get(`/groups/${groupId}/result`, {
-          headers,
-        });
-        // Get the returned users and update the state.
-        setRecipes(recipesResponse.data);
-        localStorage.setItem("recipes", JSON.stringify(recipesResponse.data));
-
-        if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
-          alert(
-            "All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!"
-          );
-          // Perform the redirect to the static version of the page
-        }
-        await api.put(`/users/${user.id}/${groupId}/ready`, null, {
-          headers,
-        });
-        setUser({
-          ...user,
-          groupState: "RECIPE_STATIC",
-        });
-        history.push("/recipe");
-      } catch (error) {
-        alert(
-          `Something went wrong while fetching the recipe: \n${handleError(
-            error
-          )}`
-        );
-        console.error("Details:", error);
-      }
+  const handleContinue = async () => {
+    try {
+      localStorage.removeItem("groupId");
+      localStorage.removeItem("group");
+      localStorage.removeItem("users");
+      setUser({
+        ...user,
+        groupState: "NOGROUP",
+        groupId: null,
+      });
+      history.push("/dashboard");
+    } catch (error) {
+      handleError(error);
     }
-
-    fetchData();
-  }, []);
+  };
 
   if (!recipes) {
     return (
@@ -217,10 +175,10 @@ const Final = () => {
 
                 <button
                   className="final button"
-                  // onClick={() => {
-                  //   // make the user groupState in the user context "NOGROUP"
-                  //   handleContinue(groupId, user.id);
-                  // }}
+                  onClick={() => {
+                    // make the user groupState in the user context "NOGROUP"
+                    handleContinue(groupId, user.id);
+                  }}
                 >
                   Back to Landing Page
                 </button>
