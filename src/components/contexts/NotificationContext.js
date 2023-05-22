@@ -50,7 +50,7 @@ export const NotificationProvider = ({ children }) => {
 
     // Clear the interval on unmount
     return () => clearInterval(intervalId);
-  }, [isLoggedIn]);
+  }, [isLoggedIn, user.groupState]);
 
   return (
     <NotificationContext.Provider
