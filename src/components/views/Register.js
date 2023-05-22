@@ -7,6 +7,7 @@ import "styles/views/Login.scss";
 import PropTypes from "prop-types";
 import AuthContext from "components/contexts/AuthContext";
 import UserContext from "components/contexts/UserContext";
+import ErrorModal from "components/ui/ErrorModal";
 
 const FormField = (props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -55,13 +56,16 @@ const Register = (props) => {
   const [username, setUsername] = useState("");
   const { setIsLoggedIn } = useContext(AuthContext);
   const { setUser } = useContext(UserContext);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [error, setError] = useState("");
 
   const handleRegister = () => {
     if (password !== repeatPassword) {
-      alert("The two passwords are not matching");
-      return;
+      setError("The two passwords are not matching");
+      setShowErrorModal(true);
+    } else {
+      doRegister();
     }
-    doRegister();
   };
 
   const doRegister = async () => {
@@ -91,15 +95,19 @@ const Register = (props) => {
       // Register successfully worked --> navigate to the route /dashboard in the GameRouter
       history.push(`/dashboard`);
     } catch (error) {
-      alert(
-        `Something went wrong during the registration: \n${handleError(error)}`
+      setError(
+        `Something went wrong during the registration: \n 
+        ${error.response.data.message}`
       );
+      handleError(error);
+      setShowErrorModal(true);
+
+      //alert(`Something went wrong during the login: \n${handleError(error)}`);
       history.push(`/register`);
     }
   };
 
   return (
-    // <BaseContainer>
     <div className="login container">
       <img className="login image" alt="login background"></img>
       <div className="login form">
@@ -110,14 +118,14 @@ const Register = (props) => {
             friends.
           </p>
         </div>
-          <FormField
-            label="Username"
-            value={username}
-            onChange={(un) => setUsername(un)}
-          />
-          <div className="login small-text">
-            only alphabetic characters allowed
-          </div>
+        <FormField
+          label="Username"
+          value={username}
+          onChange={(un) => setUsername(un)}
+        />
+        <div className="login small-text">
+          only alphabetic characters allowed
+        </div>
         <FormField
           label="Password"
           name="Password"
@@ -155,8 +163,13 @@ const Register = (props) => {
           </div>
         </div>
       </div>
+      {showErrorModal && (
+        <ErrorModal
+          message={error}
+          onConfirm={() => setShowErrorModal(false)}
+        />
+      )}
     </div>
-    // </BaseContainer>
   );
 };
 /**
