@@ -34,106 +34,8 @@ const Profile = () => {
   const history = useHistory();
   const { userId } = useParams();
   const [user, setUser] = useState(null);
-  //isEditable is a variable that is set to false by defalut and becomes true when the modify profile button is pressed
   const [isEditable, setIsEditable] = useState(false);
-
-  const [username, setUsername] = useState(user?.username);
-  const [currentPassword, setCurrentPassword] = useState(null);
-  const [newPassword, setNewPassword] = useState(null);
-  const [diet, setDiet] = useState(null);
   const [allergies, setAllergies] = useState([]);
-  const [cuisine, setCuisine] = useState([]);
-
-  const options = [
-    { value: "vegan", label: "vegan" },
-    { value: "vegetarian", label: "vegetarian" },
-    { value: "paleo", label: "paleo" },
-    { value: "gluten-free", label: "gluten-free" },
-    { value: "ketogenic", label: "ketogenic" },
-    { value: "lacto-vegetarian", label: "lacto-vegetarian" },
-    { value: "ovo-vegetarian", label: "ovo-vegetarian" },
-    { value: "pescetarian", label: "pescetarian" },
-    { value: "omnivore", label: "omnivore" },
-    { value: "primal", label: "primal" },
-  ];
-
-  const allergens = [
-    { value: "dairy", label: "dairy" },
-    { value: "egg", label: "egg" },
-    { value: "gluten", label: "gluten" },
-    { value: "grain", label: "grain" },
-    { value: "peanut", label: "peanut" },
-    { value: "seafood", label: "seafood" },
-    { value: "sesame", label: "sesame" },
-    { value: "shellfish", label: "shellfish" },
-    { value: "soy", label: "soy" },
-    { value: "sulfite", label: "sulfite" },
-    { value: "tree-nut", label: "tree-nut" },
-    { value: "wheat", label: "wheat" },
-  ];
-
-  const cuisines = [
-    { value: "african", label: "african" },
-    { value: "american", label: "american" },
-    { value: "british", label: "british" },
-    { value: "cajun", label: "cajun" },
-    { value: "caribbean", label: "caribbean" },
-    { value: "chinese", label: "chinese" },
-    { value: "eastern european", label: "eastern european" },
-    { value: "european", label: "european" },
-    { value: "french", label: "french" },
-    { value: "german", label: "german" },
-    { value: "greek", label: "greek" },
-    { value: "indian", label: "indian" },
-    { value: "irish", label: "irish" },
-    { value: "italian", label: "italian" },
-    { value: "japanese", label: "japanese" },
-    { value: "jewish", label: "jewish" },
-    { value: "korean", label: "korean" },
-    { value: "mediterranean", label: "mediterranean" },
-    { value: "mexican", label: "mexican" },
-    { value: "middle eastern", label: "middle eastern" },
-    { value: "nordic", label: "nordic" },
-    { value: "spanish", label: "spanish" },
-    { value: "thai", label: "thai" },
-    { value: "vietnamese", label: "vietnamese" },
-  ];
-
-  const handleCuisineChange = (selectedOptions) => {
-    setCuisine(selectedOptions.map((option) => option.value));
-  };
-
-  const handleAllergiesChange = (selectedOptions) => {
-    setAllergies(selectedOptions.map((option) => option.value));
-  };
-
-  const handleDietChange = (d) => {
-    setDiet(d.value);
-  };
-
-  console.log(user);
-  console.log(user?.allergiesSet);
-
-  const handleUpdate = async () => {
-    try {
-      const requestBody = JSON.stringify({
-        username: username,
-        specialDiet: diet,
-        password: newPassword,
-        currentPassword: currentPassword,
-        allergies: allergies,
-        favoriteCuisine: cuisine,
-      });
-      await api.put(`/users/${userId}`, requestBody, { headers });
-      window.location.reload();
-    } catch (error) {
-      alert(
-        `Something went wrong while updating the profile: \n${handleError(
-          error
-        )}`
-      );
-    }
-  };
 
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
@@ -143,8 +45,6 @@ const Profile = () => {
     async function fetchData() {
       try {
         const response = await api.get(`/users/${userId}`, { headers });
-
-        // Get the returned users and update the state.
         setUser(response.data);
         setAllergies(user?.allergiesSet);
       } catch (error) {
@@ -207,74 +107,6 @@ const Profile = () => {
             </div>
           )}
 
-          {isEditable && (
-            <div className="profile modify-section">
-              <div className="profile singles">
-                <div className="field-info">
-                  <InfoField
-                    label="Username"
-                    value={username}
-                    onChange={(u) => setUsername(u)}
-                  />
-                  <div className="profile small-text">
-                    {" "}
-                    only alphabetic characters allowed{" "}
-                  </div>
-                </div>
-                <div className="field-info">
-                  <InfoField
-                    label="Current Password"
-                    onChange={(cp) => setCurrentPassword(cp)}
-                  />
-                  <div className="profile small-text">
-                    {" "}
-                    username and password must differ{" "}
-                  </div>
-                </div>
-
-                <div className="profile diet-dropdown">
-                  <label className="profile titles"> Diet preference </label>
-                  <Dropdown
-                    placeHolder="select diet"
-                    value={user?.specialDiet?.toString()}
-                    options={options}
-                    onChange={handleDietChange}
-                  />
-                </div>
-
-                <InfoField
-                  label="New Password"
-                  onChange={(np) => setNewPassword(np)}
-                />
-              </div>
-
-              <div className="profile dropdowns">
-                <div className="profile list">
-                  <div className="profile titles">Allergies</div>
-                  <MultiDropdown
-                    isSearchable
-                    isMulti
-                    placeHolder="add allergy"
-                    options={allergens}
-                    onChange={handleAllergiesChange}
-                    value={user?.allergiesSet}
-                  />
-                </div>
-
-                <div className="profile list">
-                  <div className="profile titles">Favorite cuisines</div>
-                  <MultiDropdown
-                    isSearchable
-                    isMulti
-                    placeHolder="add cuisine"
-                    options={cuisines}
-                    onChange={handleCuisineChange}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
           {localStorage.getItem("userId") == user?.id && (
             <div className="profile buttons">
               {!isEditable && (
@@ -282,35 +114,10 @@ const Profile = () => {
                   className="profile general-button"
                   width="24%"
                   onClick={() => {
-                    toggleEdit();
+                    history.push(`/profile/${user?.id}/edit`);
                   }}
                 >
                   Edit profile
-                </button>
-              )}
-
-              {isEditable && (
-                <button
-                  className="profile cancel-button"
-                  width="24%"
-                  onClick={() => {
-                    toggleEdit();
-                  }}
-                >
-                  Cancel
-                </button>
-              )}
-
-              {isEditable && (
-                <button
-                  className="profile general-button"
-                  width="24%"
-                  onClick={() => {
-                    toggleEdit();
-                    handleUpdate();
-                  }}
-                >
-                  Save
                 </button>
               )}
             </div>
@@ -319,14 +126,6 @@ const Profile = () => {
       </BaseContainer>
     </AppContainer>
   );
-
-  function toggleEdit() {
-    setIsEditable(!isEditable);
-    setDefaultValues();
-  }
-  function setDefaultValues() {
-    setUsername(user?.username);
-  }
 };
 /**
  * You can get access to the history object's properties via the withRouter.

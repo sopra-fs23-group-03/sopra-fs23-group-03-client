@@ -5,6 +5,7 @@ import Login from "components/views/Login";
 import Register from "components/views/Register";
 import NavigationBar from "components/views/NavigationBar";
 import Profile from "components/views/Profile";
+import EditProfile from "components/views/EditProfile";
 import GroupCreation from "components/views/GroupCreation";
 import Final from "components/views/Final";
 import FinalStatic from "components/views/FinalStatic";
@@ -65,19 +66,19 @@ const AppRouter = () => {
           </GameGuard>
         </Route>
 
-        <Route exact path="/users/:userId">
+        <Route exact path="/profile/:userId/edit">
           <GameGuard>
             <UserStateGuard state="NOGROUP">
-              <Profile />
+              <EditProfile />
             </UserStateGuard>
           </GameGuard>
         </Route>
 
         <Route path="/group-creation">
           <GameGuard>
-            {/* <UserStateGuard state="NOGROUP" > */}
-            <GroupCreation />
-            {/* </UserStateGuard> */}
+            <UserStateGuard state="NOGROUP">
+              <GroupCreation />
+            </UserStateGuard>
           </GameGuard>
         </Route>
 
