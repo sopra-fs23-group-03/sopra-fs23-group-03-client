@@ -10,7 +10,6 @@ import { Spinner } from "components/ui/Spinner";
 import useGroupMembers from "hooks/useGroupMembers";
 import { useContext } from "react";
 import UserContext from "components/contexts/UserContext";
-
 const InfoField = (props) => {
   return (
     <div className="final field">
@@ -19,7 +18,6 @@ const InfoField = (props) => {
     </div>
   );
 };
-
 const Final = () => {
   const history = useHistory();
   const [recipes, setRecipes] = useState(null);
@@ -39,25 +37,12 @@ const Final = () => {
   const showInstructions = () => {
     setSeeIstructions(true);
   };
-
   const hideInstructions = () => {
     setSeeIstructions(false);
   };
-
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
   }, []);
-
-  // const handleContinue = async () => {
-  //   try {
-  //     await api.put(`/users/${user.id}/${groupId}/ready`, null, {
-  //       headers,
-  //     });
-  //     history.push("/finalstatic");
-  //   } catch (error) {
-  //     handleError(error);
-  //   }
-  // };
 
   useEffect(() => {
     async function fetchData() {
@@ -68,6 +53,15 @@ const Final = () => {
 
         // Get the returned users and update the state.
         setRecipes(recipesResponse.data);
+        localStorage.setItem("recipes", JSON.stringify(recipesResponse.data));
+        await api.put(`/users/${user.id}/${groupId}/ready`, null, {
+          headers,
+        });
+        setUser({
+          ...user,
+          groupState: "RECIPE_STATIC",
+        });
+        history.push("/recipe");
       } catch (error) {
         alert(
           `Something went wrong while fetching the recipe: \n${handleError(
@@ -77,7 +71,6 @@ const Final = () => {
         console.error("Details:", error);
       }
     }
-
     fetchData();
   }, []);
 
@@ -138,7 +131,6 @@ const Final = () => {
                   />
                   <div className="final section">
                     <InfoField label="Recipe" value={recipes[0]?.title} />
-
                     <InfoField
                       label="Approx. time"
                       value={(recipes[0]?.readyInMinutes + " minutes").replace(
@@ -146,7 +138,6 @@ const Final = () => {
                         "'"
                       )}
                     />
-
                     <InfoField
                       label="Instructions"
                       value={
@@ -175,7 +166,6 @@ const Final = () => {
                         )}
                       </ul>
                     </div>
-
                     <div className="final ingredients">
                       <div className="final ingredients-title">
                         <i className="final icon">shopping_cart</i>
@@ -191,7 +181,6 @@ const Final = () => {
                     </div>
                   </div>
                 )}
-
                 {recipes[0]?.usedIngredients.length === 0 && (
                   <div className="final ingredients solo">
                     <div className="final ingredients-title">
@@ -208,20 +197,11 @@ const Final = () => {
                   </div>
                 )}
 
-                <button
-                  className="final button"
-                  // onClick={() => {
-                  //   // make the user groupState in the user context "NOGROUP"
-                  //   handleContinue(groupId, user.id);
-                  // }}
-                >
-                  Back to Landing Page
-                </button>
+                <button className="final button">Back to Landing Page</button>
               </div>
             </BaseContainer>
           </div>
         </div>
-
         {seeInstructions && (
           <div id="modal-root">
             <div className="modal">
@@ -243,5 +223,4 @@ const Final = () => {
     );
   }
 };
-
 export default Final;

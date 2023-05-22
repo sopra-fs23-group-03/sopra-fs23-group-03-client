@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  useMemo,
-  useContext,
-} from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import { api } from "helpers/api";
 import AuthContext from "components/contexts/AuthContext";
 import UserContext from "./UserContext";

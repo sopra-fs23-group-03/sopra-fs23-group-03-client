@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import "styles/views/Dashboard.scss";
 import AppContainer from "components/ui/AppContainer";
-import AuthContext from "components/contexts/AuthContext";
 import { useContext } from "react";
 import UserContext from "components/contexts/UserContext";
 import ConfirmationModal from "components/ui/ConfirmationModal";
@@ -94,7 +93,7 @@ const Dashboard = () => {
     fetchUsers();
     fetchGroups();
     const usersInterval = setInterval(fetchUsers, 5000);
-    const groupsInterval = setInterval(fetchGroups, 10000);
+    const groupsInterval = setInterval(fetchGroups, 5000);
 
     if (groups) {
       groups.forEach((group) => {
@@ -113,7 +112,6 @@ const Dashboard = () => {
     }
   }, []);
 
-  
   // Load joinRequests from localStorage on component mount
   useEffect(() => {
     const storedJoinRequests =
@@ -175,7 +173,7 @@ const Dashboard = () => {
           checkGroupId(groupId);
         }
       }
-    }, 5000); // Check every 5 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [joinRequests]);

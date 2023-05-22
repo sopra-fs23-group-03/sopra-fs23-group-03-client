@@ -1,13 +1,12 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState } from "react";
 import "styles/views/Profile.scss";
 import BaseContainer from "components/ui/BaseContainer";
-import { api, handleError } from "helpers/api";
+import { handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import AppContainer from "components/ui/AppContainer";
 import "styles/views/Final.scss";
 import "styles/views/GroupFormingHost.scss";
 import { Spinner } from "components/ui/Spinner";
-import useGroupMembers from "hooks/useGroupMembers";
 import { useContext } from "react";
 import UserContext from "components/contexts/UserContext";
 
@@ -53,6 +52,14 @@ const Final = () => {
       handleError(error);
     }
   };
+
+  // useEffect(() => {
+  //   if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
+  //     alert(
+  //       "All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!"
+  //     );
+  //   }
+  // }, [recipes]);
 
   if (!recipes) {
     return (
@@ -176,7 +183,6 @@ const Final = () => {
                 <button
                   className="final button"
                   onClick={() => {
-                    // make the user groupState in the user context "NOGROUP"
                     handleContinue(groupId, user.id);
                   }}
                 >

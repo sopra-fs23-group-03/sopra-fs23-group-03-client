@@ -47,7 +47,6 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
   };
 
   const [suggestions, setSuggestions] = useState([]);
-  const [allIngredients, setAllIngredients] = useState([]);
 
   const fetchIngredients = async (text) => {
     try {

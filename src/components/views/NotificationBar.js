@@ -1,9 +1,7 @@
 import "styles/views/NotificationBar.scss";
-import React, { useState, useEffect, useMemo } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import "styles/views/NavigationBar.scss";
 import { useHistory } from "react-router-dom";
-import { api } from "helpers/api";
 import useInvitationActions from "hooks/useInvitationActions";
 
 const NotificationBar = ({ notificationData }) => {

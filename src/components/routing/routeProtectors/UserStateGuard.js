@@ -32,8 +32,6 @@ const UserStateGuard = ({ children, state }) => {
       case "GROUPFORMING_HOST_LOBBY":
         return <Redirect to={`/groupforming/host/lobby`} />;
 
-      case "GROUPFORMING_LOBBY":
-        return <Redirect to={`/groupforming/lobby`} />;
       case "INGREDIENTENTERING":
         return (
           <Redirect to={`/ingredients/${localStorage.getItem("groupId")}`} />
@@ -86,6 +84,7 @@ UserStateGuard.propTypes = {
     "FINAL",
     "FINAL_LOBBY",
     "RECIPE",
+    "RECIPE_STATIC",
   ]).isRequired,
 };
 

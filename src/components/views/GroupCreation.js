@@ -19,15 +19,11 @@ const GroupCreation = () => {
 
   const [users, setUsers] = useState(null);
   const [guests, setGuests] = useState([]);
-  const [isInvited, setIsInvited] = useState(false);
   const [groupName, setGroupName] = useState("");
   const [invitedUsers, setInvitedUsers] = useState([]);
-  const [votingType, setVotingType] = useState("MAJORITYVOTE");
-  const [hostId, setHostId] = useState(localStorage.getItem("userId"));
+  const votingType = "MAJORITYVOTE";
+  const hostId = localStorage.getItem("userId");
   const { user, setUser } = useContext(UserContext);
-
-
-  const [isHovering, setIsHovering] = useState(false);
 
   const createGroup = async () => {
     if (groupName.length < 3 || groupName.length > 9) {
@@ -47,7 +43,7 @@ const GroupCreation = () => {
         votingType: votingType,
       };
       const response = await api.post("/groups", requestBody, { headers });
-      const group = new Group(response.data); //added
+      const group = new Group(response.data);
       const groupId = group.id;
 
       if (
@@ -81,7 +77,6 @@ const GroupCreation = () => {
       try {
         const response = await api.get("/users", { headers });
         setUsers(response.data);
-
       } catch (error) {
         alert(
           `Something went wrong while fetching the users: \n${handleError(
@@ -103,16 +98,18 @@ const GroupCreation = () => {
   }, []);
 
   useEffect(() => {
-    setGuests(users?.filter((user) =>
-              user.id != localStorage.getItem("userId") &&
-              user.status === "ONLINE" &&
-              !user.groupId
-    ))
+    setGuests(
+      users?.filter(
+        (user) =>
+          user.id !== localStorage.getItem("userId") &&
+          user.status === "ONLINE" &&
+          !user.groupId
+      )
+    );
 
     console.log(users);
     console.log(guests);
-    
-}, [users]);
+  }, [users]);
 
   const toggleInvitation = (user) => {
     if (invitedUsers.includes(user.id)) {
@@ -157,7 +154,6 @@ const GroupCreation = () => {
           <div className="group-creation field">
             <div className="group-creation label"> Voting Type </div>
             <div className="group-creation voting">
-              
               <button className="group-creation voting-button">
                 <i className="group-creation icon">timeline</i>
                 Point Distribution
@@ -167,7 +163,6 @@ const GroupCreation = () => {
                 <i className="group-creation icon">star</i>
                 Majority
               </button>
-
             </div>
           </div>
 
@@ -176,20 +171,25 @@ const GroupCreation = () => {
               Who do you want to invite?
             </div>
             <div className="group-creation people">
-              {guests?.length === 0 && 
-              <div className="group-creation no-users"> No users available </div>}
-                
-              {guests?.length !== 0 && guests?.map((user) => (
-                <div className="person container" key={user.id}>
-                  <div className="person username">{user.username}</div>
-                  <button
-                    className="person add"
-                    onClick={() => toggleInvitation(user)}
-                  >
-                    {invitedUsers.includes(user.id) ? "done" : "person_add"}
-                  </button>
+              {guests?.length === 0 && (
+                <div className="group-creation no-users">
+                  {" "}
+                  No users available{" "}
                 </div>
-              ))}
+              )}
+
+              {guests?.length !== 0 &&
+                guests?.map((user) => (
+                  <div className="person container" key={user.id}>
+                    <div className="person username">{user.username}</div>
+                    <button
+                      className="person add"
+                      onClick={() => toggleInvitation(user)}
+                    >
+                      {invitedUsers.includes(user.id) ? "done" : "person_add"}
+                    </button>
+                  </div>
+                ))}
             </div>
 
             <div className="group-creation buttons">
@@ -201,7 +201,11 @@ const GroupCreation = () => {
               </button>
               <button
                 className="group-creation button continue"
-                disabled={groupName === "" || guests.length === 0 || invitedUsers.length === 0}
+                disabled={
+                  groupName === "" ||
+                  guests.length === 0 ||
+                  invitedUsers.length === 0
+                }
                 onClick={createGroup}
               >
                 Continue
