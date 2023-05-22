@@ -101,7 +101,7 @@ const GroupCreation = () => {
     setGuests(
       users?.filter(
         (user) =>
-          user.id !== localStorage.getItem("userId") &&
+          user.id != localStorage.getItem("userId") &&
           user.status === "ONLINE" &&
           !user.groupId
       )
