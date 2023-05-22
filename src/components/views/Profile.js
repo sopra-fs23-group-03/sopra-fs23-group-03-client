@@ -3,7 +3,7 @@ import "styles/views/Profile.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import Dropdown from "components/ui/Dropdown";
 import MultiDropdown from "components/ui/MultiDropdown";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import AppContainer from "components/ui/AppContainer";
@@ -33,8 +33,9 @@ InfoField.propTypes = {
 const Profile = () => {
   const history = useHistory();
   const { userId } = useParams();
+  console.log("fdvdfv", userId);
   const [user, setUser] = useState(null);
-  const [isEditable, setIsEditable] = useState(false);
+  //const [isEditable, setIsEditable] = useState(false);
   const [allergies, setAllergies] = useState([]);
 
   const headers = useMemo(() => {
@@ -67,59 +68,53 @@ const Profile = () => {
         <div className="profile form">
           <div className="profile main">
             <i className="profile icon">account_circle</i>
-            {!isEditable && (
-              <div className="profile text"> {user?.username} </div>
-            )}
-            {!isEditable && (
-              <div className="profile diet">{user?.specialDiet}</div>
-            )}
+
+            <div className="profile text"> {user?.username} </div>
+
+            <div className="profile diet">{user?.specialDiet}</div>
           </div>
 
-          {!isEditable && (
-            <div className="profile sections">
-              <div className="profile preferences">
-                <div className="profile titles">Allergies</div>
-                <div className="profile items">
-                  {user &&
-                    user.allergies &&
-                    user.allergies.filter(Boolean).map((allergy) => (
-                      <div className="profile item" key={allergy}>
-                        {" "}
-                        {allergy}{" "}
-                      </div>
-                    ))}
-                </div>
-              </div>
-
-              <div className="profile preferences">
-                <div className="profile titles">Favourite cuisines</div>
-                <div className="profile items">
-                  {user &&
-                    user.favoriteCuisine &&
-                    user.favoriteCuisine.filter(Boolean).map((cuisine) => (
-                      <div className="profile item" key={cuisine}>
-                        {" "}
-                        {cuisine}{" "}
-                      </div>
-                    ))}
-                </div>
+          <div className="profile sections">
+            <div className="profile preferences">
+              <div className="profile titles">Allergies</div>
+              <div className="profile items">
+                {user &&
+                  user.allergies &&
+                  user.allergies.filter(Boolean).map((allergy) => (
+                    <div className="profile item" key={allergy}>
+                      {" "}
+                      {allergy}{" "}
+                    </div>
+                  ))}
               </div>
             </div>
-          )}
 
-          {localStorage.getItem("userId") == user?.id && (
+            <div className="profile preferences">
+              <div className="profile titles">Favourite cuisines</div>
+              <div className="profile items">
+                {user &&
+                  user.favoriteCuisine &&
+                  user.favoriteCuisine.filter(Boolean).map((cuisine) => (
+                    <div className="profile item" key={cuisine}>
+                      {" "}
+                      {cuisine}{" "}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
+
+          {localStorage.getItem("userId") == userId && (
             <div className="profile buttons">
-              {!isEditable && (
-                <button
-                  className="profile general-button"
-                  width="24%"
-                  onClick={() => {
-                    history.push(`/profile/${user?.id}/edit`);
-                  }}
-                >
-                  Edit profile
-                </button>
-              )}
+              <button
+                className="profile general-button"
+                width="24%"
+                onClick={() => {
+                  history.push(`/profile/${user.id}/edit`);
+                }}
+              >
+                Edit profile
+              </button>
             </div>
           )}
         </div>

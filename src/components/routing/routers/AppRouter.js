@@ -66,6 +66,14 @@ const AppRouter = () => {
           </GameGuard>
         </Route>
 
+        <Route path="/users/profile/:userId">
+          <GameGuard>
+            <UserStateGuard state="NOGROUP">
+              <Profile />
+            </UserStateGuard>
+          </GameGuard>
+        </Route>
+
         <Route exact path="/profile/:userId/edit">
           <GameGuard>
             <UserStateGuard state="NOGROUP">

@@ -222,7 +222,7 @@ const Dashboard = () => {
                 <Button
                   className={`player container ${user.status.toLowerCase()}`}
                   key={user.id}
-                  onClick={() => history.push(`/profile/${user.id}`)}
+                  onClick={() => history.push(`users/profile/${user.id}`)}
                 >
                   <div className="status-circle" />
 
