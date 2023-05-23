@@ -43,7 +43,7 @@ const EditProfile = () => {
   const [cuisine, setCuisine] = useState(user?.favoriteCuisine || []);
 
   const options = [
-    { value: "", label: "No Specific Preference" },
+    { value: "", label: "no preference" },
     { value: "vegan", label: "vegan" },
     { value: "vegetarian", label: "vegetarian" },
     { value: "paleo", label: "paleo" },
@@ -100,11 +100,22 @@ const EditProfile = () => {
   ];
 
   const handleCuisineChange = (selectedOptions) => {
-    setCuisine(selectedOptions.map((option) => option.value));
+    const selectedValues = selectedOptions.map((option) => option.value);
+    if (selectedValues.includes("")) {
+      setCuisine([""]); // Set the cuisine state to an array with only the empty string value
+    } else {
+      setCuisine(selectedValues); // Set the selected cuisine values
+    }
   };
 
-  const handleAllergiesChange = (Options) => {
-    setAllergies(Options.map((option) => option.value));
+  const handleAllergiesChange = (selectedOptions) => {
+    const selectedValues = selectedOptions.map((option) => option.value);
+    if (selectedValues.includes("")) {
+      // If "No Allergies" is selected, exclude it from other selected values
+      setAllergies([""]);
+    } else {
+      setAllergies(selectedValues); // Set the selected allergies values
+    }
   };
 
   const handleDietChange = (d) => {
@@ -208,6 +219,7 @@ const EditProfile = () => {
               <div className="profile dropdowns">
                 <div className="profile list">
                   <div className="profile titles">Allergies</div>
+
                   <MultiDropdown
                     isSearchable
                     isMulti
