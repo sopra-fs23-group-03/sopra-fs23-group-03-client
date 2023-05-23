@@ -124,10 +124,10 @@ const GoSoloFinal = () => {
             <button
               className="final button"
               onClick={() => {
-                history.push(`/dashboard`);
+                window.location.reload();
               }}
             >
-              Back to Landing Page
+              Request again
             </button>
           </div>
         </BaseContainer>
