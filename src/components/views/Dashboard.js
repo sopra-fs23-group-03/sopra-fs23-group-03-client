@@ -244,7 +244,7 @@ const Dashboard = () => {
           </div>
 
           <div className=" game  group-container">
-          <div className="game welcome">CollaborEat helps to find a suitable dish for your next planned meal. Start with creating/joining a group or go solo. Have fun!</div>
+          <div className="game welcome">CollaborEat helps to find a suitable dish for your next planned meal. Refine your profile to meet your needs and start with creating/joining a group or go solo. Have fun!</div>
             <h2>Groups</h2>
 
             <div className="game group-container-labels">
