@@ -67,6 +67,11 @@ const Dashboard = () => {
     try {
       const groupsResponse = await api.get("/groups", { headers });
       setGroups(groupsResponse.data);
+
+      // Fetch group members immediately after fetching the groups
+      groupsResponse.data.forEach((group) => {
+        fetchGroupMembers(group.id);
+      });
     } catch (error) {
       console.error(`Failed to fetch groups data: \n${handleError(error)}`);
     }
@@ -101,20 +106,19 @@ const Dashboard = () => {
     const groupsInterval = setInterval(fetchGroups, 5000);
 
     if (groups) {
-      groups.forEach((group) => {
-        fetchGroupMembers(group.id);
-        const membersInterval = setInterval(
-          () => fetchGroupMembers(group.id),
-          10000
-        );
-
-        return () => {
-          clearInterval(usersInterval);
-          clearInterval(groupsInterval);
-          clearInterval(membersInterval);
-        };
+      groups.forEach(async (group) => {
+        await fetchGroupMembers(group.id);
       });
     }
+    const membersIntervals = groups.map((group) =>
+      setInterval(() => fetchGroupMembers(group.id), 10000)
+    );
+
+    return () => {
+      clearInterval(usersInterval);
+      clearInterval(groupsInterval);
+      membersIntervals.forEach((interval) => clearInterval(interval));
+    };
   }, []);
 
   // Load joinRequests from localStorage on component mount
