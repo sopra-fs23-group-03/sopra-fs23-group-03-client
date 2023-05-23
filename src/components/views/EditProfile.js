@@ -57,7 +57,7 @@ const EditProfile = () => {
   ];
 
   const allergens = [
-    { value: "", label: "No Allergies" },
+    { value: "", label: "no allergies" },
     { value: "dairy", label: "dairy" },
     { value: "egg", label: "egg" },
     { value: "gluten", label: "gluten" },
