@@ -74,7 +74,6 @@ const EditProfile = () => {
 
   const cuisines = [
     { value: "", label: "No Specific Preference" },
-    { value: "african", label: "african" },
     { value: "american", label: "american" },
     { value: "british", label: "british" },
     { value: "cajun", label: "cajun" },
