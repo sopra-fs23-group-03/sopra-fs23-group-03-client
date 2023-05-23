@@ -65,8 +65,8 @@ const Profile = () => {
   return (
     <AppContainer>
       <BaseContainer>
-        <div className="profile form">
-          <div className="profile main">
+        <div className="profile main">
+          <div className="profile form">
             <i className="profile icon">account_circle</i>
 
             <div className="profile text"> {user?.username} </div>
@@ -103,7 +103,6 @@ const Profile = () => {
               </div>
             </div>
           </div>
-
           {localStorage.getItem("userId") == userId && (
             <div className="profile buttons">
               <button

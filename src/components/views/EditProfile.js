@@ -179,7 +179,7 @@ const EditProfile = () => {
                     only alphabetic characters allowed{" "}
                   </div>
                 </div>
-                <div className="field-info">
+                <div className="profile field-info">
                   <InfoField
                     label="Current Password"
                     onChange={(cp) => setCurrentPassword(cp)}
@@ -230,29 +230,29 @@ const EditProfile = () => {
                 </div>
               </div>
             </div>
-            <div className="profile buttons">
-              <button
-                className="profile cancel-button"
-                width="24%"
-                onClick={() => {
-                  toggleEdit();
-                  history.push("/profile/" + userId);
-                }}
-              >
-                Cancel
-              </button>
-              <button
-                className="profile general-button"
-                width="24%"
-                onClick={() => {
-                  handleUpdate();
-                  toggleEdit();
-                  history.push("/profile/" + userId);
-                }}
-              >
-                Save
-              </button>
-            </div>
+          </div>
+          <div className="profile buttons">
+            <button
+              className="profile cancel-button"
+              width="24%"
+              onClick={() => {
+                toggleEdit();
+                history.push("/profile/" + userId);
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              className="profile general-button"
+              width="24%"
+              onClick={() => {
+                handleUpdate();
+                toggleEdit();
+                history.push("/profile/" + userId);
+              }}
+            >
+              Save
+            </button>
           </div>
         </div>
       </BaseContainer>
