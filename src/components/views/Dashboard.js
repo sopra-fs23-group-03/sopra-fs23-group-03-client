@@ -284,8 +284,13 @@ const Dashboard = () => {
                       }
                     >
                       {joinRequests[group.id] &&
-                      group.groupState !== "GROUPFORMING" ? (
+                      group.groupState === "GROUPFORMING" ? (
                         <i className="material-icons done-icon">done</i>
+                      ) : joinRequests[group.id] &&
+                        group.groupState !== "GROUPFORMING" ? (
+                        <i className="material-icons exit-icon">
+                          highlight_off
+                        </i>
                       ) : (
                         <span>Join</span>
                       )}
