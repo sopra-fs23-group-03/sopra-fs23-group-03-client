@@ -1,6 +1,13 @@
 @import "styles/theme";
 
 .profile {
+  &.main {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+  }
+
   &.form {
     display: flex;
     flex-direction: column;
@@ -17,14 +24,6 @@
     grid-row-gap: 5px;
     grid-column-gap: 40px;
     background: none;
-  }
-
-  &.main {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    text-align: center;
-    width: 40%;
   }
 
   &.sections {
@@ -83,12 +82,12 @@
     text-align: center;
   }
 
-  &.diet-dropdown{
+  &.diet-dropdown {
     display: flex;
     flex-direction: column;
   }
 
-  &.dropdowns{
+  &.dropdowns {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -127,14 +126,16 @@
     font-size: 100px;
     text-align: center;
     color: #333333;
-    margin-top: -20px;
-    margin-bottom: -15px;
+    // margin-top: -50px;
+    margin-bottom: -10px;
   }
 
   &.buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    //justify-content: center;
+    //gap: 20px;
     width: 100%;
     //margin-bottom: 15%;
     white-space: nowrap; //makes the text be in 1 line
@@ -146,12 +147,14 @@
     border-radius: 32px;
     border: 0px;
     width: 30%;
+
     cursor: pointer;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 50px;
     text-align: center;
+
     color: #ffffff;
     cursor: pointer;
   }
@@ -178,28 +181,28 @@
     justify-content: space-evenly;
     background: #f2f2f2;
     border-radius: 8px;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     display: flex;
     flex-direction: column;
     box-shadow: $dropShadow;
   }
 
-  &.preference-section{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 80px;
-  }
+  // &.preference-section {
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: space-between;
+  //   height: 80px;
+  // }
 
   &.list {
     display: flex;
     flex-direction: column;
   }
 
-  &.field-info{
+  &.field-info {
     display: flex;
     flex-direction: column;
     gap: 2px;

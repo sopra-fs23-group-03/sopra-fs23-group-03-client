@@ -34,7 +34,6 @@ const EditProfile = () => {
   const history = useHistory();
   const userId = localStorage.getItem("userId");
   const [user, setUser] = useState(null);
-  //isEditable is a variable that is set to false by defalut and becomes true when the modify profile button is pressed
   const [isEditable, setIsEditable] = useState(true);
   const [username, setUsername] = useState(user?.username);
   const [currentPassword, setCurrentPassword] = useState(null);
@@ -164,11 +163,9 @@ const EditProfile = () => {
   return (
     <AppContainer>
       <BaseContainer>
-        <div className="profile form">
-          <div className="profile main">
+        <div className="profile main">
+          <div className="profile form">
             <i className="profile icon">account_circle</i>
-          </div>
-          {isEditable && (
             <div className="profile modify-section">
               <div className="profile singles">
                 <div className="field-info">
@@ -233,29 +230,29 @@ const EditProfile = () => {
                 </div>
               </div>
             </div>
-          )}
-          <div className="profile buttons">
-            <button
-              className="profile cancel-button"
-              width="24%"
-              onClick={() => {
-                toggleEdit();
-                history.push("/profile/" + userId);
-              }}
-            >
-              Cancel
-            </button>
-            <button
-              className="profile general-button"
-              width="24%"
-              onClick={() => {
-                handleUpdate();
-                toggleEdit();
-                history.push("/profile/" + userId);
-              }}
-            >
-              Save
-            </button>
+            <div className="profile buttons">
+              <button
+                className="profile cancel-button"
+                width="24%"
+                onClick={() => {
+                  toggleEdit();
+                  history.push("/profile/" + userId);
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                className="profile general-button"
+                width="24%"
+                onClick={() => {
+                  handleUpdate();
+                  toggleEdit();
+                  history.push("/profile/" + userId);
+                }}
+              >
+                Save
+              </button>
+            </div>
           </div>
         </div>
       </BaseContainer>
