@@ -9,6 +9,7 @@ import AppContainer from "components/ui/AppContainer";
 import { useContext } from "react";
 import UserContext from "components/contexts/UserContext";
 import ConfirmationModal from "components/ui/ConfirmationModal";
+import NavigationBar from "./NavigationBar";
 
 const Player = ({ user }) => (
   <div className="player container">
@@ -36,12 +37,16 @@ const Dashboard = () => {
   const userId = localStorage.getItem("userId");
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [userGroupId, setGroupId] = useState(null);
+  const showNotificationBar = useState(false);
 
   const handleConfirmation = (userGroupId) => {
     // Perform any necessary actions
     localStorage.setItem("groupId", userGroupId);
     setUser({ ...user, groupState: "GROUPFORMING_GUEST" });
+    //localStorage.removeItem("joinRequests");
     localStorage.removeItem("joinRequests");
+
+    setGroupId(userGroupId);
     history.push(`/groupforming/${userGroupId}/guest`);
 
     // Close the confirmation modal
@@ -160,8 +165,14 @@ const Dashboard = () => {
           console.log("userGroupId", userGroupId);
 
           if (Number.isInteger(userGroupId)) {
-            setShowConfirmationModal(true);
+            //reload the page
+            localStorage.setItem("groupId", userGroupId);
+
+            //localStorage.removeItem("joinRequests");
+
             setGroupId(userGroupId);
+            //NavigationBar(showNotificationBar);
+            setShowConfirmationModal(true);
           }
         } catch (error) {
           console.error(`Failed to check groupId for user:`, error);
@@ -222,7 +233,7 @@ const Dashboard = () => {
                 <Button
                   className={`player container ${user.status.toLowerCase()}`}
                   key={user.id}
-                  onClick={() => history.push(`/profile/${user.id}`)}
+                  onClick={() => history.push(`users/profile/${user.id}`)}
                 >
                   <div className="status-circle" />
 

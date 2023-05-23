@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import "styles/views/Profile.scss";
 import BaseContainer from "components/ui/BaseContainer";
-import Dropdown from "components/ui/Dropdown";
-import MultiDropdown from "components/ui/MultiDropdown";
 import { useParams } from "react-router-dom";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
@@ -33,107 +31,10 @@ InfoField.propTypes = {
 const Profile = () => {
   const history = useHistory();
   const { userId } = useParams();
+  console.log("fdvdfv", userId);
   const [user, setUser] = useState(null);
-  //isEditable is a variable that is set to false by defalut and becomes true when the modify profile button is pressed
-  const [isEditable, setIsEditable] = useState(false);
-
-  const [username, setUsername] = useState(user?.username);
-  const [currentPassword, setCurrentPassword] = useState(null);
-  const [newPassword, setNewPassword] = useState(null);
-  const [diet, setDiet] = useState(null);
+  //const [isEditable, setIsEditable] = useState(false);
   const [allergies, setAllergies] = useState([]);
-  const [cuisine, setCuisine] = useState([]);
-
-  const options = [
-    { value: "vegan", label: "vegan" },
-    { value: "vegetarian", label: "vegetarian" },
-    { value: "paleo", label: "paleo" },
-    { value: "gluten-free", label: "gluten-free" },
-    { value: "ketogenic", label: "ketogenic" },
-    { value: "lacto-vegetarian", label: "lacto-vegetarian" },
-    { value: "ovo-vegetarian", label: "ovo-vegetarian" },
-    { value: "pescetarian", label: "pescetarian" },
-    { value: "omnivore", label: "omnivore" },
-    { value: "primal", label: "primal" },
-  ];
-
-  const allergens = [
-    { value: "dairy", label: "dairy" },
-    { value: "egg", label: "egg" },
-    { value: "gluten", label: "gluten" },
-    { value: "grain", label: "grain" },
-    { value: "peanut", label: "peanut" },
-    { value: "seafood", label: "seafood" },
-    { value: "sesame", label: "sesame" },
-    { value: "shellfish", label: "shellfish" },
-    { value: "soy", label: "soy" },
-    { value: "sulfite", label: "sulfite" },
-    { value: "tree-nut", label: "tree-nut" },
-    { value: "wheat", label: "wheat" },
-  ];
-
-  const cuisines = [
-    {value:"american", label: "american"},
-    {value:"british", label: "british"},
-    {value:"cajun", label: "cajun"},
-    {value:"caribbean", label: "caribbean"},
-    {value:"chinese", label: "chinese"},
-    {value:"eastern european", label: "eastern european"},
-    {value:"european", label: "european"},
-    {value:"french", label: "french"},
-    {value:"german", label: "german"},
-    {value:"greek", label: "greek"},
-    {value:"indian", label: "indian"},
-    {value:"irish", label: "irish"},
-    {value:"italian", label: "italian"},
-    {value:"japanese", label: "japanese"},
-    {value:"jewish", label: "jewish"},
-    {value:"korean", label: "korean"},
-    {value:"mediterranean", label: "mediterranean"},
-    {value:"mexican", label: "mexican"},
-    {value:"middle eastern", label: "middle eastern"},
-    {value:"nordic", label: "nordic"},
-    {value:"spanish", label: "spanish"},
-    {value:"thai", label: "thai"},
-    {value:"vietnamese", label: "vietnamese"}
-  ];
-
-  const handleCuisineChange = (selectedOptions) => {
-    setCuisine(selectedOptions.map((option) => option.value));
-  };
-
-  const handleAllergiesChange = (selectedOptions) => {
-    setAllergies(selectedOptions.map((option) => option.value));
-  };
-
-  const handleDietChange = (d) => {
-    setDiet(d.value);
-  };
-
-  console.log(user);
-  console.log(user?.allergiesSet);
-
-  const handleUpdate = async () => {
-    try {
-      const requestBody = JSON.stringify({
-        username: username,
-        specialDiet: diet,
-        password: newPassword,
-        currentPassword: currentPassword,
-        allergies: allergies,
-        favoriteCuisine: cuisine,
-      });
-      await api.put(`/users/${userId}`, requestBody, { headers });
-      window.location.reload();
-    } catch (error) {
-      alert(
-        `Something went wrong while updating the profile: \n${handleError(
-          error
-        )}`
-      );
-    }
-  };
-
 
   const headers = useMemo(() => {
     return { "X-Token": localStorage.getItem("token") };
@@ -143,8 +44,6 @@ const Profile = () => {
     async function fetchData() {
       try {
         const response = await api.get(`/users/${userId}`, { headers });
-
-        // Get the returned users and update the state.
         setUser(response.data);
         setAllergies(user?.allergiesSet);
       } catch (error) {
@@ -167,166 +66,59 @@ const Profile = () => {
         <div className="profile form">
           <div className="profile main">
             <i className="profile icon">account_circle</i>
-            {!isEditable && (
-              <div className="profile text"> {user?.username} </div>
-            )}
-            {!isEditable && (
-              <div className="profile diet">{user?.specialDiet}</div>
-            )}
+
+            <div className="profile text"> {user?.username} </div>
+
+            <div className="profile diet">{user?.specialDiet}</div>
           </div>
 
-          {!isEditable && (
-            <div className="profile sections">
-              <div className="profile preferences">
-                <div className="profile titles">Allergies</div>
-                <div className="profile items">
-                  {user &&
-                    user.allergies &&
-                    user.allergies.filter(Boolean).map((allergy) => (
-                      <div className="profile item" key={allergy}>
-                        {" "}
-                        {allergy}{" "}
-                      </div>
-                    ))}
-                </div>
-              </div>
-
-              <div className="profile preferences">
-                <div className="profile titles">Favourite cuisines</div>
-                <div className="profile items">
-                  {user &&
-                    user.favoriteCuisine &&
-                    user.favoriteCuisine.filter(Boolean).map((cuisine) => (
-                      <div className="profile item" key={cuisine}>
-                        {" "}
-                        {cuisine}{" "}
-                      </div>
-                    ))}
-                </div>
+          <div className="profile sections">
+            <div className="profile preferences">
+              <div className="profile titles">Allergies</div>
+              <div className="profile items">
+                {user &&
+                  user.allergies &&
+                  user.allergies.filter(Boolean).map((allergy) => (
+                    <div className="profile item" key={allergy}>
+                      {" "}
+                      {allergy}{" "}
+                    </div>
+                  ))}
               </div>
             </div>
-          )}
 
-          {isEditable && (
-            <div className="profile modify-section">
-              <div className="profile singles">
-                <div className="field-info">
-                  <InfoField
-                    label="Username"
-                    value={username}
-                    onChange={(u) => setUsername(u)}
-                  />
-                  <div className="profile small-text">
-                    {" "}
-                    only alphabetic characters allowed{" "}
-                  </div>
-                </div>
-                <div className="field-info">
-                  <InfoField
-                    label="Current Password"
-                    onChange={(cp) => setCurrentPassword(cp)}
-                  />
-                  <div className="profile small-text">
-                    {" "}
-                    username and password must differ{" "}
-                  </div>
-                </div>
-
-                <div className="profile diet-dropdown">
-                  <label className="profile titles"> Diet preference </label>
-                  <Dropdown
-                    placeHolder="select diet"
-                    value={user?.specialDiet?.toString()}
-                    options={options}
-                    onChange={handleDietChange}
-                  />
-                </div>
-
-                <InfoField
-                  label="New Password"
-                  onChange={(np) => setNewPassword(np)}
-                />
-              </div>
-
-              <div className="profile dropdowns">
-                <div className="profile list">
-                  <div className="profile titles">Allergies</div>
-                  <MultiDropdown
-                    isSearchable
-                    isMulti
-                    placeHolder="add allergy"
-                    options={allergens}
-                    onChange={handleAllergiesChange}
-                    value={user?.allergiesSet}
-                  />
-                </div>
-
-                <div className="profile list">
-                  <div className="profile titles">Favorite cuisines</div>
-                  <MultiDropdown
-                    isSearchable
-                    isMulti
-                    placeHolder="add cuisine"
-                    options={cuisines}
-                    onChange={handleCuisineChange}
-                  />
-                </div>
+            <div className="profile preferences">
+              <div className="profile titles">Favourite cuisines</div>
+              <div className="profile items">
+                {user &&
+                  user.favoriteCuisine &&
+                  user.favoriteCuisine.filter(Boolean).map((cuisine) => (
+                    <div className="profile item" key={cuisine}>
+                      {" "}
+                      {cuisine}{" "}
+                    </div>
+                  ))}
               </div>
             </div>
-          )}
+          </div>
 
-          {localStorage.getItem("userId") == user?.id && (
+          {localStorage.getItem("userId") == userId && (
             <div className="profile buttons">
-              {!isEditable && (
-                <button
-                  className="profile general-button"
-                  width="24%"
-                  onClick={() => {
-                    toggleEdit();
-                  }}
-                >
-                  Edit profile
-                </button>
-              )}
-
-              {isEditable && (
-                <button
-                  className="profile cancel-button"
-                  width="24%"
-                  onClick={() => {
-                    toggleEdit();
-                  }}
-                >
-                  Cancel
-                </button>
-              )}
-
-              {isEditable && (
-                <button
-                  className="profile general-button"
-                  width="24%"
-                  onClick={() => {
-                    toggleEdit();
-                    handleUpdate();
-                  }}
-                >
-                  Save
-                </button>
-              )}
+              <button
+                className="profile general-button"
+                width="24%"
+                onClick={() => {
+                  history.push(`/profile/${user.id}/edit`);
+                }}
+              >
+                Edit profile
+              </button>
             </div>
           )}
         </div>
       </BaseContainer>
     </AppContainer>
   );
-
-  function toggleEdit() {
-    setIsEditable(!isEditable);
-    setDefaultValues();
-  }
-  function setDefaultValues() {
-    setUsername(user?.username);
-  }
 };
 /**
  * You can get access to the history object's properties via the withRouter.

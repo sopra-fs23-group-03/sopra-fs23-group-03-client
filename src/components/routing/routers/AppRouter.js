@@ -5,10 +5,11 @@ import Login from "components/views/Login";
 import Register from "components/views/Register";
 import NavigationBar from "components/views/NavigationBar";
 import Profile from "components/views/Profile";
+import EditProfile from "components/views/EditProfile";
 import GroupCreation from "components/views/GroupCreation";
 import Final from "components/views/Final";
 import FinalStatic from "components/views/FinalStatic";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "components/contexts/AuthContext";
 import GroupFormingGuest from "components/views/GroupFormingGuest";
 import GroupFormingHost from "components/views/GroupFormingHost";
@@ -32,10 +33,14 @@ import UserStateGuard from "components/routing/routeProtectors/UserStateGuard";
 
 const AppRouter = () => {
   const { isLoggedIn } = useContext(AuthContext);
+  const showNotificationBar = useState(false);
 
   return (
     <BrowserRouter>
-      <NavigationBar isLoggedIn={isLoggedIn} />
+      <NavigationBar
+        showNotificationBar={showNotificationBar}
+        isLoggedIn={isLoggedIn}
+      />
       <Switch>
         <Route exact path="/dashboard">
           <GameGuard>
@@ -65,7 +70,7 @@ const AppRouter = () => {
           </GameGuard>
         </Route>
 
-        <Route exact path="/users/:userId">
+        <Route path="/users/profile/:userId">
           <GameGuard>
             <UserStateGuard state="NOGROUP">
               <Profile />
@@ -73,11 +78,19 @@ const AppRouter = () => {
           </GameGuard>
         </Route>
 
+        <Route exact path="/profile/:userId/edit">
+          <GameGuard>
+            <UserStateGuard state="NOGROUP">
+              <EditProfile />
+            </UserStateGuard>
+          </GameGuard>
+        </Route>
+
         <Route path="/group-creation">
           <GameGuard>
-            {/* <UserStateGuard state="NOGROUP" > */}
-            <GroupCreation />
-            {/* </UserStateGuard> */}
+            <UserStateGuard state="NOGROUP">
+              <GroupCreation />
+            </UserStateGuard>
           </GameGuard>
         </Route>
 

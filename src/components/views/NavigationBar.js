@@ -62,9 +62,14 @@ const NavigationBar = () => {
       {/* {isLoggedIn && ( */}
       {isLoggedIn && !groupId && (
         <div className="navbar button-container">
-          <Link to={`/profile/${localStorage.getItem("userId")}`}>
-            <button className="navbar profile-icon">person</button>
-          </Link>
+          <button
+            className="navbar profile-icon"
+            onClick={() =>
+              history.push(`/profile/${localStorage.getItem("userId")}`)
+            }
+          >
+            person
+          </button>
 
           <button
             // Add the class "has-new-notifications" to the button if there are new notifications
@@ -81,14 +86,12 @@ const NavigationBar = () => {
             // Pass the notification data as a prop to the NotificationBar component
             <NotificationBar notificationData={notifications} />
           )}
-
           <button
             className="navbar home-icon "
             onClick={() => history.push(`/dashboard`)}
           >
             home
           </button>
-
           <button className="button login" onClick={() => logout()}>
             <span className="text">Logout</span>
           </button>
