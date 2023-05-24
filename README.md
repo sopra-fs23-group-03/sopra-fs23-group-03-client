@@ -37,6 +37,8 @@ For every displayed final recipe, two calls are needed: First, to retrieve the r
 ### Users don't leave the process
 We assume that all group members stay online and continue the meal-planning process together. If one member is not moving along in the process, all other members of the group get stuck at that point and would have to delete their local storage and create a new account in order to use our services.
 
+TODO: add more? The one in the report?
+
 ### Web Browser
 Our application was developed and tested mostly using [Google Chrome](https://www.google.com/chrome/). We therefore recommend you download and install Chrome to have the best experience with our application.
 
@@ -94,9 +96,25 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-> Thanks to Lucas Pelloni and Kyrill Hux for working on the template.
+> Thanks to Lucas Pelloni and Kyrill Hux for working on the template.  TODO: we should delete that
 
 ## Illustrations
+- **Landing Page**: This page provides an overview of all (active) users, current groups in various states of planning (more see below) and offers two option which lead to a recipe. Once the go-solo option, which gives recipe suggestions without typing in ingredients, but taking into account all personal information in the user profile. The other option is creating a group (which makes the user a host) and to start the group planning process. 
+<img width="828" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/40631e73-b9e1-4e16-aff6-d147b23119a0">
+
+
+Profile
+
+Notification Bar
+
+Adding Ingredients
+
+Rating the ingredients
+
+Final Recipe
+
+
+
 TODO:
 In your client repository, briefly describe and illustrate the main user flow(s) of your interface. How does it work (without going into too much detail)? Feel free to include a few screenshots of your application.
 
