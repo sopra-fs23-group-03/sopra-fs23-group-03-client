@@ -8,6 +8,7 @@ import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import AppContainer from "components/ui/AppContainer";
 import PropTypes from "prop-types";
+import ErrorModal from "components/ui/ErrorModal";
 
 const InfoField = (props) => {
   return (
@@ -41,9 +42,11 @@ const EditProfile = () => {
   const [diet, setDiet] = useState(null);
   const [allergies, setAllergies] = useState(user?.allergies || []);
   const [cuisine, setCuisine] = useState(user?.favoriteCuisine || []);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [error, setError] = useState("");
 
   const options = [
-    { value: "", label: "no preference" },
+    { value: "omnivore", label: "omnivore" },
     { value: "vegan", label: "vegan" },
     { value: "vegetarian", label: "vegetarian" },
     { value: "paleo", label: "paleo" },
@@ -52,7 +55,6 @@ const EditProfile = () => {
     { value: "lacto-vegetarian", label: "lacto-vegetarian" },
     { value: "ovo-vegetarian", label: "ovo-vegetarian" },
     { value: "pescetarian", label: "pescetarian" },
-    { value: "omnivore", label: "omnivore" },
     { value: "primal", label: "primal" },
   ];
 
@@ -136,12 +138,14 @@ const EditProfile = () => {
         favoriteCuisine: cuisine,
       });
       await api.put(`/users/${userId}`, requestBody, { headers });
+      history.push("/profile/" + userId);
     } catch (error) {
-      alert(
-        `Something went wrong while updating the profile: \n${handleError(
-          error
-        )}`
+      setError(
+        `Something went wrong while updating the profile: \n 
+        ${error.response.data.message}`
       );
+      handleError(error);
+      setShowErrorModal(true);
     }
   };
 
@@ -259,7 +263,6 @@ const EditProfile = () => {
               onClick={() => {
                 handleUpdate();
                 toggleEdit();
-                history.push("/profile/" + userId);
               }}
             >
               Save
@@ -267,6 +270,12 @@ const EditProfile = () => {
           </div>
         </div>
       </BaseContainer>
+      {showErrorModal && (
+        <ErrorModal
+          message={error}
+          onConfirm={() => setShowErrorModal(false)}
+        />
+      )}
     </AppContainer>
   );
 
