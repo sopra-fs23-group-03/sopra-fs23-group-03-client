@@ -44,7 +44,6 @@ const EditProfile = () => {
   const [cuisine, setCuisine] = useState(user?.favoriteCuisine || []);
 
   const options = [
-    { value: "", label: "No Specific Preference" },
     { value: "vegan", label: "vegan" },
     { value: "vegetarian", label: "vegetarian" },
     { value: "paleo", label: "paleo" },
