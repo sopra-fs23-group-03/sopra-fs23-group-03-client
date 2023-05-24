@@ -29,7 +29,6 @@
     background: #fefefe;
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
-    justify-content: center;
     align-items: center;
     padding: 1rem;
     min-width: fit-content;
@@ -38,11 +37,10 @@
 
   &.welcome {
     font-size: 16px;
-    line-height: 20px;
+    line-height: 25px;
     font-weight:700;
     color: #333333;
     font-weight: 200;
-    margin-bottom: 15px;
     width: 550px;
     margin-top: 10px;
   }
@@ -79,6 +77,7 @@
       }
     }
     &.create-group {
+      margin-top: 0.5em;
       &:hover::after {
         content: "Want to plan a meal with friends? Start planning here!";
         position: absolute;
@@ -96,6 +95,10 @@
         word-wrap: break-word;
       }
     }
+  }
+
+  .title {
+    color: #333333;
   }
 
   &.user-list {
@@ -120,7 +123,7 @@
     font-size: 1.2em;
     line-height: 1em;
     align-items: center;
-    color: #000000;
+    color: #333333;
     font-weight: 500;
     margin: 0.5em -0.5em;
   }
