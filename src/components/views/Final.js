@@ -65,7 +65,7 @@ const Final = () => {
           ...user,
           groupState: "RECIPE_STATIC",
         });
-        history.push("/recipe");
+        //history.push("/recipe");
       } catch (error) {
         alert(
           `Something went wrong while fetching the recipe: \n${handleError(
@@ -80,23 +80,21 @@ const Final = () => {
 
   useEffect(() => {
     if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
-      setError(
+      // setError(
+      //   "There's no recipe matching your personal preferences, try to change your favourite cuisine!"
+      // );
+
+      // setShowErrorModal(true);
+      alert(
         "There's no recipe matching your personal preferences, try to change your favourite cuisine!"
       );
-      setShowErrorModal(true);
     }
   }, [recipes]);
 
-  if (!recipes && !error) {
+  if (!recipes) {
     return (
       <AppContainer>
         <Spinner />
-      </AppContainer>
-    );
-  } else if (error) {
-    return (
-      <AppContainer>
-        <ErrorModal message={error} onConfirm={history.push("/recipe")()} />
       </AppContainer>
     );
   } else {
