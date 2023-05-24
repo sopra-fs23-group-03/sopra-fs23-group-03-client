@@ -187,10 +187,6 @@ const EditProfile = () => {
                     label="Current Password"
                     onChange={(cp) => setCurrentPassword(cp)}
                   />
-                  <div className="profile small-text">
-                    {" "}
-                    username and password must differ{" "}
-                  </div>
                 </div>
 
                 <div className="profile diet-dropdown">
@@ -203,10 +199,17 @@ const EditProfile = () => {
                   />
                 </div>
 
-                <InfoField
-                  label="New Password"
-                  onChange={(np) => setNewPassword(np)}
-                />
+                <div className="field-info">
+                  <InfoField
+                    label="New Password"
+                    onChange={(np) => setNewPassword(np)}
+                  />
+
+                  <div className="profile small-text">
+                    {" "}
+                    username and password must differ{" "}
+                  </div>
+                </div>
               </div>
 
               <div className="profile dropdowns">
