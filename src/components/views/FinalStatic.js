@@ -9,6 +9,8 @@ import "styles/views/GroupFormingHost.scss";
 import { Spinner } from "components/ui/Spinner";
 import { useContext } from "react";
 import UserContext from "components/contexts/UserContext";
+import ErrorModal from "components/ui/ErrorModal";
+import { useEffect } from "react";
 
 const InfoField = (props) => {
   return (
@@ -28,6 +30,10 @@ const Final = () => {
   console.log("user state: " + user.groupState);
   const group = JSON.parse(localStorage.getItem("group"));
   const users = JSON.parse(localStorage.getItem("users"));
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [error, setError] = useState("");
+  const [hasDisplayedErrorMessage, setHasDisplayedErrorMessage] =
+    useState(false);
 
   const showInstructions = () => {
     setSeeIstructions(true);
@@ -43,6 +49,7 @@ const Final = () => {
       localStorage.removeItem("group");
       localStorage.removeItem("users");
       localStorage.removeItem("recipes");
+      localStorage.removeItem("hasDisplayedErrorMessage");
       setUser({
         ...user,
         groupState: "NOGROUP",
@@ -53,6 +60,24 @@ const Final = () => {
       handleError(error);
     }
   };
+
+  useEffect(() => {
+    const storedHasDisplayedErrorMessage = localStorage.getItem(
+      "hasDisplayedErrorMessage"
+    );
+    if (
+      !storedHasDisplayedErrorMessage &&
+      recipes &&
+      recipes[0]?.isRandomBasedOnIntolerances
+    ) {
+      setError(
+        "All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!"
+      );
+      setShowErrorModal(true);
+      setHasDisplayedErrorMessage(true);
+      localStorage.setItem("hasDisplayedErrorMessage", true);
+    }
+  }, [recipes]);
 
   if (!recipes) {
     return (
@@ -202,6 +227,12 @@ const Final = () => {
               </div>
             </div>
           </div>
+        )}
+        {showErrorModal && (
+          <ErrorModal
+            message={error}
+            onConfirm={() => setShowErrorModal(false)}
+          />
         )}
       </AppContainer>
     );

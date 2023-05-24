@@ -10,6 +10,7 @@ import { Spinner } from "components/ui/Spinner";
 import useGroupMembers from "hooks/useGroupMembers";
 import { useContext } from "react";
 import UserContext from "components/contexts/UserContext";
+
 const InfoField = (props) => {
   return (
     <div className="final field">
@@ -25,6 +26,7 @@ const Final = () => {
   const [seeInstructions, setSeeIstructions] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const { group, users } = useGroupMembers(groupId);
+
   console.log("user state: " + user.groupState);
   useEffect(() => {
     // Save the group and users data in localStorage when they are fetched
@@ -61,7 +63,7 @@ const Final = () => {
           ...user,
           groupState: "RECIPE_STATIC",
         });
-        history.push("/recipe");
+        //history.push("/recipe");
       } catch (error) {
         alert(
           `Something went wrong while fetching the recipe: \n${handleError(
@@ -73,14 +75,6 @@ const Final = () => {
     }
     fetchData();
   }, []);
-
-  useEffect(() => {
-    if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
-      alert(
-        "All the ingredients provided match with a group's allergy. But no worries, here's a random recipe fitting the group's allergies!"
-      );
-    }
-  }, [recipes]);
 
   if (!recipes) {
     return (
