@@ -53,9 +53,10 @@ const DrodownList = ({ ingredients, setIngredients, onIngredientSelect }) => {
       const response = await api.get(`/ingredients?initialString=${text}`, {
         headers,
       });
-      setSuggestions(response.data);
-
-      setShowSuggestions(response.data.length > 0);
+      const sortedData = response.data.sort();
+      setSuggestions(sortedData);
+      setShowSuggestions(sortedData.length > 0);
+      
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setSuggestions([]);
