@@ -202,11 +202,14 @@ const GroupCreation = () => {
               <button
                 className="group-creation button"
                 onClick={() => history.push("dashboard")}
+                disabled={groupName !== "" &&
+                guests.length !== 0 &&
+                invitedUsers.length !== 0}
               >
                 Cancel
               </button>
               <button
-                className="group-creation button continue"
+                className="group-creation button"
                 disabled={
                   groupName === "" ||
                   guests.length === 0 ||
