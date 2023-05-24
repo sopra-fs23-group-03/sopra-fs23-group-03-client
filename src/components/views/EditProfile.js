@@ -57,7 +57,7 @@ const EditProfile = () => {
   ];
 
   const allergens = [
-    { value: "", label: "No Allergies" },
+    { value: "", label: "no allergies" },
     { value: "dairy", label: "dairy" },
     { value: "egg", label: "egg" },
     { value: "gluten", label: "gluten" },
@@ -73,7 +73,7 @@ const EditProfile = () => {
   ];
 
   const cuisines = [
-    { value: "", label: "No Specific Preference" },
+    { value: "", label: "no specific preference" },
     { value: "african", label: "african" },
     { value: "american", label: "american" },
     { value: "british", label: "british" },
