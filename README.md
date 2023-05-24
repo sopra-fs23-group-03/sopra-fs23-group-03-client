@@ -50,7 +50,8 @@ In a first interaction with our deployed application, upon a server instance bei
 
 
 ## Illustrations and main user flow
-- **Landing Page**: This page provides an overview of all (active) users, current groups in various states of planning (more see below) and offers two option which lead to a recipe. Once the go-solo option, which gives recipe suggestions without typing in ingredients, but taking into account all personal information in the user profile. The other option is creating a group (which makes the user a host) and to start the group planning process. 
+- **Landing Page**: 
+This page provides an overview of all (active) users, current groups in various states of planning (more see below) and offers two option which lead to a recipe. Once the go-solo option, which gives recipe suggestions without typing in ingredients, but taking into account all personal information in the user profile. The other option is creating a group (which makes the user a host) and to start the group planning process. 
 <img width="395" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/6384d1b2-a489-4d21-919b-5d083624b114">
 
 
@@ -59,12 +60,14 @@ As long as a group is open to join, one sees the "join" button next to it. When 
 
 
 
-- **Profile**: In the personal profile a user can change the name and passwort. More interesting though are the options to define diet preferences, allergies and favourite cuisines. This information will taken into acount during the recipe selection.
+- **Profile**: 
+In the personal profile a user can change the name and passwort. More interesting though are the options to define diet preferences, allergies and favourite cuisines. This information will taken into acount during the recipe selection.
 <img width="299" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/7272711e-8080-4904-87d6-243235626f94">
 
 
 
-- **Notification Bar**: The bar includes a button to reach the profile, the notifications and the Landing Page. It also displays the logout functionality. In case a user got invited to a group, the notification "bell" will show a red node and upon clicking present the group the invitation came from as well as further possible actions. At certain stages within the group planning process, the notification bar is not shown, as we do want the user to focus on the planning process and exclude the option to logout.
+- **Notification Bar**:
+The bar includes a button to reach the profile, the notifications and the Landing Page. It also displays the logout functionality. In case a user got invited to a group, the notification "bell" will show a red node and upon clicking present the group the invitation came from as well as further possible actions. At certain stages within the group planning process, the notification bar is not shown, as we do want the user to focus on the planning process and exclude the option to logout.
 <img width="452" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/78cfec31-496d-471b-834c-dac9ae911957">
 
 
@@ -77,18 +80,8 @@ Once the guests confirmed they are "ready", their names are highlighted in green
 <img width="452" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/56be5d2d-3abe-4043-a342-fe7097d830a8">
 
 
-
 - **Starting the planning process (guest view)**:
-Upon accepting the invitation send by a host/the acceptance of a join request, a guest has to confirm again that one is ready to start the process. We planned it in that way, because once a group is in the planning process, it is needed that every one actively participates. Otherwise the whole group gets stuck. In this view "Gisela" still has the option to leave the group. <img width="416" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/eefced42-7ec1-4f11-bcc0-02dcb44b7e34">
-
-
-
-- **Waiting pages**:
-Several waiting pages allign the group process and inform the users about the next steps. 
-<img width="652" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/03d919a3-4e75-4ee8-949b-7385d26447d2">
-<img width="639" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/376dee0e-6315-4ca5-99fc-b1ba6755b9f5">
-<img width="614" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/67dc064d-47ca-467f-bb1d-99e23c881f4e">
-<img width="626" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/d879ad91-d888-4e03-a038-bcd72327ad9f">
+Upon accepting the invitation send by a host/the acceptance of a join request, a guest has to confirm again that one is ready to start the process. We planned it in that way, because once a group is in the planning process, it is important that every member actively participates. Otherwise the whole group gets stuck. 
 
 
 - **Adding Ingredients**:
@@ -97,10 +90,11 @@ This step retrieves the ingredients used by the external API. This is why a user
 - **Rating the ingredients**:
 <img width="452" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/7d225116-c617-4b09-9783-aa19e1a2f67b">
 
-After the rating, all group members see the final ingredients being left. In case there are no ingredients left, an info text is shown. <img width="452" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/2e3cee37-6644-46da-9cf3-053be7ae6a10">
+After the rating, all group members see the final ingredients being left. In case there are no ingredients left, an info text is shown.
 
 
 - **Final Recipe**:
+<img width="452" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/e516d3c7-c4d8-48f2-9ff0-698dcc506b30">
 
 
 
