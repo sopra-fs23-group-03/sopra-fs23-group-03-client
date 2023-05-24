@@ -68,9 +68,11 @@ const GroupCreation = () => {
       setUser({ ...user, groupState: "GROUPFORMING_HOST", groupId: groupId });
       history.push(`/groupforming/${groupId}/host`);
     } catch (error) {
-      alert(
-        `Something went wrong while creating the group: \n${handleError(error)}`
+      setError(
+        `Something went wrong while creating the group:  ${error.response.data.message} ${error}`
       );
+
+      setShowErrorModal(true);
       console.error("Details:", error);
     }
   };
@@ -83,11 +85,10 @@ const GroupCreation = () => {
         const response = await api.get("/users", { headers });
         setUsers(response.data);
       } catch (error) {
-        alert(
-          `Something went wrong while fetching the users: \n${handleError(
-            error
-          )}`
+        setError(
+          `Something went wrong while creating the group: <br />${error.response.data.message}<br />${error}`
         );
+        setShowErrorModal(true);
         console.error("Details:", error);
       }
       console.log(invitedUsers, groupName);
