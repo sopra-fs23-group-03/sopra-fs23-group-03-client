@@ -335,12 +335,12 @@ const Dashboard = () => {
           {showInstructions && (
             <ConfirmationModal
             message={
-              <div>
+              <div className="game welcome">
                 CollaborEat helps to find a suitable dish for your next planned meal.
-                Refine your profile and set your personal preferences.<br />
-                If you are all alone tonight, try our go solo option to get a recipe suggestion based on your profile.<br />
+                Refine your profile and set your personal preferences.<br /><br />
+                If you are all alone tonight, try our go solo option to get a recipe suggestion based on your profile.<br /><br />
                 If you feel more sociable, you can start creating/joining a group with your friends. After you typed in the ingredients you want to contribute,
-                you can rate them. Taking also into account the group’s allergies you will then receive the best fitting recipe.<br />
+                you can rate them. Taking also into account the group’s allergies you will then receive the best fitting recipe.<br /><br />
                 Have fun!
               </div>}
             onConfirm={() => setShowInstructions(false)}
