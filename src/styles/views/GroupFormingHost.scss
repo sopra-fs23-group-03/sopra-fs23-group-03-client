@@ -265,7 +265,7 @@
     &:hover::after {
       content: "Deleting a group with guests highlighted in green is not possible.";
       position: absolute;
-      transform: translate(-40%, 0%);
+      transform: translate(-160%, 55%);
       background: #f2f2f2;
       color: #666666;
       padding: 5px;
@@ -274,11 +274,14 @@
       z-index: 1;
       text-align: left;
       font-weight: 100;
-      width: 230px;
+      width: 180px;
       height: 55px;
       word-wrap: break-word;
     }
+    
   }
+
+  
 
   
 
