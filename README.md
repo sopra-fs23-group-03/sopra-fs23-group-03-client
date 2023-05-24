@@ -52,7 +52,8 @@ In a first interaction with our deployed application, upon a server instance bei
 ## Illustrations and main user flow
 - **Landing Page**: This page provides an overview of all (active) users, current groups in various states of planning (more see below) and offers two option which lead to a recipe. Once the go-solo option, which gives recipe suggestions without typing in ingredients, but taking into account all personal information in the user profile. The other option is creating a group (which makes the user a host) and to start the group planning process. 
 <img width="828" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/40631e73-b9e1-4e16-aff6-d147b23119a0">
-As long a a group is open to join, one sees the "join" button next to it. When one requested to join, a tick is shown. As soon as the requested group moves on and the join request was denied, one sees a stop sign. 
+
+As long as a group is open to join, one sees the "join" button next to it. When one requested to join, a tick is shown. As soon as the requested group moves on and the join request was denied, one sees a stop sign. 
 <img width="393" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/ca4596f9-d30c-4f2b-a070-6a8ebfb6ced1">
 
 
@@ -67,8 +68,9 @@ As long a a group is open to join, one sees the "join" button next to it. When o
 
 - **Creating a group and starting the planning process (host view)**:
 Upon clicking on "Form Group", one decided to be a host and starts the planning process with this screen: <img width="598" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/50deca5e-9fe4-4f3b-9f41-5b89b59abf5a">
+
 Here the future host sees all active and available users (users which are not actively taking part of another planning process) to invite them. Only upon pressing "continue", the respective invited users get a notification. 
-Once the guests confirmed they are "ready", their names are highlighted in green and the host can finally start the planning process: <img width="565" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/3eb74b6b-aae3-43fa-bf85-9df999a88165">
+Once the guests confirmed they are "ready", their names are highlighted in green and the host can finally start the planning process.<img width="565" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/3eb74b6b-aae3-43fa-bf85-9df999a88165">
 
 
 - **Starting the planning process (guest view)**:
