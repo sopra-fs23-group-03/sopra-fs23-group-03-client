@@ -80,7 +80,7 @@ const GoSoloFinal = () => {
       <AppContainer>
         <ErrorModal
           message={error}
-          onConfirm={() => history.push("/dashboard")}
+          onConfirm={() => history.push(`/dashboard`)}
         />
       </AppContainer>
     );
@@ -95,6 +95,7 @@ const GoSoloFinal = () => {
             </div>
             <div className="final bottom">
               <img className="final img" alt="recipe" src={recipe.image} />
+
               <div className="final section">
                 <InfoField label="Recipe" value={recipe?.title} />
 
@@ -135,16 +136,24 @@ const GoSoloFinal = () => {
                 </ul>
               </div>
             </div>
-
-            <button
-              className="final button"
-              onClick={() => {
-                window.location.reload();
-              }}
-            >
-              Request again
-            </button>
           </div>
+          <button
+            className="final reload-button"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            <i className="material-icons">replay</i>
+          </button>
+
+          <button
+            className="final button"
+            onClick={() => {
+              history.push(`/dashboard`);
+            }}
+          >
+            Back to Landing Page
+          </button>
         </BaseContainer>
 
         {seeInstructions && (
