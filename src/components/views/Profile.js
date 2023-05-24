@@ -33,7 +33,6 @@ const Profile = () => {
   const { userId } = useParams();
   console.log("fdvdfv", userId);
   const [user, setUser] = useState(null);
-  //const [isEditable, setIsEditable] = useState(false);
   const [allergies, setAllergies] = useState([]);
 
   const headers = useMemo(() => {
@@ -58,7 +57,7 @@ const Profile = () => {
     }
 
     fetchData();
-  }, []);
+  }, [userId]);
 
   return (
     <AppContainer>
