@@ -6,6 +6,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import { Spinner } from "components/ui/Spinner";
+import ErrorModal from "components/ui/ErrorModal";
 
 const InfoField = (props) => {
   return (
@@ -21,6 +22,8 @@ const GoSoloFinal = () => {
   const [recipe, setRecipe] = useState(null);
   const [seeInstructions, setSeeIstructions] = useState(false);
   const userId = localStorage.getItem("userId");
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [error, setError] = useState("");
 
   const showInstructions = () => {
     setSeeIstructions(true);
@@ -45,16 +48,19 @@ const GoSoloFinal = () => {
         setRecipe(recipeResponse.data);
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          alert(
+          // alert(
+          //   "There's no recipe matching your personal preferences, try to change your favourite cuisine!"
+          // );
+          setError(
             "There's no recipe matching your personal preferences, try to change your favourite cuisine!"
           );
-          history.push(`/dashboard`);
+          setShowErrorModal(true);
+          //history.push(`/dashboard`);
         } else {
-          alert(
-            `Something went wrong while fetching the recipe: \n${handleError(
-              error
-            )}`
+          setError(
+            `Something went wrong while fetching the recipe: \n  ${error.response.data.message}`
           );
+          setShowErrorModal(true);
           console.error("Details:", error);
         }
       }
@@ -63,10 +69,19 @@ const GoSoloFinal = () => {
     fetchData();
   }, []);
 
-  if (!recipe) {
+  if (!recipe && !error) {
     return (
       <AppContainer>
         <Spinner />
+      </AppContainer>
+    );
+  } else if (error) {
+    return (
+      <AppContainer>
+        <ErrorModal
+          message={error}
+          onConfirm={() => history.push("/dashboard")}
+        />
       </AppContainer>
     );
   } else {
