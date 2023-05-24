@@ -9,7 +9,7 @@ const ConfirmationModal = ({ message, onConfirm }) => {
         <p>{message}</p>
         <div className="modal-buttons">
           <button className="confirm-button" onClick={onConfirm}>
-            Confirm
+            Ok
           </button>
         </div>
       </div>
