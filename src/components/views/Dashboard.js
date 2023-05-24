@@ -336,7 +336,7 @@ const Dashboard = () => {
             <ConfirmationModal
             message={
               <div className="game welcome">
-                CollaborEat helps to find a suitable dish for your next planned meal.
+                CollaborEat helps to find a suitable dish for your next planned meal, ideally based on the ingredients you have already at home.
                 Refine your profile and set your personal preferences.<br /><br />
                 If you are all alone tonight, try our go solo option to get a recipe suggestion based on your profile.<br /><br />
                 If you feel more sociable, you can start creating/joining a group with your friends. After you typed in the ingredients you want to contribute,
