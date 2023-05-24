@@ -44,7 +44,6 @@ const EditProfile = () => {
   const [cuisine, setCuisine] = useState(user?.favoriteCuisine || []);
 
   const options = [
-    { value: "", label: "No Specific Preference" },
     { value: "vegan", label: "vegan" },
     { value: "vegetarian", label: "vegetarian" },
     { value: "paleo", label: "paleo" },
@@ -58,7 +57,7 @@ const EditProfile = () => {
   ];
 
   const allergens = [
-    { value: "", label: "No Allergies" },
+    { value: "", label: "no allergies" },
     { value: "dairy", label: "dairy" },
     { value: "egg", label: "egg" },
     { value: "gluten", label: "gluten" },
@@ -74,8 +73,7 @@ const EditProfile = () => {
   ];
 
   const cuisines = [
-    { value: "", label: "No Specific Preference" },
-    { value: "african", label: "african" },
+    { value: "", label: "no specific preference" },
     { value: "american", label: "american" },
     { value: "british", label: "british" },
     { value: "cajun", label: "cajun" },
