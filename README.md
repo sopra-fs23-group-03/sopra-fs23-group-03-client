@@ -13,7 +13,7 @@ Our motivation for this project was to aid fellow students in planning their mea
 
 ## Technologies
 - React
-- Google Cloud (doployment)
+- Google Cloud (deployment)
 
 TODO: add more?
 
@@ -47,6 +47,75 @@ We have kept the in-memory H2 database of the template project provided by the S
 
 ### Server Instance
 In a first interaction with our deployed application, upon a server instance being created, you might experience our application stating that the server cannot be reached. This will resolve itself once the server has started properly. In order to avoid issues with multiple instances of the server we have also limited the maximum number of instances to one. This means, that our application does not scale for too many clients.
+
+
+## Illustrations and main user flow
+- **Landing Page**: This page provides an overview of all (active) users, current groups in various states of planning (more see below) and offers two option which lead to a recipe. Once the go-solo option, which gives recipe suggestions without typing in ingredients, but taking into account all personal information in the user profile. The other option is creating a group (which makes the user a host) and to start the group planning process. 
+<img width="828" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/40631e73-b9e1-4e16-aff6-d147b23119a0">
+As long a a group is open to join, one sees the "join" button next to it. When one requested to join, a tick is shown. As soon as the requested group moves on and the join request was denied, one sees a stop sign. 
+<img width="393" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/ca4596f9-d30c-4f2b-a070-6a8ebfb6ced1">
+
+
+- **Profile**: In the personal profile a user can change the name and passwort. More interesting though are the options to define diet preferences, allergies and favourite cuisines. This information will taken into acount during the recipe selection.
+<img width="595" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/6f974ed8-26fe-4e87-85e5-a6f4c9d0c92e">
+
+
+- **Notification Bar**: The bar includes a button to reach the profile, the notifications and the Landing Page. It also displays the logout functionality. In case a user got invited to a group, the notification "bell" will show a red node and upon clicking present the group the invitation came from as well as further possible actions. At certain stages within the group planning process, the notification bar is not shown, as we do want the user to focus on the planning process and exclude the option to logout.
+<img width="1090" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/b0622112-71db-4bd0-9cd1-da823f0a958c">
+<img width="662" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/95be40bc-8ba3-4117-b467-6b3ce3c24bb5">
+
+
+- **Creating a group and starting the planning process (host view)**:
+Upon clicking on "Form Group", one decided to be a host and starts the planning process with this screen: <img width="598" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/50deca5e-9fe4-4f3b-9f41-5b89b59abf5a">
+Here the future host sees all active and available users (users which are not actively taking part of another planning process) to invite them. Only upon pressing "continue", the respective invited users get a notification. 
+Once the guests confirmed they are "ready", their names are highlighted in green and the host can finally start the planning process: <img width="565" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/3eb74b6b-aae3-43fa-bf85-9df999a88165">
+
+
+- **Starting the planning process (guest view)**:
+Upon accepting the invitation send by a host/the acceptance of a join request, a guest has to confirm again that one is ready to start the process. We planned it in that way, because once a group is in the planning process, it is needed that every one actively participates. Otherwise the whole group gets stuck. In this view "Gisela" still has the option to leave the group. <img width="595" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/7f9f8299-1091-43b2-b3a3-7f469365bbea">
+
+
+- **Waiting pages**:
+Several waiting pages allign the group process and inform the users about the next steps. 
+<img width="652" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/03d919a3-4e75-4ee8-949b-7385d26447d2">
+<img width="639" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/376dee0e-6315-4ca5-99fc-b1ba6755b9f5">
+<img width="614" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/67dc064d-47ca-467f-bb1d-99e23c881f4e">
+<img width="626" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/d879ad91-d888-4e03-a038-bcd72327ad9f">
+
+
+- **Adding Ingredients**:
+This step retrieves the ingredients used by the external API. This is why a user will see certain suggestions based on his typed letters. One can only submit those proposed ingredients. At this point, double entries made by the user are possible, but won't be taken into acount later. For simplicity reasons, we ignore quantity measurements in general in this app.  Every user has to submit at least one ingredient to be able to continue. <img width="484" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/4d1f11a2-f70a-46e5-b639-b77217ea9c31">
+
+
+- **Rating the ingredients**:
+<img width="467" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/09ef2fcd-072e-4a57-8806-9dee6a23f137">
+
+After the rating, all group members see the final ingredients being left. In case there are no ingredients left, an info text is shown. <img width="475" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/426970c8-e389-4596-93d4-109526eb2a52">
+
+
+
+- **Final Recipe**:
+
+
+
+## Roadmap
+See the [Future Work](https://github.com/orgs/sopra-fs23-group-03/projects/1/views/5?filterQuery=milestone%3A%22Future+Work%22) in our Project Board for the functionality we'd plan to develop further in our application. Here are the three most interesting additions we'd like to implement:
+
+- **The distribution of missing ingredients**: While we maximize the ingredients from the final list of ingredients to be used in the recipe, it can happen, that the recipe requires ingredients, that are missing. In a next step, we'd implement a way to decide/plan which of the members of the group will bring which of the missing ingredients. Related user story: [#24](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-server/issues/24)
+
+- **Additional decision logic**: The rating of the ingredients is implemented with a majority-vote-logic. In a next step, we'd add additional decision logics to this step, e.g. a point-distribution logic. Related user story: [#22](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-server/issues/22)
+
+- **Choose from multiple recipes**: A group will get one final recipe at the end of the process, if the spoonacular API had returned multiple recipes, we choose one at random for the group. In a next step we'd give the group all options that the spoonacular API provides and let the host choose one of them as the final recipe. Related user story: [#25](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-server/issues/25)
+
+## Authors and acknowledgment
+- Kalliopi Papadaki - [KallPap](https://github.com/KallPap)
+- Orestis Bollano - [OrestisBollano](https://github.com/OrestisBollano)
+- Ann-Kathrin Hedwig Sabina Kübler - [akkuebler](https://github.com/akkuebler)
+- Chiara Letsch - [chiaralentsch](https://github.com/chiaralentsch)
+- Lany Dennise Weizenblut Oseguera - [wlany](https://github.com/wlany)
+
+## License
+Apache License 2.0
 
 ## Launch & Deployment
 TODO:
@@ -96,75 +165,5 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-> Thanks to Lucas Pelloni and Kyrill Hux for working on the template.  TODO: we should delete that
-
-## Illustrations
-- **Landing Page**: This page provides an overview of all (active) users, current groups in various states of planning (more see below) and offers two option which lead to a recipe. Once the go-solo option, which gives recipe suggestions without typing in ingredients, but taking into account all personal information in the user profile. The other option is creating a group (which makes the user a host) and to start the group planning process. 
-<img width="828" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/40631e73-b9e1-4e16-aff6-d147b23119a0">
-
-
-- **Profile**: In the personal profile a user can change the name and passwort. More interesting though are the options to define diet preferences, allergies and favourite cuisines. This information will taken into acount during the recipe selection.
-<img width="595" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/6f974ed8-26fe-4e87-85e5-a6f4c9d0c92e">
-
-
-- **Notification Bar**: The bar includes a button to reach the profile, the notifications and the Landing Page. It also displays the logout functionality. In case a user got invited to a group, the notification "bell" will show a red node and upon clicking present the group the invitation came from as well as further possible actions. At certain stages within the group planning process, the notification bar is not shown, as we do want the user to focus on the planning process and exclude the option to logout.
-<img width="1090" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/b0622112-71db-4bd0-9cd1-da823f0a958c">
-<img width="662" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/95be40bc-8ba3-4117-b467-6b3ce3c24bb5">
-
-
-- **Creating a group and starting the planning process (host view) **:
-Upon clicking on "Form Group", one decided to be a host and starts the planning process with this screen: <img width="598" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/50deca5e-9fe4-4f3b-9f41-5b89b59abf5a">
-Here the future host sees all active and available users (users which are not actively taking part of another planning process) to invite them. Only upon pressing "continue", the respective invited users get a notification. 
-Once the guests confirmed they are "ready", their names are highlighted in green and the host can finally start the planning process: <img width="565" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/3eb74b6b-aae3-43fa-bf85-9df999a88165">
-
-
-- **Starting the planning process (guest view) **:
-Upon accepting the invitation send by a host/the acceptance of a join request, a guest has to confirm again that one is ready to start the process. We planned it in that way, because once a group is in the planning process, it is needed that every one actively participates. Otherwise the whole group gets stuck. In this view "Gisela" still has the option to leave the group. <img width="595" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/7f9f8299-1091-43b2-b3a3-7f469365bbea">
-
-
-- **Waiting pages**:
-Several waiting pages allign the group process and inform the users about the next steps. 
-<img width="652" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/03d919a3-4e75-4ee8-949b-7385d26447d2">
-<img width="639" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/376dee0e-6315-4ca5-99fc-b1ba6755b9f5">
-<img width="614" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/67dc064d-47ca-467f-bb1d-99e23c881f4e">
-<img width="626" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/d879ad91-d888-4e03-a038-bcd72327ad9f">
-
-
-
-- **Adding Ingredients**:
-This step retrieves the ingredients used by the external API. This is why a user will see certain suggestions based on his typed letters. One can only submit those proposed ingredients. At this point, double entries made by the user are possible, but won't be taken into acount later. For simplicity reasons, we ignore quantity measurements in general in this app.  Every user has to submit at least one ingredient to be able to continue. <img width="484" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/4d1f11a2-f70a-46e5-b639-b77217ea9c31">
-
-
-- **Rating the ingredients**:
-<img width="467" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/09ef2fcd-072e-4a57-8806-9dee6a23f137">
-
-After the rating, all group members see the final ingredients being left. In case there are no ingredients left, an info text is shown. <img width="475" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/426970c8-e389-4596-93d4-109526eb2a52">
-
-
-
-Final Recipe
-
-
-
-TODO:
-In your client repository, briefly describe and illustrate the main user flow(s) of your interface. How does it work (without going into too much detail)? Feel free to include a few screenshots of your application.
-
-## Roadmap
-See the [Future Work](https://github.com/orgs/sopra-fs23-group-03/projects/1/views/5?filterQuery=milestone%3A%22Future+Work%22) in our Project Board for the functionality we'd plan to develop further in our application. Here are the three most interesting additions we'd like to implement:
-
-- **The distribution of missing ingredients**: While we maximize the ingredients from the final list of ingredients to be used in the recipe, it can happen, that the recipe requires ingredients, that are missing. In a next step, we'd implement a way to decide/plan which of the members of the group will bring which of the missing ingredients. Related user story: [#24](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-server/issues/24)
-
-- **Additional decision logic**: The rating of the ingredients is implemented with a majority-vote-logic. In a next step, we'd add additional decision logics to this step, e.g. a point-distribution logic. Related user story: [#22](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-server/issues/22)
-
-- **Choose from multiple recipes**: A group will get one final recipe at the end of the process, if the spoonacular API had returned multiple recipes, we choose one at random for the group. In a next step we'd give the group all options that the spoonacular API provides and let the host choose one of them as the final recipe. Related user story: [#25](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-server/issues/25)
-
-## Authors and acknowledgment
-- Kalliopi Papadaki - [KallPap](https://github.com/KallPap)
-- Orestis Bollano - [OrestisBollano](https://github.com/OrestisBollano)
-- Ann-Kathrin Hedwig Sabina Kübler - [akkuebler](https://github.com/akkuebler)
-- Chiara Letsch - [chiaralentsch](https://github.com/chiaralentsch)
-- Lany Dennise Weizenblut Oseguera - [wlany](https://github.com/wlany)
-
-## License
-Apache License 2.0
+> Thanks to Lucas Pelloni and Kyrill Hux for working on the template on how to launch & deploy
 
