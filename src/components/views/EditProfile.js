@@ -3,7 +3,6 @@ import "styles/views/Profile.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import Dropdown from "components/ui/Dropdown";
 import MultiDropdown from "components/ui/MultiDropdown";
-import { useParams } from "react-router-dom";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import AppContainer from "components/ui/AppContainer";
@@ -75,7 +74,7 @@ const EditProfile = () => {
   ];
 
   const cuisines = [
-    { value: "", label: "No Specific Preference" },
+    { value: "", label: "no specific preference" },
     { value: "american", label: "american" },
     { value: "british", label: "british" },
     { value: "cajun", label: "cajun" },
