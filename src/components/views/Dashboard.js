@@ -257,8 +257,11 @@ const Dashboard = () => {
               ))}
             </ul>
           </div>
-
+          
           <div className=" game  group-container">
+
+          <div className="game welcome">CollaborEat helps to find a suitable dish for your next planned meal. Refine your profile and set your personal preferences. If you are all alone tonight, try our go solo option to get a recipe suggestion based on your profile. If you feel more sociable, you can start creating/joining a group with your friends. After you typed in the ingredients you want to contribute, you can rate them. Taking also into account the group’s allergies you will recieve the best fitting recipe. Have fun!</div>
+          
             <h2 className="title">Groups</h2>
 
             <div className="game group-container-labels">
