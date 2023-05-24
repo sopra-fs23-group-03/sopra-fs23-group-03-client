@@ -78,7 +78,10 @@ const GoSoloFinal = () => {
   } else if (error) {
     return (
       <AppContainer>
-        <ErrorModal message={error} onConfirm={() => history} />
+        <ErrorModal
+          message={error}
+          onConfirm={() => history.push(`/dashboard`)}
+        />
       </AppContainer>
     );
   } else {
