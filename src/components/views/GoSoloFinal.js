@@ -146,7 +146,7 @@ const GoSoloFinal = () => {
           <button
             className="final button"
             onClick={() => {
-              window.location.reload();
+              history.push(`/dashboard`);
             }}
           >
             Back to Landing Page
