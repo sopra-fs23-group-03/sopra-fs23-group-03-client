@@ -79,6 +79,7 @@ const Login = (props) => {
       localStorage.setItem("token", response.headers["x-token"]);
       localStorage.setItem("userId", user.id);
       localStorage.setItem("isLoggedIn", true);
+      localStorage.setItem("welcome", true);
       // initialize the user context with the user object from the response
       setIsLoggedIn(true);
       setUser(user);

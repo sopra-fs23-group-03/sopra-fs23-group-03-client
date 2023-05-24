@@ -89,6 +89,7 @@ const Register = (props) => {
 
       // Store the user ID in local storage.
       localStorage.setItem("userId", user.id);
+      localStorage.setItem("welcome", true);
       setIsLoggedIn(true);
       setUser(user);
 

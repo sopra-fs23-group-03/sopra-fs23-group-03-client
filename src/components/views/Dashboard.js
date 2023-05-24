@@ -37,7 +37,7 @@ const Dashboard = () => {
   const userId = localStorage.getItem("userId");
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [userGroupId, setGroupId] = useState(null);
-  const showNotificationBar = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false); // State to track if instructions should be shown
 
   const handleConfirmation = (userGroupId) => {
     // Perform any necessary actions
@@ -98,6 +98,17 @@ const Dashboard = () => {
       );
     }
   };
+
+  useEffect(() => {
+    // Check if the user has registered
+    const welcome = localStorage.getItem("welcome");
+    if (welcome) {
+      // Show the instructions popup
+      setShowInstructions(true);
+      // Clear the flag from localStorage
+      localStorage.removeItem("welcome");
+    }
+  }, []);
 
   useEffect(() => {
     fetchUsers();
@@ -248,10 +259,10 @@ const Dashboard = () => {
           </div>
           
           <div className=" game  group-container">
+
           <div className="game welcome">CollaborEat helps to find a suitable dish for your next planned meal. Refine your profile and set your personal preferences. If you are all alone tonight, try our go solo option to get a recipe suggestion based on your profile. If you feel more sociable, you can start creating/joining a group with your friends. After you typed in the ingredients you want to contribute, you can rate them. Taking also into account the group’s allergies you will recieve the best fitting recipe. Have fun!</div>
-
+          
             <h2 className="title">Groups</h2>
-
 
             <div className="game group-container-labels">
               <label className="game label-text">Group</label>
@@ -321,6 +332,14 @@ const Dashboard = () => {
             <ConfirmationModal
               message="Your join request got accepted. You will be directed to the event."
               onConfirm={() => handleConfirmation(userGroupId)}
+            />
+          )}
+          {showInstructions && (
+            <ConfirmationModal
+              message=" CollaborEat helps to find a suitable dish for your next planned
+              meal. Refine your profile to meet your needs and start with
+              creating/joining a group or go solo. Have fun!"
+              onConfirm={() => setShowInstructions(false)}
             />
           )}
         </div>
