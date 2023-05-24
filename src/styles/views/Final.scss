@@ -1,10 +1,6 @@
 @import "styles/theme";
 
 .final {
-  &.main {
-    display: flex;
-    flex-direction: column;
-  }
   &.form {
     display: flex;
     flex-direction: column;
@@ -12,8 +8,14 @@
     gap: 10px;
     width: 100%;
   }
+  &.main {
+    display: flex;
+    flex-direction: column;
+  }
 
   &.icon {
+    display: flex;
+    flex-direction: column;
     font-family: "Material Symbols Outlined";
     font-style: normal;
     font-size: 90px;
@@ -36,6 +38,28 @@
     color: #333333;
   }
 
+  &.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    gap: 40px;
+    margin-top: 10px;
+  }
+  &.reload-button {
+    background: #333333;
+    // background: #ffffff;
+    box-shadow: 1px 1px 2px 2px rgba(0.1, 0.1, 0.1, 0.1);
+    border-radius: 100%;
+    border: 0px;
+    cursor: pointer;
+    font-style: normal;
+    font-size: 5px;
+    text-align: center;
+    //color: #a09d9d;
+    color: #ffffff;
+    padding: 10px;
+  }
   &.button {
     background: #333333;
     box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
@@ -44,7 +68,7 @@
     width: auto;
     cursor: pointer;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     font-size: 16px;
     text-align: center;
     color: #ffffff;
@@ -62,6 +86,7 @@
     padding-bottom: 20px;
     padding-right: 10px;
     padding-left: 10px;
+    width: 100%;
     gap: 10px;
   }
 
@@ -70,7 +95,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 90%;
+    width: 100%;
   }
 
   &.label {
@@ -113,7 +138,7 @@
     height: 100%;
 
     &.solo {
-      width: 85%;
+      width: 100%;
     }
   }
 
@@ -123,11 +148,12 @@
     gap: 10px;
     width: 85%;
     height: 50%;
+
     align-items: center;
   }
 
   &.icon {
-    font-size: 30px;
+    font-size: 26px;
 
     &.clickable {
       cursor: pointer;
@@ -144,7 +170,6 @@
 
   .list {
     list-style-type: circle;
-    //width: 100%;
     margin: 0px;
     display: flex;
     flex-direction: column;
@@ -154,9 +179,10 @@
 
     &.solo {
       display: grid;
+      width: 100%;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: repeat(3, auto);
-      grid-column-gap: 40px;
+      //grid-template-rows: repeat(3, auto);
+      //grid-column-gap: 40px;
     }
   }
 }
