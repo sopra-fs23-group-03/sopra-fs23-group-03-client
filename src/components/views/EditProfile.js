@@ -197,10 +197,6 @@ const EditProfile = () => {
                     label="Current Password"
                     onChange={(cp) => setCurrentPassword(cp)}
                   />
-                  <div className="profile small-text">
-                    {" "}
-                    username and password must differ{" "}
-                  </div>
                 </div>
 
                 <div className="profile diet-dropdown">
@@ -217,6 +213,10 @@ const EditProfile = () => {
                   label="New Password"
                   onChange={(np) => setNewPassword(np)}
                 />
+                <div className="profile small-text">
+                    {" "}
+                    username and password must differ{" "}
+                </div>
               </div>
 
               <div className="profile dropdowns">

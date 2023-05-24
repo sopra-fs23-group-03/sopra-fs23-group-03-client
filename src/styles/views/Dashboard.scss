@@ -36,13 +36,7 @@
   }
 
   &.welcome {
-    font-size: 16px;
-    line-height: 25px;
-    font-weight:700;
-    color: #333333;
-    font-weight: 200;
-    width: 550px;
-    margin-top: 10px;
+    text-align: left;
   }
 
   .sidebar-buttons {
@@ -144,6 +138,7 @@
       min-height: 30px;
       // if name is too long, it will be cut off and replaced with "..."
       white-space: nowrap;
+      margin: 5px;
       overflow: hidden;
       text-overflow: ellipsis;
       min-height: 23px; // modified because some names were cut off above and below
