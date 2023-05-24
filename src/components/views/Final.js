@@ -10,7 +10,6 @@ import { Spinner } from "components/ui/Spinner";
 import useGroupMembers from "hooks/useGroupMembers";
 import { useContext } from "react";
 import UserContext from "components/contexts/UserContext";
-import ErrorModal from "components/ui/ErrorModal";
 
 const InfoField = (props) => {
   return (
@@ -27,8 +26,7 @@ const Final = () => {
   const [seeInstructions, setSeeIstructions] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const { group, users } = useGroupMembers(groupId);
-  const [showErrorModal, setShowErrorModal] = useState(false);
-  const [error, setError] = useState("");
+
   console.log("user state: " + user.groupState);
   useEffect(() => {
     // Save the group and users data in localStorage when they are fetched
@@ -78,25 +76,10 @@ const Final = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (recipes && recipes[0]?.isRandomBasedOnIntolerances) {
-      setError(
-        "There's no recipe matching your personal preferences, try to change your favourite cuisine!"
-      );
-      setShowErrorModal(true);
-    }
-  }, [recipes]);
-
-  if (!recipes && !error) {
+  if (!recipes) {
     return (
       <AppContainer>
         <Spinner />
-      </AppContainer>
-    );
-  } else if (error) {
-    return (
-      <AppContainer>
-        <ErrorModal message={error} onConfirm={history.push("/recipe")()} />
       </AppContainer>
     );
   } else {
