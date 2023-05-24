@@ -306,7 +306,7 @@ const Dashboard = () => {
                         group.groupState !== "GROUPFORMING" ? (
                         <i className="material-icons exit-icon">block</i>
                       ) : (
-                        <span>Join</span>
+                        <span>Request</span>
                       )}
                     </button>
                   </ul>
