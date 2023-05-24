@@ -63,7 +63,7 @@ const Final = () => {
           ...user,
           groupState: "RECIPE_STATIC",
         });
-        history.push("/recipe");
+        //history.push("/recipe");
       } catch (error) {
         alert(
           `Something went wrong while fetching the recipe: \n${handleError(

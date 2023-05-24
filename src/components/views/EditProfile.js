@@ -3,11 +3,11 @@ import "styles/views/Profile.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import Dropdown from "components/ui/Dropdown";
 import MultiDropdown from "components/ui/MultiDropdown";
+import { useParams } from "react-router-dom";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import AppContainer from "components/ui/AppContainer";
 import PropTypes from "prop-types";
-import ErrorModal from "components/ui/ErrorModal";
 
 const InfoField = (props) => {
   return (
@@ -34,6 +34,7 @@ const EditProfile = () => {
   const history = useHistory();
   const userId = localStorage.getItem("userId");
   const [user, setUser] = useState(null);
+  //isEditable is a variable that is set to false by defalut and becomes true when the modify profile button is pressed
   const [isEditable, setIsEditable] = useState(true);
   const [username, setUsername] = useState(user?.username);
   const [currentPassword, setCurrentPassword] = useState(null);
@@ -41,11 +42,9 @@ const EditProfile = () => {
   const [diet, setDiet] = useState(null);
   const [allergies, setAllergies] = useState(user?.allergies || []);
   const [cuisine, setCuisine] = useState(user?.favoriteCuisine || []);
-  const [showErrorModal, setShowErrorModal] = useState(false);
-  const [error, setError] = useState("");
 
   const options = [
-    { value: "omnivore", label: "omnivore" },
+    { value: "", label: "No Specific Preference" },
     { value: "vegan", label: "vegan" },
     { value: "vegetarian", label: "vegetarian" },
     { value: "paleo", label: "paleo" },
@@ -54,11 +53,12 @@ const EditProfile = () => {
     { value: "lacto-vegetarian", label: "lacto-vegetarian" },
     { value: "ovo-vegetarian", label: "ovo-vegetarian" },
     { value: "pescetarian", label: "pescetarian" },
+    { value: "omnivore", label: "omnivore" },
     { value: "primal", label: "primal" },
   ];
 
   const allergens = [
-    { value: "", label: "no allergies" },
+    { value: "", label: "No Allergies" },
     { value: "dairy", label: "dairy" },
     { value: "egg", label: "egg" },
     { value: "gluten", label: "gluten" },
@@ -74,7 +74,8 @@ const EditProfile = () => {
   ];
 
   const cuisines = [
-    { value: "", label: "no specific preference" },
+    { value: "", label: "No Specific Preference" },
+    { value: "african", label: "african" },
     { value: "american", label: "american" },
     { value: "british", label: "british" },
     { value: "cajun", label: "cajun" },
@@ -101,22 +102,11 @@ const EditProfile = () => {
   ];
 
   const handleCuisineChange = (selectedOptions) => {
-    const selectedValues = selectedOptions.map((option) => option.value);
-    if (selectedValues.includes("")) {
-      setCuisine([""]); // Set the cuisine state to an array with only the empty string value
-    } else {
-      setCuisine(selectedValues); // Set the selected cuisine values
-    }
+    setCuisine(selectedOptions.map((option) => option.value));
   };
 
-  const handleAllergiesChange = (selectedOptions) => {
-    const selectedValues = selectedOptions.map((option) => option.value);
-    if (selectedValues.includes("")) {
-      // If "No Allergies" is selected, exclude it from other selected values
-      setAllergies([""]);
-    } else {
-      setAllergies(selectedValues); // Set the selected allergies values
-    }
+  const handleAllergiesChange = (Options) => {
+    setAllergies(Options.map((option) => option.value));
   };
 
   const handleDietChange = (d) => {
@@ -137,14 +127,12 @@ const EditProfile = () => {
         favoriteCuisine: cuisine,
       });
       await api.put(`/users/${userId}`, requestBody, { headers });
-      history.push("/profile/" + userId);
     } catch (error) {
-      setError(
-        `Something went wrong while updating the profile: \n 
-        ${error.response.data.message}`
+      alert(
+        `Something went wrong while updating the profile: \n${handleError(
+          error
+        )}`
       );
-      handleError(error);
-      setShowErrorModal(true);
     }
   };
 
@@ -176,9 +164,11 @@ const EditProfile = () => {
   return (
     <AppContainer>
       <BaseContainer>
-        <div className="profile main">
-          <div className="profile form">
+        <div className="profile form">
+          <div className="profile main">
             <i className="profile icon">account_circle</i>
+          </div>
+          {isEditable && (
             <div className="profile modify-section">
               <div className="profile singles">
                 <div className="field-info">
@@ -192,7 +182,7 @@ const EditProfile = () => {
                     only alphabetic characters allowed{" "}
                   </div>
                 </div>
-                <div className="profile field-info">
+                <div className="field-info">
                   <InfoField
                     label="Current Password"
                     onChange={(cp) => setCurrentPassword(cp)}
@@ -209,20 +199,22 @@ const EditProfile = () => {
                   />
                 </div>
 
-                <InfoField
-                  label="New Password"
-                  onChange={(np) => setNewPassword(np)}
-                />
-                <div className="profile small-text">
+                <div className="field-info">
+                  <InfoField
+                    label="New Password"
+                    onChange={(np) => setNewPassword(np)}
+                  />
+
+                  <div className="profile small-text">
                     {" "}
                     username and password must differ{" "}
+                  </div>
                 </div>
               </div>
 
               <div className="profile dropdowns">
                 <div className="profile list">
                   <div className="profile titles">Allergies</div>
-
                   <MultiDropdown
                     isSearchable
                     isMulti
@@ -244,7 +236,7 @@ const EditProfile = () => {
                 </div>
               </div>
             </div>
-          </div>
+          )}
           <div className="profile buttons">
             <button
               className="profile cancel-button"
@@ -262,6 +254,7 @@ const EditProfile = () => {
               onClick={() => {
                 handleUpdate();
                 toggleEdit();
+                history.push("/profile/" + userId);
               }}
             >
               Save
@@ -269,12 +262,6 @@ const EditProfile = () => {
           </div>
         </div>
       </BaseContainer>
-      {showErrorModal && (
-        <ErrorModal
-          message={error}
-          onConfirm={() => setShowErrorModal(false)}
-        />
-      )}
     </AppContainer>
   );
 

@@ -149,7 +149,7 @@ const AppRouter = () => {
               <Lobby
                 groupState={"INGREDIENTENTERING"}
                 message={
-                  "You successfully registered for this event! Wait for other friends to join..."
+                  "You successfully registered for this event! Wait for other friends to join... In the meantime, go and check out your fridge and pantry!"
                 }
                 nextRoute={"/ingredients/:groupId"}
               />
