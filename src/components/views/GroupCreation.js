@@ -10,6 +10,7 @@ import Group from "models/Group"; //added
 import NotificationBar from "components/views/NotificationBar";
 import UserContext from "components/contexts/UserContext";
 import { useContext } from "react";
+import ErrorModal from "components/ui/ErrorModal";
 
 const GroupCreation = () => {
   const history = useHistory();
@@ -24,15 +25,19 @@ const GroupCreation = () => {
   const votingType = "MAJORITYVOTE";
   const hostId = localStorage.getItem("userId");
   const { user, setUser } = useContext(UserContext);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [error, setError] = useState("");
 
   const createGroup = async () => {
     if (groupName.length < 3 || groupName.length > 9) {
-      alert("Group name has to be between 3 and 9 characters");
+      setError("Group name has to be between 3 and 9 characters");
+      setShowErrorModal(true);
       return;
     }
 
     if (groupName.includes(" ")) {
-      alert("Group name cannot include spaces");
+      setError("Group name cannot include spaces");
+      setShowErrorModal(true);
       return;
     }
 
@@ -214,6 +219,12 @@ const GroupCreation = () => {
           </div>
         </div>
       </BaseContainer>
+      {showErrorModal && (
+        <ErrorModal
+          message={error}
+          onConfirm={() => setShowErrorModal(false)}
+        />
+      )}
     </AppContainer>
   );
 };

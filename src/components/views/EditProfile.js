@@ -34,7 +34,6 @@ const EditProfile = () => {
   const history = useHistory();
   const userId = localStorage.getItem("userId");
   const [user, setUser] = useState(null);
-  //isEditable is a variable that is set to false by defalut and becomes true when the modify profile button is pressed
   const [isEditable, setIsEditable] = useState(true);
   const [username, setUsername] = useState(user?.username);
   const [currentPassword, setCurrentPassword] = useState(null);
@@ -44,7 +43,7 @@ const EditProfile = () => {
   const [cuisine, setCuisine] = useState(user?.favoriteCuisine || []);
 
   const options = [
-    { value: "", label: "No Specific Preference" },
+    { value: "", label: "no preference" },
     { value: "vegan", label: "vegan" },
     { value: "vegetarian", label: "vegetarian" },
     { value: "paleo", label: "paleo" },
@@ -58,7 +57,7 @@ const EditProfile = () => {
   ];
 
   const allergens = [
-    { value: "", label: "No Allergies" },
+    { value: "", label: "no allergies" },
     { value: "dairy", label: "dairy" },
     { value: "egg", label: "egg" },
     { value: "gluten", label: "gluten" },
@@ -75,7 +74,6 @@ const EditProfile = () => {
 
   const cuisines = [
     { value: "", label: "No Specific Preference" },
-    { value: "african", label: "african" },
     { value: "american", label: "american" },
     { value: "british", label: "british" },
     { value: "cajun", label: "cajun" },
@@ -102,11 +100,22 @@ const EditProfile = () => {
   ];
 
   const handleCuisineChange = (selectedOptions) => {
-    setCuisine(selectedOptions.map((option) => option.value));
+    const selectedValues = selectedOptions.map((option) => option.value);
+    if (selectedValues.includes("")) {
+      setCuisine([""]); // Set the cuisine state to an array with only the empty string value
+    } else {
+      setCuisine(selectedValues); // Set the selected cuisine values
+    }
   };
 
-  const handleAllergiesChange = (Options) => {
-    setAllergies(Options.map((option) => option.value));
+  const handleAllergiesChange = (selectedOptions) => {
+    const selectedValues = selectedOptions.map((option) => option.value);
+    if (selectedValues.includes("")) {
+      // If "No Allergies" is selected, exclude it from other selected values
+      setAllergies([""]);
+    } else {
+      setAllergies(selectedValues); // Set the selected allergies values
+    }
   };
 
   const handleDietChange = (d) => {
@@ -164,11 +173,9 @@ const EditProfile = () => {
   return (
     <AppContainer>
       <BaseContainer>
-        <div className="profile form">
-          <div className="profile main">
+        <div className="profile main">
+          <div className="profile form">
             <i className="profile icon">account_circle</i>
-          </div>
-          {isEditable && (
             <div className="profile modify-section">
               <div className="profile singles">
                 <div className="field-info">
@@ -182,7 +189,7 @@ const EditProfile = () => {
                     only alphabetic characters allowed{" "}
                   </div>
                 </div>
-                <div className="field-info">
+                <div className="profile field-info">
                   <InfoField
                     label="Current Password"
                     onChange={(cp) => setCurrentPassword(cp)}
@@ -212,6 +219,7 @@ const EditProfile = () => {
               <div className="profile dropdowns">
                 <div className="profile list">
                   <div className="profile titles">Allergies</div>
+
                   <MultiDropdown
                     isSearchable
                     isMulti
@@ -233,7 +241,7 @@ const EditProfile = () => {
                 </div>
               </div>
             </div>
-          )}
+          </div>
           <div className="profile buttons">
             <button
               className="profile cancel-button"

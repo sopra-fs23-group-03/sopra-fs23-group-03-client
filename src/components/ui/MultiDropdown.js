@@ -24,7 +24,7 @@ const MultiDropdown = ({
   isMulti,
   isSearchable,
   onChange,
-  value
+  value,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState(isMulti ? [] : null);
@@ -110,10 +110,12 @@ const MultiDropdown = ({
   const onItemClick = (option) => {
     let newValue;
     if (isMulti) {
-      if (selectedValue.findIndex((o) => o.value === option.value) >= 0) {
-        newValue = removeOption(option);
+      if (option.value === "") {
+        newValue = [option];
+      } else if (selectedValue.findIndex((o) => o.value === "") >= 0) {
+        newValue = [option];
       } else {
-        newValue = [...selectedValue, option];
+        newValue = [...selectedValue.filter((o) => o.value !== ""), option];
       }
     } else {
       newValue = option;
@@ -151,7 +153,11 @@ const MultiDropdown = ({
 
   return (
     <div className="multidropdown-container">
-      <div ref={inputRef} onClick={handleInputClick} className="multidropdown-input">
+      <div
+        ref={inputRef}
+        onClick={handleInputClick}
+        className="multidropdown-input"
+      >
         <div className="multidropdown-selected-value">{getDisplay()}</div>
         <div className="multidropdown-tools">
           <div className="multidropdown-tool">
@@ -170,7 +176,9 @@ const MultiDropdown = ({
             <div
               onClick={() => onItemClick(option)}
               key={option.value}
-              className={`multidropdown-item ${isSelected(option) && "selected"}`}
+              className={`multidropdown-item ${
+                isSelected(option) && "selected"
+              }`}
             >
               {option.label}
             </div>
