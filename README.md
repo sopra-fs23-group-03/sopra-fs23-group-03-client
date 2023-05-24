@@ -51,14 +51,17 @@ In a first interaction with our deployed application, upon a server instance bei
 
 ## Illustrations and main user flow
 - **Landing Page**: This page provides an overview of all (active) users, current groups in various states of planning (more see below) and offers two option which lead to a recipe. Once the go-solo option, which gives recipe suggestions without typing in ingredients, but taking into account all personal information in the user profile. The other option is creating a group (which makes the user a host) and to start the group planning process. 
-<img width="828" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/40631e73-b9e1-4e16-aff6-d147b23119a0">
+<img width="395" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/6384d1b2-a489-4d21-919b-5d083624b114">
+
 
 As long as a group is open to join, one sees the "join" button next to it. When one requested to join, a tick is shown. As soon as the requested group moves on and the join request was denied, one sees a stop sign. 
-<img width="393" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/ca4596f9-d30c-4f2b-a070-6a8ebfb6ced1">
+<img width="397" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/a3a48a92-fb7b-46f5-b9db-39dbeb09b7e0">
+
 
 
 - **Profile**: In the personal profile a user can change the name and passwort. More interesting though are the options to define diet preferences, allergies and favourite cuisines. This information will taken into acount during the recipe selection.
-<img width="595" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/6f974ed8-26fe-4e87-85e5-a6f4c9d0c92e">
+<img width="299" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/7272711e-8080-4904-87d6-243235626f94">
+
 
 
 - **Notification Bar**: The bar includes a button to reach the profile, the notifications and the Landing Page. It also displays the logout functionality. In case a user got invited to a group, the notification "bell" will show a red node and upon clicking present the group the invitation came from as well as further possible actions. At certain stages within the group planning process, the notification bar is not shown, as we do want the user to focus on the planning process and exclude the option to logout.
