@@ -133,7 +133,7 @@ See the [Future Work](https://github.com/orgs/sopra-fs23-group-03/projects/1/vie
 - Kalliopi Papadaki - [KallPap](https://github.com/KallPap)
 - Orestis Bollano - [OrestisBollano](https://github.com/OrestisBollano)
 - Ann-Kathrin Hedwig Sabina Kübler - [akkuebler](https://github.com/akkuebler)
-- Chiara Letsch - [chiaralentsch](https://github.com/chiaralentsch)
+- Chiara Lentsch - [chiaralentsch](https://github.com/chiaralentsch)
 - Lany Dennise Weizenblut Oseguera - [wlany](https://github.com/wlany)
 
 ## License
@@ -141,7 +141,7 @@ Apache License 2.0
 
 ## Launch & Deployment
 TODO:
-Write down the steps a new developer joining your team would have to take to get started with your application. What commands are required to build and run your project locally? How can they run the tests? Do you have external dependencies or a database that needs to be running? How can they do releases?
+Write down the steps a new developer joining your team would have to take to get started with your application. What commands are required to build and run your project locally? How can they run the tests? (no tests) Do you have external dependencies or a database that needs to be running? How can they do releases?
 
 lany- I put here what used to be in the README from the template. adapt what's necessary :) -lany
 
@@ -170,12 +170,6 @@ Run this command before you start your application for the first time. Next, you
 Now you can open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 Notice that the page will reload if you make any edits. You will also see any lint errors in the console (use Google Chrome).
-
-#### Testing
-Testing is optional, and you can run the tests with `npm run test`.
-This launches the test runner in an interactive watch mode. See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-> For macOS user running into a 'fsevents' error: https://github.com/jest-community/vscode-jest/issues/423
 
 #### Build
 Finally, `npm run build` builds the app for production to the `build` folder.<br>
