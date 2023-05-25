@@ -21,30 +21,24 @@ Our motivation for this project was to aid fellow students in planning their mea
 ## High-level components
 
 ### [Dashboard](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/blob/main/src/components/views/Dashboard.js)
-Roles: display existing groups, display online and offline existing users, display new invitations through a notification
-
-Relations: from the dashboard the user can get into a group by accepting an invitation from a new group or by sending a join request to an existing group. The user can also opt for creating his/her own group or going solo.
+- Roles: Display existing groups, display online and offline existing users, display new invitations through a notification.
+- Relations: From the dashboard the user can get into a group by accepting an invitation from a new group or by sending a join request to an existing group. The user can also opt for creating their own group or going solo.
 
 ### [Profile](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/blob/main/src/components/views/Profile.js)
-Roles: display username, diet preference, allergies and favourite cuisine of the user also allowing him/her to modify them. 
-
-Relations: from the profile the user can either go back to the landing page or receive an invitation to a group in the notification section.
+- Roles: Display username, diet preference, allergies and favourite cuisine of the user also allowing him/her to modify them. 
+- Relations: From the profile the user can either go back to the landing page or receive an invitation to a group in the notification section.
 
 ### [Ingredients-Entering Page](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/blob/main/src/components/views/Ingredient.js)
-Roles: allow users to type in ingredients they have in their fridge or paintry. The text field provides suggestions of possible ingredients.
-
-Relations: as soon as every member of the group typed in their ingredients, the user is directed to the voting page.
+- Roles: Allow users to type in the ingredients they have in their fridge or paintry. The text field provides suggestions of possible ingredients.
+- Relations: As soon as every member of the group typed in their ingredients, the user is directed to the voting page.
 
 ### [Voting Page](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/blob/main/src/components/views/Ingredient.js)
-Roles: allow users to vote the overall list of typed-in ingredients through a majority vote system. They can express their opinion by selecting either yes, no, or indifferent.
-
-Relations: as soon as every member of the group expressed their votes the user is directed to the final ingredients page that summarizes the outcome of the majority voting.
+- Roles: Allow users to vote the overall list of typed-in ingredients through a majority vote system. They can express their opinion by selecting either yes, no, or indifferent.
+- Relations: As soon as every member of the group expressed their votes the user is directed to the final ingredients page that summarizes the outcome of the majority voting.
 
 ### [Final Recipe](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/blob/main/src/components/views/Final.js)
-Roles: display image, title, preparation time, instructions of the suggested recipe as well as the ingredients the users need to contribute with and those they need to buy.
-
-Relations: from the final recipe page you can go back to the landing page and be able to join a new group or go solo
-
+- Roles: Display image, title, preparation time, and instructions of the suggested recipe as well as the ingredients the users need to contribute with and those they need to buy.
+- Relations: From the final recipe page you can go back to the landing page and be able to join a new group or go solo.
 
 ## External API
 The [spoonacular API](https://spoonacular.com/food-api) is used to retrieve the final recipes based on the given ingredients, intolerances, favourite cuisines and dietary preferences. The ingredients, which the user can choose to contribute to the meal, are also retrieved from the API to avoid the need for natural language processing in the backend. Furthermore, the intolerances (or allergies), favourite cuisines and dietary preferences used to personalize the profiles are retrieved from spoonacular to later match the requests to the API.
