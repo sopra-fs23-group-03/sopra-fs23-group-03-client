@@ -64,7 +64,7 @@ In a first interaction with our deployed application, upon a server instance bei
 ## Illustrations and main user flow
 
 ### Landing Page
-This page provides an overview of all users (including their online-status), current groups in various states of planning (more see below), and offers two options which lead to a recipe. One is the the go-solo option, which gives recipe suggestions without typing in ingredients, but taking into account all personal information in the user profile. The other option is creating a group (which makes the user a host) and to start the group planning process. 
+This page provides an overview of all users (including their online-status), current groups in various states of planning (more see below), and offers two options which lead to a recipe. One is the go-solo option, which gives recipe suggestions without typing in ingredients, but taking into account all personal information in the user profile. The other option is creating a group (which makes the user a host) and to start the group planning process. 
 
 <img width="395" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/6384d1b2-a489-4d21-919b-5d083624b114"> <img width="397" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/a3a48a92-fb7b-46f5-b9db-39dbeb09b7e0">
 
