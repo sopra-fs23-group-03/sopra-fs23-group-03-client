@@ -86,8 +86,9 @@ Upon clicking on "Form Group", one decided to be a host and starts the planning 
 <img width="299" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/1d9c9ffa-5726-4359-b6c5-eba437859c08">
 
 Here the future host sees all online and available users (users which are not actively taking part of another planning process) to invite them. Only upon pressing "continue", the respective invitations are sent and the potential guests get a notification. 
-Once the guests confirmed that they are "ready", their names are highlighted in green and the host can finally start the planning process.
+
 <img width="452" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/56be5d2d-3abe-4043-a342-fe7097d830a8">
+Once the guests confirmed that they are "ready", their names are highlighted in green and the host can finally start the planning process.
 
 ### Starting the planning process (guest view)
 Upon accepting the invitation send by a host or the acceptance of a join request by the guest themselves, a guest has to confirm again that they are ready to start the process. We planned it in this way, because once a group is in the planning process, it is important that every member actively participates. Otherwise the whole group gets stuck.
