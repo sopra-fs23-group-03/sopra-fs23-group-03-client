@@ -27,19 +27,19 @@ Our motivation for this project was to aid fellow students in planning their mea
 
 ### [Profile](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/blob/main/src/components/views/Profile.js)
 - Roles: Display username, diet preference, allergies and favourite cuisine of the user also allowing him/her to modify them. 
-- Relations: From the profile the user can either go back to the landing page or receive an invitation to a group in the notification section.
+- Relations: From the profile the user can either go back to the Landing Page or receive an invitation to a group in the notification section.
 
 ### [Ingredients-Entering Page](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/blob/main/src/components/views/Ingredient.js)
 - Roles: Allow users to type in the ingredients they have in their fridge or paintry. The text field provides suggestions of possible ingredients.
 - Relations: As soon as every member of the group typed in their ingredients, the user is directed to the voting page.
 
 ### [Voting Page](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/blob/main/src/components/views/Ingredient.js)
-- Roles: Allow users to vote the overall list of typed-in ingredients through a majority vote system. They can express their opinion by selecting either yes, no, or indifferent.
+- Roles: Allow users to vote the overall list of typed-in ingredients through a majority vote system. One can express the opinion by selecting either yes, no, or indifferent.
 - Relations: As soon as every member of the group expressed their votes the user is directed to the final ingredients page that summarizes the outcome of the majority voting.
 
 ### [Final Recipe](https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/blob/main/src/components/views/Final.js)
 - Roles: Display image, title, preparation time, and instructions of the suggested recipe as well as the ingredients the users need to contribute with and those they need to buy.
-- Relations: From the final recipe page you can go back to the landing page and be able to join a new group or go solo.
+- Relations: From the final recipe page you can go back to the Landing Page and be able to join a new group or go solo.
 
 ## External API
 The [spoonacular API](https://spoonacular.com/food-api) is used to retrieve the final recipes based on the given ingredients, intolerances, favourite cuisines and dietary preferences. The ingredients, which the user can choose to contribute to the meal, are also retrieved from the API to avoid the need for natural language processing in the backend. Furthermore, the intolerances (or allergies), favourite cuisines and dietary preferences used to personalize the profiles are retrieved from spoonacular to later match the requests to the API.
