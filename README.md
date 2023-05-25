@@ -17,6 +17,7 @@ Our motivation for this project was to aid fellow students in planning their mea
 - [node.js](https://nodejs.org/)
 - [JavaScript](https://www.javascript.com/)
 - [Google Cloud](https://cloud.google.com/)
+- [GitHub](https://github.com/)
 
 ## High-level components
 
