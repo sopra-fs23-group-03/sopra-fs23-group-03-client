@@ -75,7 +75,7 @@ In the personal profile a user can change the name and password. More interestin
 
 <img width="299" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/7272711e-8080-4904-87d6-243235626f94">
 
-### Notification Bar
+### Navigation Bar
 The bar includes a button to reach the profile, the notifications, and the Landing Page. It also displays the logout functionality. In case a user got invited to a group, the notification bell will show a red node and upon clicking present the group the invitation came from as well as further possible actions. At certain stages within the group planning process, the notification bar is not shown, as we want the user to focus on the planning process and e.g., exclude the option to logout.
 
 <img width="452" alt="grafik" src="https://github.com/sopra-fs23-group-03/sopra-fs23-group-03-client/assets/91547040/78cfec31-496d-471b-834c-dac9ae911957">
