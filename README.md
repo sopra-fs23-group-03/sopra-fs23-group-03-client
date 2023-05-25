@@ -62,7 +62,7 @@ We assume that all group members stay online and continue the meal-planning proc
 TODO: add more? The one in the report?
 
 ### Web Browser
-Our application was developed and tested mostly using [Google Chrome](https://www.google.com/chrome/). We therefore recommend you download and install Chrome to have the best experience with our application.
+Our application was developed and tested mostly using the desktop version of [Google Chrome](https://www.google.com/chrome/). We therefore recommend you download and install Chrome to have the best experience with our application.
 
 ### Database
 We have kept the in-memory H2 database of the template project provided by the SoPra FS23 Team. This means that whenever the server gets terminated, e.g. in our deployment due to inactivity, the database gets destroyed with it.
