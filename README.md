@@ -12,13 +12,11 @@ CollaborEat is an online application where people can get together to plan a mea
 Our motivation for this project was to aid fellow students in planning their meals with food they might already have at home. With our application we aim to reduce food waste and help in saving money and time for our users, but we also hope to inspire people to get creative with their meals and to get together to bond and have fun cooking together.
 
 ## Technologies
-- React
-- npm
-- node.js
-- JavaScript
-- Google Cloud
-
-TODO: add more? Github, REST (Luis group)
+- [React](https://react.dev/)
+- [npm](https://www.npmjs.com/)
+- [node.js](https://nodejs.org/)
+- [JavaScript](https://www.javascript.com/)
+- [Google Cloud](https://cloud.google.com/)
 
 ## High-level components
 
@@ -140,10 +138,6 @@ See the [Future Work](https://github.com/orgs/sopra-fs23-group-03/projects/1/vie
 Apache License 2.0
 
 ## Launch & Deployment
-TODO:
-Write down the steps a new developer joining your team would have to take to get started with your application. What commands are required to build and run your project locally? How can they run the tests? (no tests) Do you have external dependencies or a database that needs to be running? How can they do releases?
-
-lany- I put here what used to be in the README from the template. adapt what's necessary :) -lany
 
 ### Getting started
 
